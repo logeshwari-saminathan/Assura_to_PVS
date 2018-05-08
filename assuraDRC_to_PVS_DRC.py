@@ -23,7 +23,7 @@ t_DIVIDE  = r'/'
 t_EQUALS  = r'='
 t_LPAREN  = r'\('
 t_RPAREN  = r'\)'
-t_METAL   = r'Metal\d'
+#t_METAL   = r'Metal'
 
 #t_NAME    = r'[a-zA-Z_][a-zA-Z0-9_]*'
 t_RULMESSAGE = r'".*"'
@@ -37,7 +37,11 @@ reserved = {
 }
 
 # A regular expression rule with some action code
+def t_METAL(t):    
+    return t
+t_METAL.__doc__=r'Metal\d' #can be an expression
 
+    
 def t_NWELL(t):
     r'nwell'
     t.value =['inLayer1']
@@ -73,7 +77,7 @@ def t_DRC(t):
     
 def t_SEPNOTCH(t):
    r'sepNotch|sep'
-   if t.value=='sepNotch':
+   if t.value=='sMetal1epNotch':
        t.value = '-notch'
    else:
        t.value = ""
@@ -97,6 +101,7 @@ def t_NUMBER(t):
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
+    
 
 # A string containing ignored characters (spaces and tabs)
 t_ignore  = '\t \n'
@@ -110,8 +115,9 @@ def t_error(t):
 lexer = lex.lex()
 
 # Test it out  (Input)
-data = '''L998=drc(Metal sepNotch<0.06)
-errorLayer(L998 "METAL.SP.1.1: Metal to Metal spacing must be >= 0.06 um")'''
+data = '''L998=drc(Metal1 sepNotch<0.06)
+
+errorLayer(L998 "METAL1.SP.1.1: Metal1 to Metal1 spacing must be >= 0.06 um")'''
 #Metal1_d=layer( 7 type(0) )
 #L91383=drc(Nburied Nwell enc<0.2)'''
 
@@ -144,7 +150,7 @@ names = {}
 
 
 #[outLayer = ]drc( inLayer1 [inLayer2] check [modifiers] )
-#def p_expression(t):
+#def p_expression(t):print('\t',expr)
 #   expression : ID? drc expression1
 #   expression1: LPARAN Metal Metal? check RPARAN
 #   check      : LESSTHAN | EQUALS? | GREATERTHAN? | EQUALS? 
@@ -165,7 +171,7 @@ def print_expr():
             print('rule ',expr1.split(':')[0],'" {')
             print('\tcaption',expr1)
         else:
-            print('\t',expr)
+            print('\t',expr1)
              
     print('}')
     expr = []  
@@ -217,7 +223,8 @@ lines = data.split('\n')
 #infl = open("Input_rule_file")
 #lines = list(infl)
 for line in lines:
-    result = parser.parse(line)
+    if not(line == '\n' or line==''):
+        result = parser.parse(line)
 
 #def p_expression_name(t):
 #    'expression : NAME'
