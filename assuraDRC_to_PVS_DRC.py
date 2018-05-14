@@ -5,22 +5,40 @@
 # ------------------------------------------------------------
 import ply.lex as lex
 import string
-lines = []
+from collections import Counter
+import os,sys
 
-def num_times_var(var):
+lines = []
+expr = []
+count = 0
+DEBUG = 0
+expr_sort = []
+list_more = []
+
+def num_times_var(var, string_leave = 'errorLayer'):
     global lines
+    global count 
     count = 0
     for line in lines:
-        if var in line:
+        if var in line and string_leave not in line:
             count = count +1
     return count
-
+    
+def count(element):
+    global lines
+    i = 0
+    for element in lines:
+        if element >= 3:
+            i = i+1
+            insert_at = i
+    return insert_at
+    
 # List of token names.   This is always required
 tokens = (
     'NUMBER',
     'PLUS','MINUS','TIMES','DIVIDE','EQUALS',
     'LPAREN','RPAREN', 'MODULUS','POWER',  'GREATERTHAN', 'LESSTHAN','FLOAT','DRC','SEPNOTCH','ID','METAL','GEOMGETNON90',
-    'ERRORINFO','RULMESSAGE' ,'UNDERSCORE' ,'LAYER','CHECK','NBURIED' ,'NWELL','ENC','GEOMGETLENGTH',
+    'ERRORINFO','RULMESSAGE' ,'UNDERSCORE' ,'LAYER','CHECK','NBURIED' ,'NWELL','ENC','GEOMGETLENGTH','GEOMWIDTH','KEEP','GEOMGETEDGE','COINCIDENT',
     )
 
 # Regular expression rules for simple tokens
@@ -46,6 +64,29 @@ reserved = {
 }
 
 # A regular expression rule with some action code
+
+def t_COINCIDENT(t):
+    r'coincident'
+    t.value = '-coincident_only'
+    return t
+
+def t_GEOMGETEDGE(t):
+    r'geomGetEdge'
+    t.value = 'edge_boolean'
+    return t
+    
+def t_KEEP(t):
+    r'keep'
+    t.value = ['-by','-underover']
+    return t
+t_KEEP.__doc__=r'keep' #can be an expression
+
+def t_GEOMWIDTH(t):
+    r'geomWidth'
+    t.value = ['size','and']
+    return t
+t_GEOMWIDTH.__doc__=r'geomWidth' #can be an expression
+
 def t_METAL(t):    
     return t
 t_METAL.__doc__=r'Metal\d' #can be an expression
@@ -91,10 +132,10 @@ def t_DRC(t):
     
 def t_SEPNOTCH(t):
    r'sepNotch|sep'
-   if t.value=='sMetal1epNotch':
+   if t.value=='Metal1sepNotch':
        t.value = '-notch'
    else:
-       t.value = ""
+       t.value = ["",'exte']
    return t
    
 def t_GEOMGETLENGTH(t):
@@ -142,6 +183,12 @@ errorLayer(L79024 "METAL1.SP.1.2: Metal1 to Metal1 spacing must be >= 0.18 um")'
 #Metal1_d=layer( 7 type(0) )
 #L91383=drc(Nburied Nwell enc<0.2)'''
 
+#data = '''L18723=geomWidth(Metal1 keep>0.18)
+#L52985=geomGetEdge(Metal1 coincident L18723)
+#L52985=geomGetEdge(Metal1 coincident L18723)
+#L3396=drc(Metal1 L52985 0<sep<0.18 opposite edgeb)
+#L79024=geomGetLength(L3396 keep>0.56)
+#errorLayer(L79024 "METAL1.SP.1.2: Metal1 to Metal1 spacing must be >= 0.18 um")'''
 
 
 
@@ -154,7 +201,8 @@ while True:
     tok = lexer.token()
     if not tok: 
         break      # No more input
-    print(tok)
+    if DEBUG>2:
+        print(tok)
 
 
 # Parsing rules  
@@ -167,103 +215,255 @@ precedence = (
     )
 
 # dictionary of names
-names = {}
+layer = {}
 
-
-#[outLayer = ]drc( inLayer1 [inLayer2] check [modifiers] )
-#def p_expression(t):print('\t',expr)
-#   expression : ID? drc expression1
-#   expression1: LPARAN Metal Metal? check RPARAN
-#   check      : LESSTHAN | EQUALS? | GREATERTHAN? | EQUALS? 
-                
-    
-
-                
+          
 
 # Parsing rules
 
-expr = []
-def print_expr():
+#Printing the rule
+# By default count is alwas 0
+#def print_expr():
+#    global expr
+##    expr1 = layer[expr[i]]
+#    for i in range(len(expr)):
+#        expr1 = layer[expr[i]]
+#        if DEBUG >=1:
+#            print('expr1 = ',expr1)
+#        if i ==0:
+##            print(expr1)
+#            print('rule ',expr1.split(':')[0],'" {')
+#            print('\tcaption',expr1,';')
+#        else:
+#            print('\t',expr1,';')         
+#    print('}')
+#
+#    expr = []
+
+def print_expr(count):
     global expr
-    for i in range(len(expr)):
-        expr1 = names[expr[i]]
-        if i ==0:
-#            print(expr1)
-            print('rule ',expr1.split(':')[0],'" {')
-            print('\tcaption',expr1,';')
-        else:
-            print('\t',expr1,';')
-             
-    print('}')
-    expr = []  
+#    expr1 = layer[expr[i]]
+    if count == 0:
+        for i in range(len(expr)):
+            expr1 = layer[expr[i]]
+            if DEBUG >=1:
+                print('expr1 = ',expr1)
+            if i ==0:
+    #            print(expr1)
+                print('rule ',expr1.split(':')[0],'" {')
+                print('\tcaption',expr1,';')
+            else:
+                print('\t',expr1,';')         
+        print('}')
+    
+        expr = []
+    else:
+        print('##')
+    
+#def print_expr(count):
+#    global expr_sort
+##    expr1 = layer[expr[i]]
+##    global expr_sort
+#    if count == 0:
+#        for i in range(len(expr_sort)):
+#            expr1 = layer[expr_sort[i]]
+#            if DEBUG >=1:
+#                print('expr1 = ',expr1)
+#            if i ==0:
+#    #            print(expr1)
+#                print('rule ',expr1.split(':')[0],'" {')
+#                print('\tcaption',expr1,';')
+#            else:
+#                print('\t',expr1,';')         
+#        print('}')
+#        expr_sort = []
+#    else:
+#        print('########')
+##        for i in range(len(expr)):
+##            expr1 = layer[expr[i]]
+##            print()
+#        expr_sort = []
+    
+def print_expr1(count = 0):
+    global expr
+    if count == 0:
+        print()
+#        for i in range(len(expr)):
+#            expr1 = layer[expr[i]]
+#            if i ==0:
+#    #            print(expr1)
+#                print('rule ',expr1.split(':')[0],'" {')
+#                print('\tcaption',expr1,';')
+#            else:
+#                print('\t',expr1,';')         
+#        print('}')
+    else:
+        for i in range(len(expr)):
+            expr1 = layer[expr[i]]
+            if count ==1:
+                print(expr[i])
+    expr = [] 
 
  #From : L998=drc(Metal1 sepNotch<0.06)       
 # To : exte Metal1 Metal1 -lt 0.06 -output region -abut lt 90; 
-def p_statement_assign(t):
+def p_statement_metalspacing(t):
     'expression :  ID EQUALS DRC LPAREN METAL SEPNOTCH LESSTHAN NUMBER RPAREN'
-    names[t[1]] = " ".join([t[3][0],t[5],t[5], t[7],str(t[8]),'-output region -singular -abut lt 90; ' ])
-#    names[t[1]] = t[3]
+    layer[t[1]] = " ".join([t[6][0],t[5],t[5], t[7],str(t[8]),'-output region -singular -abut lt 90 ' ])
     expr.append(t[1])
-#    print(names[t[1]])
 
-#from
-#L79024=geomGetLength(L3396 keep>0.56)    
 
+#From: L18723=geomWidth(Metal1 keep>0.18)
+#To : size Metal1 -by 0.05 -underover L78025; and L78025 Metal1 L80731;
+#def p_statement_geomwidth(t):
+#    'expression : ID EQUALS GEOMWIDTH LPAREN METAL KEEP GREATERTHAN NUMBER RPAREN'
+#    layer[t[1]] = " ".join([t[3][0],t[5],t[6][0],str(t[8]),t[6][1],t[1],';','\n\t',t[3][1],t[1],t[5],t[1]])
+#    expr.append(t[1])    
+
+def p_statement_geomwidth(t):
+    'expression : ID EQUALS GEOMWIDTH LPAREN METAL KEEP GREATERTHAN NUMBER RPAREN'
+    layer[t[1]] = " ".join([t[3][0],t[5],t[6][0],str(t[8]),t[6][1],'L78025',';','\n\t',t[3][1],'L78025',t[5],'L80731'])
+    expr.append(t[1])       
+    
+#from:L79024=geomGetLength(L3396 keep>0.56)    
+#To : edge_length L52229 -gt 0.32;
 def p_statement_geomGetLength(t):
-    'expression : ID EQUALS GEOMGETLENGTH LPAREN ID ID GREATERTHAN NUMBER RPAREN'
-    names[t[1]] = " ".join([t[3],t[5],t[7],str(t[8])])
-    expr.append(t[1])
-#From    
-#L3396=drc(Metal1 L52985 0<sep<0.18 opposite edgeb)
-def p_statement_drcsep(t):
-    'expression : ID EQUALS DRC LPAREN METAL ID NUMBER LESSTHAN SEPNOTCH LESSTHAN NUMBER ID ID RPAREN'
-    names[t[1]] = " ".join([t[3][0],t[5],t[1],t[8],str(t[11]),'-output region -project -abut ltgt 0 90',t[6]])
+    'expression : ID EQUALS GEOMGETLENGTH LPAREN ID KEEP GREATERTHAN NUMBER RPAREN'
+    layer[t[1]] = " ".join([t[3],'L52229',t[7],str(t[8])])
     expr.append(t[1])
     
+#From : L3396=drc(Metal1 L52985 0<sep<0.18 opposite edgeb)
+#To: exte Metal1 L67295 -lt 0.1 -output positive2  -output region -project -abut ltgt 0 90 L52229;
+def p_statement_drcsep(t):
+    'expression : ID EQUALS DRC LPAREN METAL ID NUMBER LESSTHAN SEPNOTCH LESSTHAN NUMBER ID ID RPAREN'
+    layer[t[1]] = " ".join([t[3][0],t[5],'L67295',t[8],str(t[11]),'-output region -project -abut ltgt 0 90','L52229'])
+    expr.append(t[1])
+    
+   
+#From : L52985=geomGetEdge(Metal1 coincident L18723)
+#To : edge_boolean -coincident_only Metal1 L80731 L67295;
+def p_statement_geomgetedge(t):
+    'expression : ID EQUALS GEOMGETEDGE LPAREN METAL COINCIDENT ID RPAREN'
+    layer[t[1]] = " ".join([t[3],t[6],t[5],'L80731','L67295'])
+    expr.append(t[1])
+
+   
 #errorLayer(L998 "METAL1.SP.1.1: Metal1 to spacing must be >= 0.06 um")
+#TODO: debug p_statement_getRUL
 def p_statement_getRUL(t):
     'expression : ERRORINFO LPAREN ID RULMESSAGE RPAREN'
-    names[t[1]] = t[4]
-    expr.append(t[1])
-    expr.reverse()
-    print_expr()
+    global expr_sort
+    if DEBUG>2:
+        print('expr  =',expr)
+        print('t[4]  =',t[4])
+    layer[t[1]] = t[4]
+    if DEBUG>2:
+        print('layer[t[1]]  =',layer[t[1]])
+        print('layer =',layer)
+#    expr.append(t[1])
+    expr.insert(0,t[1])
+    
+#    Sorting and getting all the repeated IDs first to process them first
+    expr_sort = list(expr)
+    expr_sort.sort(key=Counter(expr_sort).get, reverse=True)
+    
+#    I have a list
+#    If the elements in the list is repeated more than 2 times put it in a seperate list
+#    and delete them in the old list
+    
+    if DEBUG>2:    
+        print ('expr_sort =',expr_sort)
 
+    if DEBUG>2:
+        print('t[1]  =',t[1])
+        print('expr  =',expr)
+#    expr.reverse()
+    if DEBUG>2:
+        print('expr  =',expr)
+#    Setting count_ID to 0
+#    count_ID = 0
+##    I am checking the number of IDs that are repeated in this for loop
+#    for i in range(len(expr)):
+##    If the count is more than 2 count_ID is set to 1
+#        if num_times_var(expr[i]) >2:
+#            count_ID = 1
+#            print_expr(count_ID,i)
+##    If the count is less than 2 count_ID is set to 0
+#        else:
+#            count_ID = 0
+#            print_expr(count_ID,i)
+        
+###################################################33
+#    Setting count_ID to 0
+    count_ID = 0
+#    print_expr()
+#    I am checking the number of IDs that are repeated in this for loop
+    for i in range(len(expr)):
+#    If the count is more than 2 count_ID is set to 1
+        if num_times_var(expr[i]) > 2:
+            count_ID = 1
+#            for j in range(num_times_var(expr[i])):
+#            I am appending all the IDs that are more than 2 in list_more list
+            list_more.append(expr[i])
+#    If the count is less than 2 count_ID is set to 0
+        else:
+            count_ID = 0
+    for ID in list_more:
+#        If the same element in the list_more list exists in expr_sort remove them
+        if ID in expr_sort:
+            expr_sort.remove(ID)
+    if DEBUG>2:
+        print('list_more = ',list_more)
+        print('expr_sort = ',expr_sort)
+        print('count_ID = ',count_ID)
+#    After setting the count_ID call the print_expr function
+    if count_ID == 0:
+        print_expr(count_ID)
+    else:
+        print_expr(count_ID)
 
 #From :L51265=geomGetNon90(Metal1)
 #To:angle inLayer -ltgt 0 90 outLayer;    
 def p_statement_geonon90(t):
     'expression : ID EQUALS GEOMGETNON90 LPAREN METAL RPAREN'
-    names[t[1]] = " ".join([t[3][0],t[5], t[3][1],t[1]])
+    layer[t[1]] = " ".join([t[3][0],t[5], t[3][1],t[1]])
     expr.append(t[1])
     
 # From :Metal1_d=layer( 7 type(0) )
 # To:layer_def layername arbitary_number;
 def p_statement_layermap(t):
     'expression : ID EQUALS LAYER LPAREN NUMBER ID LPAREN NUMBER RPAREN RPAREN '
-    names[t[1]] = " ".join([t[3][1],t[3][1],'arbitary_number;' ])
+    layer[t[1]] = " ".join([t[3][1],t[3][1],'arbitary_number;' ])
     expr.append(t[1])
     
 #From : L91383=drc(Nburied Nwell enc<0.2)
 #To   : enc inLayer2 inLayer1 -lt value -output region -abut lt 90;
 def p_statement_enclose(t):
     'expression : ID EQUALS DRC LPAREN NBURIED NWELL ENC LESSTHAN NUMBER RPAREN '
-    names[t[1]] = " ".join([t[7],t[5][0], t[6][0], t[8], t[9],'-output region -abut lt 90;'])
+    layer[t[1]] = " ".join([t[7],t[5][0], t[6][0], t[8], t[9],'-output region -abut lt 90;'])
     expr.append(t[1])
 
     
 import ply.yacc as yacc
 parser = yacc.yacc()
-#lines = data.split('\n')
 
-#infl = open("Input_rule_file")
-infl = open("in_drc.rul")
+
+#lines = data.split('\n')
+infl = open("Input_rule_file")
 lines = list(infl)
 for line in lines:
-    if not(line == '\n' or line==''):
-#        result = parser.parse(line)
+    if not(line == '\n' or line ==''):
+        result = parser.parse(line)
         pass
-print('#pmos=',num_times_var('pmos'))
-print('#L18723=',num_times_var('L18723'))
+
+#f = open('output_rule_file','w');
+#sys.stdout = f
+#print('#L18723=',num_times_var('L18723'))
+#print('#L52985=',num_times_var('L52985'))
+#print('#L3396=',num_times_var('L3396'))
+#print('#L79024=',num_times_var('L79024'))
+
+
+
 
 #def p_expression_name(t):
 #    'expression : NAME'
