@@ -15,23 +15,38 @@ DEBUG = 0
 expr_sort = []
 list_more = []
 
-def num_times_var(var, string_leave = 'errorLayer'):
+#Checks the number of times an element is repeated in the data
+def num_times_var(var):
     global lines
     global count 
     count = 0
     for line in lines:
-        if var in line and string_leave not in line:
+        if var in line:
             count = count +1
     return count
-    
-def count(element):
+
+#If the element is repeated 3 or more than 3 times, 
+#then return the next element as where the drc needs to 
+# be added. 
+#All the expressions before this i will be printed at a higher level
+#before printing the drc.
+
+def index_return(elements):
     global lines
-    i = 0
-    for element in lines:
-        if element >= 3:
-            i = i+1
-            insert_at = i
-    return insert_at
+    index=0
+    i=0
+#    for i in range(len(elements)):
+    #If the element has repeated 3 or more than 3 times, then insert that line in the expression
+    if num_times_var(elements[i])>= 3:
+        index = i+1
+    return index
+                     
+    
+#    for element in lines:
+#        if element >= 3:
+#            i = i+1
+#            insert_at = i
+#    return insert_at
     
 # List of token names.   This is always required
 tokens = (
@@ -222,7 +237,7 @@ layer = {}
 # Parsing rules
 
 #Printing the rule
-# By default count is alwas 0
+# By default count is always 0
 #def print_expr():
 #    global expr
 ##    expr1 = layer[expr[i]]
@@ -240,6 +255,8 @@ layer = {}
 #
 #    expr = []
 
+
+#Prints the rule in PVL
 def print_expr(count):
     global expr
 #    expr1 = layer[expr[i]]
@@ -251,14 +268,14 @@ def print_expr(count):
             if i ==0:
     #            print(expr1)
                 print('rule ',expr1.split(':')[0],'" {')
-                print('\tcaption',expr1,';')
+                print('\t caption',expr1,';')
             else:
                 print('\t',expr1,';')         
         print('}')
-    
         expr = []
     else:
         print('##')
+        
     
 #def print_expr(count):
 #    global expr_sort
@@ -284,27 +301,30 @@ def print_expr(count):
 ##            print()
 #        expr_sort = []
     
-def print_expr1(count = 0):
-    global expr
-    if count == 0:
-        print()
+#def print_expr1(count = 0):
+#    global expr
+#    if count == 0:
+#        print()
+##        for i in range(len(expr)):
+##            expr1 = layer[expr[i]]
+##            if i ==0:
+##    #            print(expr1)
+##                print('rule ',expr1.split(':')[0],'" {')
+##                print('\tcaption',expr1,';')
+##            else:
+##                print('\t',expr1,';')         
+##        print('}')
+#    else:
 #        for i in range(len(expr)):
 #            expr1 = layer[expr[i]]
-#            if i ==0:
-#    #            print(expr1)
-#                print('rule ',expr1.split(':')[0],'" {')
-#                print('\tcaption',expr1,';')
-#            else:
-#                print('\t',expr1,';')         
-#        print('}')
-    else:
-        for i in range(len(expr)):
-            expr1 = layer[expr[i]]
-            if count ==1:
-                print(expr[i])
-    expr = [] 
+#            if count ==1:
+#                print(expr[i])
+#    expr = [] 
 
- #From : L998=drc(Metal1 sepNotch<0.06)       
+
+
+
+#From : L998=drc(Metal1 sepNotch<0.06)       
 # To : exte Metal1 Metal1 -lt 0.06 -output region -abut lt 90; 
 def p_statement_metalspacing(t):
     'expression :  ID EQUALS DRC LPAREN METAL SEPNOTCH LESSTHAN NUMBER RPAREN'
@@ -352,6 +372,7 @@ def p_statement_geomgetedge(t):
 def p_statement_getRUL(t):
     'expression : ERRORINFO LPAREN ID RULMESSAGE RPAREN'
     global expr_sort
+    elements = 0
     if DEBUG>2:
         print('expr  =',expr)
         print('t[4]  =',t[4])
@@ -360,11 +381,11 @@ def p_statement_getRUL(t):
         print('layer[t[1]]  =',layer[t[1]])
         print('layer =',layer)
 #    expr.append(t[1])
-    expr.insert(0,t[1])
+    expr.insert(index_return(elements))
     
 #    Sorting and getting all the repeated IDs first to process them first
-    expr_sort = list(expr)
-    expr_sort.sort(key=Counter(expr_sort).get, reverse=True)
+#    expr_sort = list(expr)
+#    expr_sort.sort(key=Counter(expr_sort).get, reverse=True)
     
 #    I have a list
 #    If the elements in the list is repeated more than 2 times put it in a seperate list
