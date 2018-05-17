@@ -1,0 +1,4490 @@
+
+; Sample runset for 90 nm
+; GPDK090 version 4.3
+; ASSURA(r) version 3.2 DRC file
+
+
+drcExtractRules(
+
+; procedure for switches !SUGGESTED_CHECK
+procedure( switchProc0()
+    L68152=geomGetEdge(oxide_in_res inside resdum_sz)
+    L71112=drc(L68152 width<0.2)
+    errorLayer(L71112 "OXIDER.W.1.1: Oxide resistor width must be >= 0.2 um")
+
+    L1707=geomGetEdge(poly_in_res inside resdum_sz)
+    L66971=drc(L1707 width<0.2)
+    errorLayer(L66971 "POLYR.W.1.1: Poly resistor width must be >= 0.2 um")
+
+)
+
+; procedure for switches CHECK_DFM
+procedure( switchProc1()
+    L59017=drc(Poly L11119 enc<0.22)
+    errorLayer(L59017
+        "NZVT.E.1.DFM: Poly to Oxide enclosure must be >= 0.22 um for DFM")
+
+    L50822=drc(L50103 sepNotch<0.14)
+    errorLayer(L50822
+        "POLY.SP.2.DFM: Poly gate to Poly gate spacing must be >= 0.14 um")
+
+    L54146=drc(Poly nactive enc<0.20)
+    errorLayer(L54146
+        "POLY.E.1.DFM: Poly to N+ Oxide enclosure must be >= 0.20 um for DFM")
+
+    L65248=drc(Poly pactive enc<0.20)
+    errorLayer(L65248
+        "POLY.E.2.DFM: Poly to P+ Oxide enclosure must be >= 0.20 um for DFM")
+
+    errorLayer(L13970
+        "CONT.SE.1.DFM: Cont to gate spacing must be >= 0.12 um for DFM")
+    L91452=drc(L99721 L50103 sep<0.12)
+    errorLayer(L91452
+        "CONT.SE.1.DFM: Cont to gate spacing must be >= 0.12 um for DFM")
+
+    errorLayer(L67696
+        "CONT.SE.2.DFM: Cont to 2.5V gate spacing must be >= 0.14 um for DFM")
+    L73951=drc(L12025 L90375 sep<0.14)
+    errorLayer(L73951
+        "CONT.SE.2.DFM: Cont to 2.5V gate spacing must be >= 0.14 um for DFM")
+
+    errorLayer(L66537
+        "CONT.SE.3.DFM: Poly Cont to Oxide spacing must be >= 0.14 um for DFM")
+    L37299=drc(cont_poly L49719 sep<0.14)
+    errorLayer(L37299
+        "CONT.SE.3.DFM: Poly Cont to Oxide spacing must be >= 0.14 um for DFM")
+
+    errorLayer(L97549
+        "CONT.SE.4.DFM: Poly Cont to Oxide spacing must be >= 0.16 um for DFM")
+    L3875=drc(cont_poly L36121 sep<0.16)
+    errorLayer(L3875
+        "CONT.SE.4.DFM: Poly Cont to Oxide spacing must be >= 0.16 um for DFM")
+
+)
+
+; procedure for switches SUGGESTED_CHECK
+procedure( switchProc2()
+    L68153=geomGetEdge(oxide_in_res inside resdum_sz)
+    L58509=drc(L68153 width<1.5)
+    errorLayer(L58509 "OXIDER.W.1.2: Oxide resistor width must be >= 1.5 um")
+
+    L22904=geomGetEdge(resdum_sz inside oxide_in_res)
+    L60927=drc(L22904 width<8.0)
+    errorLayer(L60927 "OXIDER.L.1: Oxide resistor length must be >= 8.0 um")
+
+    L1708=geomGetEdge(poly_in_res inside resdum_sz)
+    L45632=drc(L1708 width<1.5)
+    errorLayer(L45632 "POLYR.W.1.2: Poly width must be >= 1.5 um")
+
+    L397=geomGetEdge(resdum_sz inside poly_in_res)
+    L35667=drc(L397 width<8.0)
+    errorLayer(L35667 "POLYR.L.1: Poly resistor length must be >= 8.0 um")
+
+    errorLayer(rule_VIAk_X_3_X_4a
+        "VIAk.X.3_VIAk.X.4: Metal1 through Metal6 stack must have two or more stacked Vias at all levels")
+
+    errorLayer(rule_VIAk_X_3_X_4b
+        "VIAk.X.3_VIAk.X.4: Metal2 through Metal7 stack must have two or more stacked Vias at all levels")
+
+)
+
+layerDefs("GDS2"
+
+    Bondpad=layer( 36 type(0) )
+    Bondpad_pin=pinLayer( 36 type(0) )
+
+    CapMetal=layer( 14 type(0) )
+    CapMetal_pin=pinLayer( 14 type(0) )
+
+    Cont=layer( 6 type(0) )
+
+    ESDdummy=layer( 74 type(0) )
+
+    IND2dummy=layer( 17 type(0) )
+
+    IND3dummy=layer( 70 type(0) )
+
+    INDdummy=layer( 16 type(0) )
+    INDdummy_pin=pinLayer( 16 type(0) )
+
+    M1Resdum=layer( 75 type(0) )
+
+    M2Resdum=layer( 76 type(0) )
+
+    M3Resdum=layer( 77 type(0) )
+
+    M4Resdum=layer( 78 type(0) )
+
+    M5Resdum=layer( 79 type(0) )
+
+    M6Resdum=layer( 80 type(0) )
+
+    M7Resdum=layer( 81 type(0) )
+
+    M8Resdum=layer( 82 type(0) )
+
+    M9Resdum=layer( 83 type(0) )
+
+    Metal1_d=layer( 7 type(0) )
+    Metal1_d_pin=pinLayer( 7 type(0) )
+    Metal1_d_text=textToPin( 7 type(3) )
+    Metal1_d_pintext=text( 7 type(3) )
+
+    Metal1_f=layer( 7 type(5) )
+
+    Metal1_n=layer( 7 type(4) )
+
+    Metal1_p=layer( 7 type(1) )
+    Metal1_p_pin=pinLayer( 7 type(1) )
+    Metal1_p_text=textToPin( 7 type(3) )
+    Metal1_p_pintext=text( 7 type(3) )
+
+    Metal1_slot=layer( 7 type(2) )
+
+    Metal2_d=layer( 9 type(0) )
+    Metal2_d_pin=pinLayer( 9 type(0) )
+    Metal2_d_text=textToPin( 9 type(3) )
+    Metal2_d_pintext=text( 9 type(3) )
+
+    Metal2_f=layer( 9 type(5) )
+
+    Metal2_n=layer( 9 type(4) )
+
+    Metal2_p=layer( 9 type(1) )
+    Metal2_p_pin=pinLayer( 9 type(1) )
+    Metal2_p_text=textToPin( 9 type(3) )
+    Metal2_p_pintext=text( 9 type(3) )
+
+    Metal2_slot=layer( 9 type(2) )
+
+    Metal3_d=layer( 11 type(0) )
+    Metal3_d_pin=pinLayer( 11 type(0) )
+    Metal3_d_text=textToPin( 11 type(3) )
+    Metal3_d_pintext=text( 11 type(3) )
+
+    Metal3_f=layer( 11 type(5) )
+
+    Metal3_n=layer( 11 type(4) )
+
+    Metal3_p=layer( 11 type(1) )
+    Metal3_p_pin=pinLayer( 11 type(1) )
+    Metal3_p_text=textToPin( 11 type(3) )
+    Metal3_p_pintext=text( 11 type(3) )
+
+    Metal3_slot=layer( 11 type(2) )
+
+    Metal4_d=layer( 31 type(0) )
+    Metal4_d_pin=pinLayer( 31 type(0) )
+    Metal4_d_text=textToPin( 31 type(3) )
+    Metal4_d_pintext=text( 31 type(3) )
+
+    Metal4_f=layer( 31 type(5) )
+
+    Metal4_n=layer( 31 type(4) )
+
+    Metal4_p=layer( 31 type(1) )
+    Metal4_p_pin=pinLayer( 31 type(1) )
+    Metal4_p_text=textToPin( 31 type(3) )
+    Metal4_p_pintext=text( 31 type(3) )
+
+    Metal4_slot=layer( 31 type(2) )
+
+    Metal5_d=layer( 33 type(0) )
+    Metal5_d_pin=pinLayer( 33 type(0) )
+    Metal5_d_text=textToPin( 33 type(3) )
+    Metal5_d_pintext=text( 33 type(3) )
+
+    Metal5_f=layer( 33 type(5) )
+
+    Metal5_n=layer( 33 type(4) )
+
+    Metal5_p=layer( 33 type(1) )
+    Metal5_p_pin=pinLayer( 33 type(1) )
+    Metal5_p_text=textToPin( 33 type(3) )
+    Metal5_p_pintext=text( 33 type(3) )
+
+    Metal5_slot=layer( 33 type(2) )
+
+    Metal6_d=layer( 35 type(0) )
+    Metal6_d_pin=pinLayer( 35 type(0) )
+    Metal6_d_text=textToPin( 35 type(3) )
+    Metal6_d_pintext=text( 35 type(3) )
+
+    Metal6_f=layer( 35 type(5) )
+
+    Metal6_n=layer( 35 type(4) )
+
+    Metal6_p=layer( 35 type(1) )
+    Metal6_p_pin=pinLayer( 35 type(1) )
+    Metal6_p_text=textToPin( 35 type(3) )
+    Metal6_p_pintext=text( 35 type(3) )
+
+    Metal6_slot=layer( 35 type(2) )
+
+    Metal7_d=layer( 38 type(0) )
+    Metal7_d_pin=pinLayer( 38 type(0) )
+    Metal7_d_text=textToPin( 38 type(3) )
+    Metal7_d_pintext=text( 38 type(3) )
+
+    Metal7_f=layer( 38 type(5) )
+
+    Metal7_n=layer( 38 type(4) )
+
+    Metal7_p=layer( 38 type(1) )
+    Metal7_p_pin=pinLayer( 38 type(1) )
+    Metal7_p_text=textToPin( 38 type(3) )
+    Metal7_p_pintext=text( 38 type(3) )
+
+    Metal7_slot=layer( 38 type(2) )
+
+    Metal8_d=layer( 40 type(0) )
+    Metal8_d_pin=pinLayer( 40 type(0) )
+    Metal8_d_text=textToPin( 40 type(3) )
+    Metal8_d_pintext=text( 40 type(3) )
+
+    Metal8_f=layer( 40 type(5) )
+
+    Metal8_n=layer( 40 type(4) )
+
+    Metal8_p=layer( 40 type(1) )
+    Metal8_p_pin=pinLayer( 40 type(1) )
+    Metal8_p_text=textToPin( 40 type(3) )
+    Metal8_p_pintext=text( 40 type(3) )
+
+    Metal8_slot=layer( 40 type(2) )
+
+    Metal9_d=layer( 42 type(0) )
+    Metal9_d_pin=pinLayer( 42 type(0) )
+    Metal9_d_text=textToPin( 42 type(3) )
+    Metal9_d_pintext=text( 42 type(3) )
+
+    Metal9_f=layer( 42 type(5) )
+
+    Metal9_n=layer( 42 type(4) )
+
+    Metal9_p=layer( 42 type(1) )
+    Metal9_p_pin=pinLayer( 42 type(1) )
+    Metal9_p_text=textToPin( 42 type(3) )
+    Metal9_p_pintext=text( 42 type(3) )
+
+    Metal9_slot=layer( 42 type(2) )
+
+    NPNdummy=layer( 20 type(0) )
+
+    Nburied=layer( 19 type(0) )
+    Nburied_pin=pinLayer( 19 type(0) )
+
+    Nhvt=layer( 18 type(0) )
+
+    Nimp=layer( 4 type(0) )
+    Nimp_pin=pinLayer( 4 type(0) )
+
+    Nwell=layer( 2 type(0) )
+    Nwell_pin=pinLayer( 2 type(0) )
+
+    Nzvt=layer( 52 type(0) )
+
+    Oxide=layer( 1 type(0) )
+
+    Oxide_thk=layer( 24 type(0) )
+
+    PNPdummy=layer( 21 type(0) )
+
+    Phvt=layer( 23 type(0) )
+
+    Pimp=layer( 5 type(0) )
+    Pimp_pin=pinLayer( 5 type(0) )
+
+    Poly=layer( 3 type(0) )
+    Poly_pin=pinLayer( 3 type(0) )
+
+    Psub=layer( 25 type(0) )
+    Psub_pin=pinLayer( 25 type(0) )
+
+    ResWdum=layer( 71 type(0) )
+
+    Resdum=layer( 13 type(0) )
+
+    SiProt=layer( 72 type(0) )
+
+    Via1=layer( 8 type(0) )
+
+    Via2=layer( 10 type(0) )
+
+    Via3=layer( 30 type(0) )
+
+    Via4=layer( 32 type(0) )
+
+    Via5=layer( 34 type(0) )
+
+    Via6=layer( 37 type(0) )
+
+    Via7=layer( 39 type(0) )
+
+    Via8=layer( 41 type(0) )
+
+    bulk=cellBoundary(root)
+)
+
+layerDefs("df2"
+
+    Bondpad=layer("Bondpad" type("drawing"))
+    Bondpad_pin=pinLayer("Bondpad")
+
+    CapMetal=layer("CapMetal" type("drawing"))
+    CapMetal_pin=pinLayer("CapMetal")
+
+    Cont=layer("Cont" type("drawing"))
+
+    ESDdummy=layer("ESDdummy" type("drawing"))
+
+    IND2dummy=layer("IND2dummy" type("drawing"))
+
+    IND3dummy=layer("IND3dummy" type("drawing"))
+
+    INDdummy=layer("INDdummy" type("drawing"))
+    INDdummy_pin=pinLayer("INDdummy")
+
+    M1Resdum=layer("M1Resdum" type("drawing"))
+
+    M2Resdum=layer("M2Resdum" type("drawing"))
+
+    M3Resdum=layer("M3Resdum" type("drawing"))
+
+    M4Resdum=layer("M4Resdum" type("drawing"))
+
+    M5Resdum=layer("M5Resdum" type("drawing"))
+
+    M6Resdum=layer("M6Resdum" type("drawing"))
+
+    M7Resdum=layer("M7Resdum" type("drawing"))
+
+    M8Resdum=layer("M8Resdum" type("drawing"))
+
+    M9Resdum=layer("M9Resdum" type("drawing"))
+
+    Metal1_d=layer("Metal1" type("drawing"))
+    Metal1_d_pin=pinLayer("Metal1")
+    Metal1_d_text=textToPin("Metal1" type("label"))
+    Metal1_d_pintext=pinText("Metal1")
+
+    Metal1_f=layer("Metal1" type("fill"))
+
+    Metal1_n=layer("Metal1" type("net"))
+
+    Metal1_p=layer("Metal1" type("pin"))
+    Metal1_p_pin=pinLayer("Metal1")
+    Metal1_p_text=textToPin("Metal1" type("label"))
+    Metal1_p_pintext=pinText("Metal1")
+
+    Metal1_slot=layer("Metal1" type("slot"))
+
+    Metal2_d=layer("Metal2" type("drawing"))
+    Metal2_d_pin=pinLayer("Metal2")
+    Metal2_d_text=textToPin("Metal2" type("label"))
+    Metal2_d_pintext=pinText("Metal2")
+
+    Metal2_f=layer("Metal2" type("fill"))
+
+    Metal2_n=layer("Metal2" type("net"))
+
+    Metal2_p=layer("Metal2" type("pin"))
+    Metal2_p_pin=pinLayer("Metal2")
+    Metal2_p_text=textToPin("Metal2" type("label"))
+    Metal2_p_pintext=pinText("Metal2")
+
+    Metal2_slot=layer("Metal2" type("slot"))
+
+    Metal3_d=layer("Metal3" type("drawing"))
+    Metal3_d_pin=pinLayer("Metal3")
+    Metal3_d_text=textToPin("Metal3" type("label"))
+    Metal3_d_pintext=pinText("Metal3")
+
+    Metal3_f=layer("Metal3" type("fill"))
+
+    Metal3_n=layer("Metal3" type("net"))
+
+    Metal3_p=layer("Metal3" type("pin"))
+    Metal3_p_pin=pinLayer("Metal3")
+    Metal3_p_text=textToPin("Metal3" type("label"))
+    Metal3_p_pintext=pinText("Metal3")
+
+    Metal3_slot=layer("Metal3" type("slot"))
+
+    Metal4_d=layer("Metal4" type("drawing"))
+    Metal4_d_pin=pinLayer("Metal4")
+    Metal4_d_text=textToPin("Metal4" type("label"))
+    Metal4_d_pintext=pinText("Metal4")
+
+    Metal4_f=layer("Metal4" type("fill"))
+
+    Metal4_n=layer("Metal4" type("net"))
+
+    Metal4_p=layer("Metal4" type("pin"))
+    Metal4_p_pin=pinLayer("Metal4")
+    Metal4_p_text=textToPin("Metal4" type("label"))
+    Metal4_p_pintext=pinText("Metal4")
+
+    Metal4_slot=layer("Metal4" type("slot"))
+
+    Metal5_d=layer("Metal5" type("drawing"))
+    Metal5_d_pin=pinLayer("Metal5")
+    Metal5_d_text=textToPin("Metal5" type("label"))
+    Metal5_d_pintext=pinText("Metal5")
+
+    Metal5_f=layer("Metal5" type("fill"))
+
+    Metal5_n=layer("Metal5" type("net"))
+
+    Metal5_p=layer("Metal5" type("pin"))
+    Metal5_p_pin=pinLayer("Metal5")
+    Metal5_p_text=textToPin("Metal5" type("label"))
+    Metal5_p_pintext=pinText("Metal5")
+
+    Metal5_slot=layer("Metal5" type("slot"))
+
+    Metal6_d=layer("Metal6" type("drawing"))
+    Metal6_d_pin=pinLayer("Metal6")
+    Metal6_d_text=textToPin("Metal6" type("label"))
+    Metal6_d_pintext=pinText("Metal6")
+
+    Metal6_f=layer("Metal6" type("fill"))
+
+    Metal6_n=layer("Metal6" type("net"))
+
+    Metal6_p=layer("Metal6" type("pin"))
+    Metal6_p_pin=pinLayer("Metal6")
+    Metal6_p_text=textToPin("Metal6" type("label"))
+    Metal6_p_pintext=pinText("Metal6")
+
+    Metal6_slot=layer("Metal6" type("slot"))
+
+    Metal7_d=layer("Metal7" type("drawing"))
+    Metal7_d_pin=pinLayer("Metal7")
+    Metal7_d_text=textToPin("Metal7" type("label"))
+    Metal7_d_pintext=pinText("Metal7")
+
+    Metal7_f=layer("Metal7" type("fill"))
+
+    Metal7_n=layer("Metal7" type("net"))
+
+    Metal7_p=layer("Metal7" type("pin"))
+    Metal7_p_pin=pinLayer("Metal7")
+    Metal7_p_text=textToPin("Metal7" type("label"))
+    Metal7_p_pintext=pinText("Metal7")
+
+    Metal7_slot=layer("Metal7" type("slot"))
+
+    Metal8_d=layer("Metal8" type("drawing"))
+    Metal8_d_pin=pinLayer("Metal8")
+    Metal8_d_text=textToPin("Metal8" type("label"))
+    Metal8_d_pintext=pinText("Metal8")
+
+    Metal8_f=layer("Metal8" type("fill"))
+
+    Metal8_n=layer("Metal8" type("net"))
+
+    Metal8_p=layer("Metal8" type("pin"))
+    Metal8_p_pin=pinLayer("Metal8")
+    Metal8_p_text=textToPin("Metal8" type("label"))
+    Metal8_p_pintext=pinText("Metal8")
+
+    Metal8_slot=layer("Metal8" type("slot"))
+
+    Metal9_d=layer("Metal9" type("drawing"))
+    Metal9_d_pin=pinLayer("Metal9")
+    Metal9_d_text=textToPin("Metal9" type("label"))
+    Metal9_d_pintext=pinText("Metal9")
+
+    Metal9_f=layer("Metal9" type("fill"))
+
+    Metal9_n=layer("Metal9" type("net"))
+
+    Metal9_p=layer("Metal9" type("pin"))
+    Metal9_p_pin=pinLayer("Metal9")
+    Metal9_p_text=textToPin("Metal9" type("label"))
+    Metal9_p_pintext=pinText("Metal9")
+
+    Metal9_slot=layer("Metal9" type("slot"))
+
+    NPNdummy=layer("NPNdummy" type("drawing"))
+
+    Nburied=layer("Nburied" type("drawing"))
+    Nburied_pin=pinLayer("Nburied")
+
+    Nhvt=layer("Nhvt" type("drawing"))
+
+    Nimp=layer("Nimp" type("drawing"))
+    Nimp_pin=pinLayer("Nimp")
+
+    Nwell=layer("Nwell" type("drawing"))
+    Nwell_pin=pinLayer("Nwell")
+
+    Nzvt=layer("Nzvt" type("drawing"))
+
+    Oxide=layer("Oxide" type("drawing"))
+
+    Oxide_thk=layer("Oxide_thk" type("drawing"))
+
+    PNPdummy=layer("PNPdummy" type("drawing"))
+
+    Phvt=layer("Phvt" type("drawing"))
+
+    Pimp=layer("Pimp" type("drawing"))
+    Pimp_pin=pinLayer("Pimp")
+
+    Poly=layer("Poly" type("drawing"))
+    Poly_pin=pinLayer("Poly")
+
+    Psub=layer("Psub" type("drawing"))
+    Psub_pin=pinLayer("Psub")
+
+    ResWdum=layer("ResWdum" type("drawing"))
+
+    Resdum=layer("Resdum" type("drawing"))
+
+    SiProt=layer("SiProt" type("drawing"))
+
+    Via1=layer("Via1" type("drawing"))
+
+    Via2=layer("Via2" type("drawing"))
+
+    Via3=layer("Via3" type("drawing"))
+
+    Via4=layer("Via4" type("drawing"))
+
+    Via5=layer("Via5" type("drawing"))
+
+    Via6=layer("Via6" type("drawing"))
+
+    Via7=layer("Via7" type("drawing"))
+
+    Via8=layer("Via8" type("drawing"))
+
+    bulk=cellBoundary(root)
+)
+
+offGrid(Bondpad 0.005 "off grid polygon on layer Bondpad")
+offGrid(CapMetal 0.005 "off grid polygon on layer CapMetal")
+offGrid(Cont 0.005 "off grid polygon on layer Cont")
+offGrid(ESDdummy 0.005 "off grid polygon on layer ESDdummy")
+offGrid(IND2dummy 0.005 "off grid polygon on layer IND2dummy")
+offGrid(IND3dummy 0.005 "off grid polygon on layer IND3dummy")
+offGrid(INDdummy 0.005 "off grid polygon on layer INDdummy")
+offGrid(M1Resdum 0.005 "off grid polygon on layer M1Resdum")
+offGrid(M2Resdum 0.005 "off grid polygon on layer M2Resdum")
+offGrid(M3Resdum 0.005 "off grid polygon on layer M3Resdum")
+offGrid(M4Resdum 0.005 "off grid polygon on layer M4Resdum")
+offGrid(M5Resdum 0.005 "off grid polygon on layer M5Resdum")
+offGrid(M6Resdum 0.005 "off grid polygon on layer M6Resdum")
+offGrid(M7Resdum 0.005 "off grid polygon on layer M7Resdum")
+offGrid(M8Resdum 0.005 "off grid polygon on layer M8Resdum")
+offGrid(M9Resdum 0.005 "off grid polygon on layer M9Resdum")
+offGrid(Metal1_d 0.005 "off grid polygon on layer Metal1_d")
+offGrid(Metal1_f 0.005 "off grid polygon on layer Metal1_f")
+offGrid(Metal1_n 0.005 "off grid polygon on layer Metal1_n")
+offGrid(Metal1_p 0.005 "off grid polygon on layer Metal1_p")
+offGrid(Metal1_slot 0.005 "off grid polygon on layer Metal1_slot")
+offGrid(Metal2_d 0.005 "off grid polygon on layer Metal2_d")
+offGrid(Metal2_f 0.005 "off grid polygon on layer Metal2_f")
+offGrid(Metal2_n 0.005 "off grid polygon on layer Metal2_n")
+offGrid(Metal2_p 0.005 "off grid polygon on layer Metal2_p")
+offGrid(Metal2_slot 0.005 "off grid polygon on layer Metal2_slot")
+offGrid(Metal3_d 0.005 "off grid polygon on layer Metal3_d")
+offGrid(Metal3_f 0.005 "off grid polygon on layer Metal3_f")
+offGrid(Metal3_n 0.005 "off grid polygon on layer Metal3_n")
+offGrid(Metal3_p 0.005 "off grid polygon on layer Metal3_p")
+offGrid(Metal3_slot 0.005 "off grid polygon on layer Metal3_slot")
+offGrid(Metal4_d 0.005 "off grid polygon on layer Metal4_d")
+offGrid(Metal4_f 0.005 "off grid polygon on layer Metal4_f")
+offGrid(Metal4_n 0.005 "off grid polygon on layer Metal4_n")
+offGrid(Metal4_p 0.005 "off grid polygon on layer Metal4_p")
+offGrid(Metal4_slot 0.005 "off grid polygon on layer Metal4_slot")
+offGrid(Metal5_d 0.005 "off grid polygon on layer Metal5_d")
+offGrid(Metal5_f 0.005 "off grid polygon on layer Metal5_f")
+offGrid(Metal5_n 0.005 "off grid polygon on layer Metal5_n")
+offGrid(Metal5_p 0.005 "off grid polygon on layer Metal5_p")
+offGrid(Metal5_slot 0.005 "off grid polygon on layer Metal5_slot")
+offGrid(Metal6_d 0.005 "off grid polygon on layer Metal6_d")
+offGrid(Metal6_f 0.005 "off grid polygon on layer Metal6_f")
+offGrid(Metal6_n 0.005 "off grid polygon on layer Metal6_n")
+offGrid(Metal6_p 0.005 "off grid polygon on layer Metal6_p")
+offGrid(Metal6_slot 0.005 "off grid polygon on layer Metal6_slot")
+offGrid(Metal7_d 0.005 "off grid polygon on layer Metal7_d")
+offGrid(Metal7_f 0.005 "off grid polygon on layer Metal7_f")
+offGrid(Metal7_n 0.005 "off grid polygon on layer Metal7_n")
+offGrid(Metal7_p 0.005 "off grid polygon on layer Metal7_p")
+offGrid(Metal7_slot 0.005 "off grid polygon on layer Metal7_slot")
+offGrid(Metal8_d 0.005 "off grid polygon on layer Metal8_d")
+offGrid(Metal8_f 0.005 "off grid polygon on layer Metal8_f")
+offGrid(Metal8_n 0.005 "off grid polygon on layer Metal8_n")
+offGrid(Metal8_p 0.005 "off grid polygon on layer Metal8_p")
+offGrid(Metal8_slot 0.005 "off grid polygon on layer Metal8_slot")
+offGrid(Metal9_d 0.005 "off grid polygon on layer Metal9_d")
+offGrid(Metal9_f 0.005 "off grid polygon on layer Metal9_f")
+offGrid(Metal9_n 0.005 "off grid polygon on layer Metal9_n")
+offGrid(Metal9_p 0.005 "off grid polygon on layer Metal9_p")
+offGrid(Metal9_slot 0.005 "off grid polygon on layer Metal9_slot")
+offGrid(NPNdummy 0.005 "off grid polygon on layer NPNdummy")
+offGrid(Nburied 0.005 "off grid polygon on layer Nburied")
+offGrid(Nhvt 0.005 "off grid polygon on layer Nhvt")
+offGrid(Nimp 0.005 "off grid polygon on layer Nimp")
+offGrid(Nwell 0.005 "off grid polygon on layer Nwell")
+offGrid(Nzvt 0.005 "off grid polygon on layer Nzvt")
+offGrid(Oxide 0.005 "off grid polygon on layer Oxide")
+offGrid(Oxide_thk 0.005 "off grid polygon on layer Oxide_thk")
+offGrid(PNPdummy 0.005 "off grid polygon on layer PNPdummy")
+offGrid(Phvt 0.005 "off grid polygon on layer Phvt")
+offGrid(Pimp 0.005 "off grid polygon on layer Pimp")
+offGrid(Poly 0.005 "off grid polygon on layer Poly")
+offGrid(Psub 0.005 "off grid polygon on layer Psub")
+offGrid(ResWdum 0.005 "off grid polygon on layer ResWdum")
+offGrid(Resdum 0.005 "off grid polygon on layer Resdum")
+offGrid(SiProt 0.005 "off grid polygon on layer SiProt")
+offGrid(Via1 0.005 "off grid polygon on layer Via1")
+offGrid(Via2 0.005 "off grid polygon on layer Via2")
+offGrid(Via3 0.005 "off grid polygon on layer Via3")
+offGrid(Via4 0.005 "off grid polygon on layer Via4")
+offGrid(Via5 0.005 "off grid polygon on layer Via5")
+offGrid(Via6 0.005 "off grid polygon on layer Via6")
+offGrid(Via7 0.005 "off grid polygon on layer Via7")
+offGrid(Via8 0.005 "off grid polygon on layer Via8")
+
+errorLayer(geomGetNon45(Bondpad) "non45 degree polygon on layer Bondpad")
+errorLayer(geomGetNon45(CapMetal) "non45 degree polygon on layer CapMetal")
+errorLayer(geomGetNon45(Cont) "non45 degree polygon on layer Cont")
+errorLayer(geomGetNon45(ESDdummy) "non45 degree polygon on layer ESDdummy")
+errorLayer(geomGetNon45(IND2dummy) "non45 degree polygon on layer IND2dummy")
+errorLayer(geomGetNon45(IND3dummy) "non45 degree polygon on layer IND3dummy")
+errorLayer(geomGetNon45(INDdummy) "non45 degree polygon on layer INDdummy")
+errorLayer(geomGetNon45(M1Resdum) "non45 degree polygon on layer M1Resdum")
+errorLayer(geomGetNon45(M2Resdum) "non45 degree polygon on layer M2Resdum")
+errorLayer(geomGetNon45(M3Resdum) "non45 degree polygon on layer M3Resdum")
+errorLayer(geomGetNon45(M4Resdum) "non45 degree polygon on layer M4Resdum")
+errorLayer(geomGetNon45(M5Resdum) "non45 degree polygon on layer M5Resdum")
+errorLayer(geomGetNon45(M6Resdum) "non45 degree polygon on layer M6Resdum")
+errorLayer(geomGetNon45(M7Resdum) "non45 degree polygon on layer M7Resdum")
+errorLayer(geomGetNon45(M8Resdum) "non45 degree polygon on layer M8Resdum")
+errorLayer(geomGetNon45(M9Resdum) "non45 degree polygon on layer M9Resdum")
+errorLayer(geomGetNon45(Metal1_d) "non45 degree polygon on layer Metal1_d")
+errorLayer(geomGetNon45(Metal1_f) "non45 degree polygon on layer Metal1_f")
+errorLayer(geomGetNon45(Metal1_n) "non45 degree polygon on layer Metal1_n")
+errorLayer(geomGetNon45(Metal1_p) "non45 degree polygon on layer Metal1_p")
+errorLayer(geomGetNon45(Metal1_slot)
+    "non45 degree polygon on layer Metal1_slot")
+errorLayer(geomGetNon45(Metal2_d) "non45 degree polygon on layer Metal2_d")
+errorLayer(geomGetNon45(Metal2_f) "non45 degree polygon on layer Metal2_f")
+errorLayer(geomGetNon45(Metal2_n) "non45 degree polygon on layer Metal2_n")
+errorLayer(geomGetNon45(Metal2_p) "non45 degree polygon on layer Metal2_p")
+errorLayer(geomGetNon45(Metal2_slot)
+    "non45 degree polygon on layer Metal2_slot")
+errorLayer(geomGetNon45(Metal3_d) "non45 degree polygon on layer Metal3_d")
+errorLayer(geomGetNon45(Metal3_f) "non45 degree polygon on layer Metal3_f")
+errorLayer(geomGetNon45(Metal3_n) "non45 degree polygon on layer Metal3_n")
+errorLayer(geomGetNon45(Metal3_p) "non45 degree polygon on layer Metal3_p")
+errorLayer(geomGetNon45(Metal3_slot)
+    "non45 degree polygon on layer Metal3_slot")
+errorLayer(geomGetNon45(Metal4_d) "non45 degree polygon on layer Metal4_d")
+errorLayer(geomGetNon45(Metal4_f) "non45 degree polygon on layer Metal4_f")
+errorLayer(geomGetNon45(Metal4_n) "non45 degree polygon on layer Metal4_n")
+errorLayer(geomGetNon45(Metal4_p) "non45 degree polygon on layer Metal4_p")
+errorLayer(geomGetNon45(Metal4_slot)
+    "non45 degree polygon on layer Metal4_slot")
+errorLayer(geomGetNon45(Metal5_d) "non45 degree polygon on layer Metal5_d")
+errorLayer(geomGetNon45(Metal5_f) "non45 degree polygon on layer Metal5_f")
+errorLayer(geomGetNon45(Metal5_n) "non45 degree polygon on layer Metal5_n")
+errorLayer(geomGetNon45(Metal5_p) "non45 degree polygon on layer Metal5_p")
+errorLayer(geomGetNon45(Metal5_slot)
+    "non45 degree polygon on layer Metal5_slot")
+errorLayer(geomGetNon45(Metal6_d) "non45 degree polygon on layer Metal6_d")
+errorLayer(geomGetNon45(Metal6_f) "non45 degree polygon on layer Metal6_f")
+errorLayer(geomGetNon45(Metal6_n) "non45 degree polygon on layer Metal6_n")
+errorLayer(geomGetNon45(Metal6_p) "non45 degree polygon on layer Metal6_p")
+errorLayer(geomGetNon45(Metal6_slot)
+    "non45 degree polygon on layer Metal6_slot")
+errorLayer(geomGetNon45(Metal7_d) "non45 degree polygon on layer Metal7_d")
+errorLayer(geomGetNon45(Metal7_f) "non45 degree polygon on layer Metal7_f")
+errorLayer(geomGetNon45(Metal7_n) "non45 degree polygon on layer Metal7_n")
+errorLayer(geomGetNon45(Metal7_p) "non45 degree polygon on layer Metal7_p")
+errorLayer(geomGetNon45(Metal7_slot)
+    "non45 degree polygon on layer Metal7_slot")
+errorLayer(geomGetNon45(Metal8_d) "non45 degree polygon on layer Metal8_d")
+errorLayer(geomGetNon45(Metal8_f) "non45 degree polygon on layer Metal8_f")
+errorLayer(geomGetNon45(Metal8_n) "non45 degree polygon on layer Metal8_n")
+errorLayer(geomGetNon45(Metal8_p) "non45 degree polygon on layer Metal8_p")
+errorLayer(geomGetNon45(Metal8_slot)
+    "non45 degree polygon on layer Metal8_slot")
+errorLayer(geomGetNon45(Metal9_d) "non45 degree polygon on layer Metal9_d")
+errorLayer(geomGetNon45(Metal9_f) "non45 degree polygon on layer Metal9_f")
+errorLayer(geomGetNon45(Metal9_n) "non45 degree polygon on layer Metal9_n")
+errorLayer(geomGetNon45(Metal9_p) "non45 degree polygon on layer Metal9_p")
+errorLayer(geomGetNon45(Metal9_slot)
+    "non45 degree polygon on layer Metal9_slot")
+errorLayer(geomGetNon45(NPNdummy) "non45 degree polygon on layer NPNdummy")
+errorLayer(geomGetNon45(Nburied) "non45 degree polygon on layer Nburied")
+errorLayer(geomGetNon45(Nhvt) "non45 degree polygon on layer Nhvt")
+errorLayer(geomGetNon45(Nimp) "non45 degree polygon on layer Nimp")
+errorLayer(geomGetNon45(Nwell) "non45 degree polygon on layer Nwell")
+errorLayer(geomGetNon45(Nzvt) "non45 degree polygon on layer Nzvt")
+errorLayer(geomGetNon45(Oxide) "non45 degree polygon on layer Oxide")
+errorLayer(geomGetNon45(Oxide_thk) "non45 degree polygon on layer Oxide_thk")
+errorLayer(geomGetNon45(PNPdummy) "non45 degree polygon on layer PNPdummy")
+errorLayer(geomGetNon45(Phvt) "non45 degree polygon on layer Phvt")
+errorLayer(geomGetNon45(Pimp) "non45 degree polygon on layer Pimp")
+errorLayer(geomGetNon45(Poly) "non45 degree polygon on layer Poly")
+errorLayer(geomGetNon45(Psub) "non45 degree polygon on layer Psub")
+errorLayer(geomGetNon45(ResWdum) "non45 degree polygon on layer ResWdum")
+errorLayer(geomGetNon45(Resdum) "non45 degree polygon on layer Resdum")
+errorLayer(geomGetNon45(SiProt) "non45 degree polygon on layer SiProt")
+errorLayer(geomGetNon45(Via1) "non45 degree polygon on layer Via1")
+errorLayer(geomGetNon45(Via2) "non45 degree polygon on layer Via2")
+errorLayer(geomGetNon45(Via3) "non45 degree polygon on layer Via3")
+errorLayer(geomGetNon45(Via4) "non45 degree polygon on layer Via4")
+errorLayer(geomGetNon45(Via5) "non45 degree polygon on layer Via5")
+errorLayer(geomGetNon45(Via6) "non45 degree polygon on layer Via6")
+errorLayer(geomGetNon45(Via7) "non45 degree polygon on layer Via7")
+errorLayer(geomGetNon45(Via8) "non45 degree polygon on layer Via8")
+
+
+drc(Bondpad width<0.01 "acute angle on layer Bondpad")
+drc(CapMetal width<0.01 "acute angle on layer CapMetal")
+drc(ESDdummy width<0.01 "acute angle on layer ESDdummy")
+drc(IND2dummy width<0.01 "acute angle on layer IND2dummy")
+drc(IND3dummy width<0.01 "acute angle on layer IND3dummy")
+drc(INDdummy width<0.01 "acute angle on layer INDdummy")
+drc(M1Resdum width<0.01 "acute angle on layer M1Resdum")
+drc(M2Resdum width<0.01 "acute angle on layer M2Resdum")
+drc(M3Resdum width<0.01 "acute angle on layer M3Resdum")
+drc(M4Resdum width<0.01 "acute angle on layer M4Resdum")
+drc(M5Resdum width<0.01 "acute angle on layer M5Resdum")
+drc(M6Resdum width<0.01 "acute angle on layer M6Resdum")
+drc(M7Resdum width<0.01 "acute angle on layer M7Resdum")
+drc(M8Resdum width<0.01 "acute angle on layer M8Resdum")
+drc(M9Resdum width<0.01 "acute angle on layer M9Resdum")
+drc(NPNdummy width<0.01 "acute angle on layer NPNdummy")
+drc(Nhvt width<0.01 "acute angle on layer Nhvt")
+drc(PNPdummy width<0.01 "acute angle on layer PNPdummy")
+drc(Phvt width<0.01 "acute angle on layer Phvt")
+drc(Psub width<0.01 "acute angle on layer Psub")
+drc(ResWdum width<0.01 "acute angle on layer ResWdum")
+drc(Resdum width<0.01 "acute angle on layer Resdum")
+
+Bondpad=geomOr(Bondpad Bondpad_pin)
+CapMetal=geomOr(CapMetal CapMetal_pin)
+INDdummy=geomOr(INDdummy INDdummy_pin)
+Metal1_d=geomOr(Metal1_d Metal1_d_pin)
+Metal1_p=geomOr(Metal1_p Metal1_p_pin)
+Metal2_d=geomOr(Metal2_d Metal2_d_pin)
+Metal2_p=geomOr(Metal2_p Metal2_p_pin)
+Metal3_d=geomOr(Metal3_d Metal3_d_pin)
+Metal3_p=geomOr(Metal3_p Metal3_p_pin)
+Metal4_d=geomOr(Metal4_d Metal4_d_pin)
+Metal4_p=geomOr(Metal4_p Metal4_p_pin)
+Metal5_d=geomOr(Metal5_d Metal5_d_pin)
+Metal5_p=geomOr(Metal5_p Metal5_p_pin)
+Metal6_d=geomOr(Metal6_d Metal6_d_pin)
+Metal6_p=geomOr(Metal6_p Metal6_p_pin)
+Metal7_d=geomOr(Metal7_d Metal7_d_pin)
+Metal7_p=geomOr(Metal7_p Metal7_p_pin)
+Metal8_d=geomOr(Metal8_d Metal8_d_pin)
+Metal8_p=geomOr(Metal8_p Metal8_p_pin)
+Metal9_d=geomOr(Metal9_d Metal9_d_pin)
+Metal9_p=geomOr(Metal9_p Metal9_p_pin)
+Nburied=geomOr(Nburied Nburied_pin)
+Nimp=geomOr(Nimp Nimp_pin)
+Nwell=geomOr(Nwell Nwell_pin)
+Pimp=geomOr(Pimp Pimp_pin)
+Poly=geomOr(Poly Poly_pin)
+Psub=geomOr(Psub Psub_pin)
+
+
+; Metal1_v=Metal1_p and Metal1_d
+Metal1_v=geomAnd(Metal1_d Metal1_p)
+
+; Metal2_v=Metal2_p and Metal2_d
+Metal2_v=geomAnd(Metal2_d Metal2_p)
+
+; Metal3_v=Metal3_p and Metal3_d
+Metal3_v=geomAnd(Metal3_d Metal3_p)
+
+; Metal4_v=Metal4_p and Metal4_d
+Metal4_v=geomAnd(Metal4_d Metal4_p)
+
+; Metal5_v=Metal5_p and Metal5_d
+Metal5_v=geomAnd(Metal5_d Metal5_p)
+
+; Metal6_v=Metal6_p and Metal6_d
+Metal6_v=geomAnd(Metal6_d Metal6_p)
+
+; Metal7_v=Metal7_p and Metal7_d
+Metal7_v=geomAnd(Metal7_d Metal7_p)
+
+; Metal8_v=Metal8_p and Metal8_d
+Metal8_v=geomAnd(Metal8_d Metal8_p)
+
+; Metal9_v=Metal9_p and Metal9_d
+Metal9_v=geomAnd(Metal9_d Metal9_p)
+
+; Remove the beveled Bondpad edges.
+; bondpad_sq=Bondpad downUp 5.0
+bondpad_sq=geomSize(Bondpad -5.0 downUp)
+
+; cont_poly=Cont and Poly
+cont_poly=geomAnd(Cont Poly)
+
+; ind_term1=INDdummy and IND2dummy
+ind_term1=geomAnd(IND2dummy INDdummy)
+
+; ind_term2=INDdummy and IND3dummy
+ind_term2=geomAnd(IND3dummy INDdummy)
+
+; nactive=Nimp and Oxide
+nactive=geomAnd(Nimp Oxide)
+
+; nb_tap=Nburied and Nwell
+nb_tap=geomAnd(Nburied Nwell)
+
+; npn_base=Psub and NPNdummy
+npn_base=geomAnd(NPNdummy Psub)
+
+; nwellres=Nwell and ResWdum
+nwellres=geomAnd(Nwell ResWdum)
+
+; oxide_in_res=Oxide cut Resdum
+oxide_in_res=geomStraddle(Oxide Resdum)
+
+; pactive=Pimp and Oxide
+pactive=geomAnd(Oxide Pimp)
+
+; pdiff=pactive andnot Poly
+pdiff=geomAndNot(pactive Poly)
+
+; poly_conn=Poly andnot Resdum
+poly_conn=geomAndNot(Poly Resdum)
+
+; ndiff=(nactive andnot poly_conn)
+ndiff=geomAndNot(nactive poly_conn)
+
+; poly_in_res=Poly cut Resdum
+poly_in_res=geomStraddle(Poly Resdum)
+
+; rule_NZVT_X_4=Nzvt interact > 1 Oxide
+rule_NZVT_X_4=geomButtOrOver(Nzvt Oxide keep>1)
+
+; via2_cap=Via2 and CapMetal
+via2_cap=geomAnd(CapMetal Via2)
+
+; bondpad_to_die_edge=Bondpad drcEncBy < 50.0 ( bulk area > 100000.0 )
+L31068=drc(bulk area>100000.0)
+bondpad_to_die_edge=drc(L31068 Bondpad 0<enc<50.0 opposite parallel)
+
+; bondpad_via1_array=(( Via1 and Bondpad ) upDown 0.3)
+L92260=geomAnd(Bondpad Via1)
+L31970=geomSize(L92260 0.3)
+bondpad_via1_array=geomSize(L31970 -0.3)
+
+; bondpad_via2_array=(( Via2 and Bondpad ) upDown 0.3)
+L92259=geomAnd(Bondpad Via2)
+L90648=geomSize(L92259 0.3)
+bondpad_via2_array=geomSize(L90648 -0.3)
+
+; bondpad_via3_array=(( Via3 and Bondpad ) upDown 0.3)
+L92258=geomAnd(Bondpad Via3)
+L61497=geomSize(L92258 0.3)
+bondpad_via3_array=geomSize(L61497 -0.3)
+
+; bondpad_via4_array=(( Via4 and Bondpad ) upDown 0.3)
+L92257=geomAnd(Bondpad Via4)
+L32346=geomSize(L92257 0.3)
+bondpad_via4_array=geomSize(L32346 -0.3)
+
+; bondpad_via5_array=(( Via5 and Bondpad ) upDown 0.3)
+L92256=geomAnd(Bondpad Via5)
+L3195=geomSize(L92256 0.3)
+bondpad_via5_array=geomSize(L3195 -0.3)
+
+; bondpad_via6_array=(( Via6 and Bondpad ) upDown 0.3)
+L92255=geomAnd(Bondpad Via6)
+L25956=geomSize(L92255 0.3)
+bondpad_via6_array=geomSize(L25956 -0.3)
+
+; bondpad_via7_array=(( Via7 and Bondpad ) upDown 0.3)
+L92254=geomAnd(Bondpad Via7)
+L55107=geomSize(L92254 0.3)
+bondpad_via7_array=geomSize(L55107 -0.3)
+
+; bondpad_via8_array=(( Via8 and Bondpad ) upDown 0.3)
+L92253=geomAnd(Bondpad Via8)
+L84258=geomSize(L92253 0.3)
+bondpad_via8_array=geomSize(L84258 -0.3)
+
+; cont_base=Cont and npn_base and pdiff
+L82025=geomAnd(Cont npn_base)
+cont_base=geomAnd(L82025 pdiff)
+
+; ndiff_conn=ndiff andnot Resdum andnot NPNdummy
+L46829=geomAndNot(ndiff Resdum)
+ndiff_conn=geomAndNot(L46829 NPNdummy)
+
+; cont_ndiff=Cont and ndiff_conn
+cont_ndiff=geomAnd(Cont ndiff_conn)
+
+; nsd=ndiff_conn buttOnly Poly
+nsd=geomButtOnly(ndiff_conn Poly)
+
+; nsd_esd=nsd and ESDdummy
+nsd_esd=geomAnd(ESDdummy nsd)
+
+; ntap=Nwell and ndiff_conn
+ntap=geomAnd(Nwell ndiff_conn)
+
+; ntap_esd=ntap and ESDdummy
+ntap_esd=geomAnd(ESDdummy ntap)
+
+; npn_coll=Nwell andnot ResWdum and NPNdummy
+L59011=geomAndNot(Nwell ResWdum)
+npn_coll=geomAnd(L59011 NPNdummy)
+
+; cont_coll=Cont and npn_coll andnot Psub
+L25060=geomAnd(Cont npn_coll)
+cont_coll=geomAndNot(L25060 Psub)
+
+; nwell_conn=Nwell andnot ResWdum andnot NPNdummy
+nwell_conn=geomAndNot(L59011 NPNdummy)
+
+; pdiff_conn=pdiff andnot Resdum andnot NPNdummy
+L12267=geomAndNot(pdiff Resdum)
+pdiff_conn=geomAndNot(L12267 NPNdummy)
+
+; cont_pdiff=Cont and pdiff_conn
+cont_pdiff=geomAnd(Cont pdiff_conn)
+
+; psd=pdiff_conn buttOnly Poly
+psd=geomButtOnly(pdiff_conn Poly)
+
+; psd_esd=psd and ESDdummy
+psd_esd=geomAnd(ESDdummy psd)
+
+; ptap=(pdiff_conn andnot Nwell)
+ptap=geomAndNot(pdiff_conn Nwell)
+
+; ptap_esd=ptap and ESDdummy
+ptap_esd=geomAnd(ESDdummy ptap)
+
+; rule_ESD_7_nmos=ptap_esd buttOnly nsd_esd
+rule_ESD_7_nmos=geomButtOnly(ptap_esd nsd_esd)
+
+; rule_ESD_7_pmos=ntap_esd buttOnly psd_esd
+rule_ESD_7_pmos=geomButtOnly(ntap_esd psd_esd)
+
+; rule_BONDPAD_L_1=bondpad_sq inside (bondpad_to_die_edge grow 68.0)
+L18453=geomSize(bondpad_to_die_edge 68.0 edges)
+L45856=geomOr(L18453 bondpad_to_die_edge)
+rule_BONDPAD_L_1=geomInside(bondpad_sq L45856)
+
+; rule_NBL_X_1=Nburied outside (holes Nwell)
+L85630=geomHoles(Nwell)
+L90545=geomAndNot(L85630 Nwell)
+rule_NBL_X_1=geomOutside(Nburied L90545)
+
+; rule_NHVT_X_1=(Oxide and Nhvt) xor Nhvt
+L46498=geomAnd(Nhvt Oxide)
+rule_NHVT_X_1=geomXor(L46498 Nhvt)
+
+; rule_PHVT_X_1=(Oxide and Phvt) xor Phvt
+L75618=geomAnd(Oxide Phvt)
+rule_PHVT_X_1=geomXor(L75618 Phvt)
+
+; Metal1_d_n=if MergePinAndNet Metal1_d or Metal1_n else Metal1_d
+if( avSwitch("MergePinAndNet") then
+    Metal1_d_n=geomOr(Metal1_d Metal1_n)
+else
+    Metal1_d_n=Metal1_d
+)
+
+
+; Metal1=Metal1_d_n or Metal1_p or Metal1_f
+L59680=geomOr(Metal1_d_n Metal1_p)
+Metal1=geomOr(L59680 Metal1_f)
+
+; rule_Bondpad_Missing_M1=Bondpad notInteract Metal1
+rule_Bondpad_Missing_M1=geomAvoiding(Bondpad Metal1)
+
+; metal1_conn=(Metal1 andnot Metal1_slot) andnot M1Resdum
+L32159=geomAndNot(Metal1 Metal1_slot)
+metal1_conn=geomAndNot(L32159 M1Resdum)
+
+; Metal2_d_n=if MergePinAndNet Metal2_d or Metal2_n else Metal2_d
+if( avSwitch("MergePinAndNet") then
+    Metal2_d_n=geomOr(Metal2_d Metal2_n)
+else
+    Metal2_d_n=Metal2_d
+)
+
+
+; Metal2=Metal2_d_n or Metal2_p or Metal2_f
+L17344=geomOr(Metal2_d_n Metal2_p)
+Metal2=geomOr(L17344 Metal2_f)
+
+; rule_Bondpad_Missing_M2=Bondpad notInteract Metal2
+rule_Bondpad_Missing_M2=geomAvoiding(Bondpad Metal2)
+
+; ind_term1_tap=Metal2 and INDdummy and IND2dummy
+L41497=geomAnd(INDdummy Metal2)
+ind_term1_tap=geomAnd(IND2dummy L41497)
+
+; ind_term2_tap=Metal2 and INDdummy and IND3dummy
+ind_term2_tap=geomAnd(IND3dummy L41497)
+
+; metal2_conn=(Metal2 andnot Metal2_slot) andnot M2Resdum
+L6015=geomAndNot(Metal2 Metal2_slot)
+metal2_conn=geomAndNot(L6015 M2Resdum)
+
+; Metal3_d_n=if MergePinAndNet Metal3_d or Metal3_n else Metal3_d
+if( avSwitch("MergePinAndNet") then
+    Metal3_d_n=geomOr(Metal3_d Metal3_n)
+else
+    Metal3_d_n=Metal3_d
+)
+
+
+; Metal3=Metal3_d_n or Metal3_p or Metal3_f
+L92288=geomOr(Metal3_d_n Metal3_p)
+Metal3=geomOr(L92288 Metal3_f)
+
+; rule_Bondpad_Missing_M3=Bondpad notInteract Metal3
+rule_Bondpad_Missing_M3=geomAvoiding(Bondpad Metal3)
+
+; metal3_conn=(Metal3 andnot Metal3_slot) andnot M3Resdum
+L79871=geomAndNot(Metal3 Metal3_slot)
+metal3_conn=geomAndNot(L79871 M3Resdum)
+
+; Metal4_d_n=if MergePinAndNet Metal4_d or Metal4_n else Metal4_d
+if( avSwitch("MergePinAndNet") then
+    Metal4_d_n=geomOr(Metal4_d Metal4_n)
+else
+    Metal4_d_n=Metal4_d
+)
+
+
+; Metal4=Metal4_d_n or Metal4_p or Metal4_f
+L34624=geomOr(Metal4_d_n Metal4_p)
+Metal4=geomOr(L34624 Metal4_f)
+
+; rule_Bondpad_Missing_M4=Bondpad notInteract Metal4
+rule_Bondpad_Missing_M4=geomAvoiding(Bondpad Metal4)
+
+; metal4_conn=(Metal4 andnot Metal4_slot) andnot M4Resdum
+L53727=geomAndNot(Metal4 Metal4_slot)
+metal4_conn=geomAndNot(L53727 M4Resdum)
+
+; Metal5_d_n=if MergePinAndNet Metal5_d or Metal5_n else Metal5_d
+if( avSwitch("MergePinAndNet") then
+    Metal5_d_n=geomOr(Metal5_d Metal5_n)
+else
+    Metal5_d_n=Metal5_d
+)
+
+
+; Metal5=Metal5_d_n or Metal5_p or Metal5_f
+L76960=geomOr(Metal5_d_n Metal5_p)
+Metal5=geomOr(L76960 Metal5_f)
+
+; rule_Bondpad_Missing_M5=Bondpad notInteract Metal5
+rule_Bondpad_Missing_M5=geomAvoiding(Bondpad Metal5)
+
+; metal5_conn=(Metal5 andnot Metal5_slot) andnot M5Resdum
+L27583=geomAndNot(Metal5 Metal5_slot)
+metal5_conn=geomAndNot(L27583 M5Resdum)
+
+; Metal6_d_n=if MergePinAndNet Metal6_d or Metal6_n else Metal6_d
+if( avSwitch("MergePinAndNet") then
+    Metal6_d_n=geomOr(Metal6_d Metal6_n)
+else
+    Metal6_d_n=Metal6_d
+)
+
+
+; Metal6=Metal6_d_n or Metal6_p or Metal6_f
+L19296=geomOr(Metal6_d_n Metal6_p)
+Metal6=geomOr(L19296 Metal6_f)
+
+; rule_Bondpad_Missing_M6=Bondpad notInteract Metal6
+rule_Bondpad_Missing_M6=geomAvoiding(Bondpad Metal6)
+
+; metal6_conn=(Metal6 andnot Metal6_slot) andnot M6Resdum
+L65857=geomAndNot(Metal6 Metal6_slot)
+metal6_conn=geomAndNot(L65857 M6Resdum)
+
+; Metal7_d_n=if MergePinAndNet Metal7_d or Metal7_n else Metal7_d
+if( avSwitch("MergePinAndNet") then
+    Metal7_d_n=geomOr(Metal7_d Metal7_n)
+else
+    Metal7_d_n=Metal7_d
+)
+
+
+; Metal7=Metal7_d_n or Metal7_p or Metal7_f
+L38368=geomOr(Metal7_d_n Metal7_p)
+Metal7=geomOr(L38368 Metal7_f)
+
+; rule_Bondpad_Missing_M7=Bondpad notInteract Metal7
+rule_Bondpad_Missing_M7=geomAvoiding(Bondpad Metal7)
+
+; metal7_conn=(Metal7 andnot Metal7_slot) andnot M7Resdum
+L92001=geomAndNot(Metal7 Metal7_slot)
+metal7_conn=geomAndNot(L92001 M7Resdum)
+
+; Metal8_d_n=if MergePinAndNet Metal8_d or Metal8_n else Metal8_d
+if( avSwitch("MergePinAndNet") then
+    Metal8_d_n=geomOr(Metal8_d Metal8_n)
+else
+    Metal8_d_n=Metal8_d
+)
+
+
+; Metal8=Metal8_d_n or Metal8_p or Metal8_f
+L96032=geomOr(Metal8_d_n Metal8_p)
+Metal8=geomOr(L96032 Metal8_f)
+
+; rule_Bondpad_Missing_M8=Bondpad notInteract Metal8
+rule_Bondpad_Missing_M8=geomAvoiding(Bondpad Metal8)
+
+; metal8_conn=(Metal8 andnot Metal8_slot) andnot M8Resdum
+L18145=geomAndNot(Metal8 Metal8_slot)
+metal8_conn=geomAndNot(L18145 M8Resdum)
+
+; Metal9_d_n=if MergePinAndNet Metal9_d or Metal9_n else Metal9_d
+if( avSwitch("MergePinAndNet") then
+    Metal9_d_n=geomOr(Metal9_d Metal9_n)
+else
+    Metal9_d_n=Metal9_d
+)
+
+
+; Metal9=Metal9_d_n or Metal9_p or Metal9_f
+L53696=geomOr(Metal9_d_n Metal9_p)
+Metal9=geomOr(L53696 Metal9_f)
+
+; moved merged acute angle checks for metal
+drc(Metal1 width<0.01 "acute angle on layer Metal1")
+drc(Metal2 width<0.01 "acute angle on layer Metal2")
+drc(Metal3 width<0.01 "acute angle on layer Metal3")
+drc(Metal4 width<0.01 "acute angle on layer Metal4")
+drc(Metal5 width<0.01 "acute angle on layer Metal5")
+drc(Metal6 width<0.01 "acute angle on layer Metal6")
+drc(Metal7 width<0.01 "acute angle on layer Metal7")
+drc(Metal8 width<0.01 "acute angle on layer Metal8")
+drc(Metal9 width<0.01 "acute angle on layer Metal9")
+
+; bp_tap=Bondpad and Metal9
+bp_tap=geomAnd(Bondpad Metal9)
+
+; rule_Bondpad_Missing_M9=Bondpad notInteract Metal9
+rule_Bondpad_Missing_M9=geomAvoiding(Bondpad Metal9)
+
+; metal9_conn=(Metal9 andnot Metal9_slot) andnot M9Resdum
+L44289=geomAndNot(Metal9 Metal9_slot)
+metal9_conn=geomAndNot(L44289 M9Resdum)
+
+; cont_array_zone=(( ( Cont size 0.09 ) downUp 0.409 ) size -0.09)
+L26410=geomSize(Cont 0.09)
+L61820=geomSize(L26410 -0.409 downUp)
+cont_array_zone=geomSize(L61820 -0.09)
+
+; npn_emit=ndiff andnot Resdum and NPNdummy and Psub
+L69474=geomAnd(L46829 NPNdummy)
+npn_emit=geomAnd(L69474 Psub)
+
+; cont_emit=Cont and npn_emit
+cont_emit=geomAnd(Cont npn_emit)
+
+; nwell_in_od_res=((Nwell inside Oxide) cut SiProt) cut ResWdum
+L4711=geomInside(Nwell Oxide)
+L69652=geomStraddle(L4711 SiProt)
+nwell_in_od_res=geomStraddle(L69652 ResWdum)
+
+; siprot_in_nwell_res=SiProt cut nwell_in_od_res
+siprot_in_nwell_res=geomStraddle(SiProt nwell_in_od_res)
+
+; rule_ESD_5=(Oxide cut nsd_esd) andnot (holes ptap_esd)
+L54535=geomStraddle(Oxide nsd_esd)
+L81298=geomHoles(ptap_esd)
+L31817=geomAndNot(L81298 ptap_esd)
+rule_ESD_5=geomAndNot(L54535 L31817)
+
+; rule_ESD_6=(Oxide cut psd_esd) andnot (holes ntap_esd)
+L52827=geomStraddle(Oxide psd_esd)
+L39668=geomHoles(ntap_esd)
+L85191=geomAndNot(L39668 ntap_esd)
+rule_ESD_6=geomAndNot(L52827 L85191)
+
+; rule_NZVT_O_1=((Oxide interact Nzvt) size 0.3) xor Nzvt
+L33971=geomButtOrOver(Oxide Nzvt)
+L92315=geomSize(L33971 0.3)
+rule_NZVT_O_1=geomXor(L92315 Nzvt)
+
+; via1_array_zone=(( ( Via1 size 0.11 ) downUp 0.499 ) size -0.11)
+L17980=geomSize(Via1 0.11)
+L90952=geomSize(L17980 -0.499 downUp)
+via1_array_zone=geomSize(L90952 -0.11)
+
+; via2_array_zone=(( ( Via2 size 0.11 ) downUp 0.499 ) size -0.11)
+L47131=geomSize(Via2 0.11)
+L42681=geomSize(L47131 -0.499 downUp)
+via2_array_zone=geomSize(L42681 -0.11)
+
+; via2_out_capInd=Via2 and Metal2 andnot (CapMetal or INDdummy)
+L98704=geomAnd(Metal2 Via2)
+L47735=geomOr(CapMetal INDdummy)
+via2_out_capInd=geomAndNot(L98704 L47735)
+
+; via3_array_zone=(( ( Via3 size 0.11 ) downUp 0.499 ) size -0.11)
+L76282=geomSize(Via3 0.11)
+L64294=geomSize(L76282 -0.499 downUp)
+via3_array_zone=geomSize(L64294 -0.11)
+
+; via4_array_zone=(( ( Via4 size 0.11 ) downUp 0.499 ) size -0.11)
+L5433=geomSize(Via4 0.11)
+L77470=geomSize(L5433 -0.499 downUp)
+via4_array_zone=geomSize(L77470 -0.11)
+
+; via5_array_zone=(( ( Via5 size 0.11 ) downUp 0.499 ) size -0.11)
+L34584=geomSize(Via5 0.11)
+L55171=geomSize(L34584 -0.499 downUp)
+via5_array_zone=geomSize(L55171 -0.11)
+
+; via6_array_zone=(( ( Via6 size 0.11 ) downUp 0.499 ) size -0.11)
+L63735=geomSize(Via6 0.11)
+L83479=geomSize(L63735 -0.499 downUp)
+via6_array_zone=geomSize(L83479 -0.11)
+
+; metal_2_6_stack=Metal2 and Metal3 and Metal4 and Metal5 and Metal6
+L18248=geomAnd(Metal2 Metal3)
+L79489=geomAnd(L18248 Metal4)
+L42786=geomAnd(L79489 Metal5)
+metal_2_6_stack=geomAnd(L42786 Metal6)
+
+; resdum_sz=Resdum or ((Resdum growEdges 0.001) andnot (Poly or Oxide))
+L4140=geomSize(Resdum 0.001 edges)
+L32232=geomOr(Oxide Poly)
+L29787=geomAndNot(L4140 L32232)
+resdum_sz=geomOr(L29787 Resdum)
+
+; via1_x_1=(Via1 and ( ( Metal1 downUp 0.20 ) or ( Metal2 downUp 0.20 ) ))
+L82991=geomSize(Metal1 -0.20 downUp)
+L12142=geomSize(Metal2 -0.20 downUp)
+L21748=geomOr(L12142 L82991)
+via1_x_1=geomAnd(L21748 Via1)
+
+; via1_x_2=(Via1 and ( ( Metal1 downUp 0.50 ) or ( Metal2 downUp 0.50 ) ))
+L83084=geomSize(Metal1 -0.50 downUp)
+L12235=geomSize(Metal2 -0.50 downUp)
+L4033=geomOr(L12235 L83084)
+via1_x_2=geomAnd(L4033 Via1)
+
+; via2_x_1=(Via2 and ( ( Metal2 downUp 0.20 ) or ( Metal3 downUp 0.20 ) ))
+L41293=geomSize(Metal3 -0.20 downUp)
+L52348=geomOr(L12142 L41293)
+via2_x_1=geomAnd(L52348 Via2)
+
+; via2_x_2=(Via2 and ( ( Metal2 downUp 0.50 ) or ( Metal3 downUp 0.50 ) ))
+L41386=geomSize(Metal3 -0.50 downUp)
+L53252=geomOr(L12235 L41386)
+via2_x_2=geomAnd(L53252 Via2)
+
+; via3_x_1=(Via3 and ( ( Metal3 downUp 0.20 ) or ( Metal4 downUp 0.20 ) ))
+L70444=geomSize(Metal4 -0.20 downUp)
+L48815=geomOr(L41293 L70444)
+via3_x_1=geomAnd(L48815 Via3)
+
+; via3_x_2=(Via3 and ( ( Metal3 downUp 0.50 ) or ( Metal4 downUp 0.50 ) ))
+L70537=geomSize(Metal4 -0.50 downUp)
+L87119=geomOr(L41386 L70537)
+via3_x_2=geomAnd(L87119 Via3)
+
+; via4_x_1=(Via4 and ( ( Metal4 downUp 0.20 ) or ( Metal5 downUp 0.20 ) ))
+L99595=geomSize(Metal5 -0.20 downUp)
+L18361=geomOr(L70444 L99595)
+via4_x_1=geomAnd(L18361 Via4)
+
+; via4_x_2=(Via4 and ( ( Metal4 downUp 0.50 ) or ( Metal5 downUp 0.50 ) ))
+L99688=geomSize(Metal5 -0.50 downUp)
+L43335=geomOr(L70537 L99688)
+via4_x_2=geomAnd(L43335 Via4)
+
+; via5_x_1=(Via5 and ( ( Metal5 downUp 0.20 ) or ( Metal6 downUp 0.20 ) ))
+L28746=geomSize(Metal6 -0.20 downUp)
+L91359=geomOr(L28746 L99595)
+via5_x_1=geomAnd(L91359 Via5)
+
+; via5_x_2=(Via5 and ( ( Metal5 downUp 0.50 ) or ( Metal6 downUp 0.50 ) ))
+L28839=geomSize(Metal6 -0.50 downUp)
+L14241=geomOr(L28839 L99688)
+via5_x_2=geomAnd(L14241 Via5)
+
+; via6_x_1=(Via6 and ( ( Metal6 downUp 0.20 ) or ( Metal7 downUp 0.80 ) ))
+L58083=geomSize(Metal7 -0.80 downUp)
+L20072=geomOr(L28746 L58083)
+via6_x_1=geomAnd(L20072 Via6)
+
+; via6_x_2=(Via6 and ( ( Metal6 downUp 0.50 ) or ( Metal7 downUp 2.00 ) ))
+L17417=geomSize(Metal7 -2.00 downUp)
+L34809=geomOr(L17417 L28839)
+via6_x_2=geomAnd(L34809 Via6)
+
+; via_1_5_stack=Via1 and Via2 and Via3 and Via4 and Via5
+L90744=geomAnd(Via1 Via2)
+L33864=geomAnd(L90744 Via3)
+L30797=geomAnd(L33864 Via4)
+via_1_5_stack=geomAnd(L30797 Via5)
+
+; rule_VIAk_X_3_X_4a=metal_2_6_stack enclose == 1 via_1_5_stack
+rule_VIAk_X_3_X_4a=geomEnclose(metal_2_6_stack via_1_5_stack keep==1)
+
+; via_2_6_stack=Via2 and Via3 and Via4 and Via5 and Via6
+L19896=geomAnd(Via2 Via3)
+L73372=geomAnd(L19896 Via4)
+L56520=geomAnd(L73372 Via5)
+via_2_6_stack=geomAnd(L56520 Via6)
+
+; metal_2_7_stack=Metal2 and Metal3 and Metal4 and Metal5 and Metal6 and Metal7
+metal_2_7_stack=geomAnd(Metal7 metal_2_6_stack)
+
+; rule_VIAk_X_3_X_4b=metal_2_7_stack enclose == 1 via_2_6_stack
+rule_VIAk_X_3_X_4b=geomEnclose(metal_2_7_stack via_2_6_stack keep==1)
+
+; bondpad_metal1_filled=((( (fill Metal1) enclose Bondpad) downUp 25.0) and (fill Metal1)
+;  ) enclose Bondpad
+L94375=geomNoHoles(Metal1)
+L83147=geomEnclose(L94375 Bondpad)
+L11659=geomSize(L83147 -25.0 downUp)
+L22419=geomAnd(L11659 L94375)
+bondpad_metal1_filled=geomEnclose(L22419 Bondpad)
+
+; bondpad_metal2_filled=((( (fill Metal2) enclose Bondpad) downUp 25.0) and (fill Metal2)
+;  ) enclose Bondpad
+L94376=geomNoHoles(Metal2)
+L28684=geomEnclose(L94376 Bondpad)
+L91294=geomSize(L28684 -25.0 downUp)
+L29447=geomAnd(L91294 L94376)
+bondpad_metal2_filled=geomEnclose(L29447 Bondpad)
+
+; bondpad_metal3_filled=((( (fill Metal3) enclose Bondpad) downUp 25.0) and (fill Metal3)
+;  ) enclose Bondpad
+L94377=geomNoHoles(Metal3)
+L25779=geomEnclose(L94377 Bondpad)
+L57208=geomSize(L25779 -25.0 downUp)
+L38857=geomAnd(L57208 L94377)
+bondpad_metal3_filled=geomEnclose(L38857 Bondpad)
+
+; bondpad_metal4_filled=((( (fill Metal4) enclose Bondpad) downUp 25.0) and (fill Metal4)
+;  ) enclose Bondpad
+L94378=geomNoHoles(Metal4)
+L87054=geomEnclose(L94378 Bondpad)
+L10974=geomSize(L87054 -25.0 downUp)
+L74553=geomAnd(L10974 L94378)
+bondpad_metal4_filled=geomEnclose(L74553 Bondpad)
+
+; bondpad_metal5_filled=((( (fill Metal5) enclose Bondpad) downUp 25.0) and (fill Metal5)
+;  ) enclose Bondpad
+L94379=geomNoHoles(Metal5)
+L67409=geomEnclose(L94379 Bondpad)
+L60622=geomSize(L67409 -25.0 downUp)
+L45717=geomAnd(L60622 L94379)
+bondpad_metal5_filled=geomEnclose(L45717 Bondpad)
+
+; bondpad_metal6_filled=((( (fill Metal6) enclose Bondpad) downUp 25.0) and (fill Metal6)
+;  ) enclose Bondpad
+L94380=geomNoHoles(Metal6)
+L59931=geomEnclose(L94380 Bondpad)
+L61125=geomSize(L59931 -25.0 downUp)
+L25614=geomAnd(L61125 L94380)
+bondpad_metal6_filled=geomEnclose(L25614 Bondpad)
+
+; bondpad_metal7_filled=((( (fill Metal7) enclose Bondpad) downUp 25.0) and (fill Metal7)
+;  ) enclose Bondpad
+L94381=geomNoHoles(Metal7)
+L52902=geomEnclose(L94381 Bondpad)
+L96368=geomSize(L52902 -25.0 downUp)
+L79426=geomAnd(L94381 L96368)
+bondpad_metal7_filled=geomEnclose(L79426 Bondpad)
+
+; bondpad_metal8_filled=((( (fill Metal8) enclose Bondpad) downUp 25.0) and (fill Metal8)
+;  ) enclose Bondpad
+L94382=geomNoHoles(Metal8)
+L1561=geomEnclose(L94382 Bondpad)
+L79037=geomSize(L1561 -25.0 downUp)
+L79063=geomAnd(L79037 L94382)
+bondpad_metal8_filled=geomEnclose(L79063 Bondpad)
+
+; bondpad_metal9_filled=((( (fill Metal9) enclose Bondpad) downUp 25.0) and (fill Metal9)
+;  ) enclose Bondpad
+L94383=geomNoHoles(Metal9)
+L11272=geomEnclose(L94383 Bondpad)
+L32833=geomSize(L11272 -25.0 downUp)
+L91025=geomAnd(L32833 L94383)
+bondpad_metal9_filled=geomEnclose(L91025 Bondpad)
+
+; psubstrate=(bulk andnot (Nburied and Nwell)) andnot (Psub andnot (Psub size -0.001))
+;  andnot NPNdummy
+L14174=geomAndNot(bulk nb_tap)
+L86601=geomSize(Psub -0.001)
+L7495=geomAndNot(Psub L86601)
+L43912=geomAndNot(L14174 L7495)
+psubstrate=geomAndNot(L43912 NPNdummy)
+
+; rule_Bondpad_Missing_V1=(((((Bondpad size -3) and Metal1) and Metal2)) andnot ( Metal1_slot
+;  or Metal2_slot)) notInteract Via1
+L23560=geomSize(Bondpad -1.0)
+L77035=geomSize(L23560 -2.0)
+L77627=geomAnd(L77035 Metal1)
+L4435=geomAnd(L77627 Metal2)
+L54584=geomOr(Metal1_slot Metal2_slot)
+L10908=geomAndNot(L4435 L54584)
+rule_Bondpad_Missing_V1=geomAvoiding(L10908 Via1)
+
+; rule_Bondpad_Missing_V2=(((((Bondpad size -3) and Metal2) and Metal3)) andnot ( Metal2_slot
+;  or Metal3_slot)) notInteract Via2
+L77628=geomAnd(L77035 Metal2)
+L52525=geomAnd(L77628 Metal3)
+L97786=geomOr(Metal2_slot Metal3_slot)
+L11048=geomAndNot(L52525 L97786)
+rule_Bondpad_Missing_V2=geomAvoiding(L11048 Via2)
+
+; rule_Bondpad_Missing_V3=(((((Bondpad size -3) and Metal3) and Metal4)) andnot ( Metal3_slot
+;  or Metal4_slot)) notInteract Via3
+L77629=geomAnd(L77035 Metal3)
+L57811=geomAnd(L77629 Metal4)
+L26308=geomOr(Metal3_slot Metal4_slot)
+L91875=geomAndNot(L57811 L26308)
+rule_Bondpad_Missing_V3=geomAvoiding(L91875 Via3)
+
+; rule_Bondpad_Missing_V4=(((((Bondpad size -3) and Metal4) and Metal5)) andnot ( Metal4_slot
+;  or Metal5_slot)) notInteract Via4
+L77630=geomAnd(L77035 Metal4)
+L20482=geomAnd(L77630 Metal5)
+L83106=geomOr(Metal4_slot Metal5_slot)
+L52424=geomAndNot(L20482 L83106)
+rule_Bondpad_Missing_V4=geomAvoiding(L52424 Via4)
+
+; rule_Bondpad_Missing_V5=(((((Bondpad size -3) and Metal5) and Metal6)) andnot ( Metal5_slot
+;  or Metal6_slot)) notInteract Via5
+L77631=geomAnd(L77035 Metal5)
+L89854=geomAnd(L77631 Metal6)
+L39904=geomOr(Metal5_slot Metal6_slot)
+L19965=geomAndNot(L89854 L39904)
+rule_Bondpad_Missing_V5=geomAvoiding(L19965 Via5)
+
+; rule_Bondpad_Missing_V6=(((((Bondpad size -3) and Metal6) and Metal7)) andnot ( Metal6_slot
+;  or Metal7_slot)) notInteract Via6
+L77632=geomAnd(L77035 Metal6)
+L67106=geomAnd(L77632 Metal7)
+L3298=geomOr(Metal6_slot Metal7_slot)
+L97016=geomAndNot(L67106 L3298)
+rule_Bondpad_Missing_V6=geomAvoiding(L97016 Via6)
+
+; rule_Bondpad_Missing_V7=(((((Bondpad size -3) and Metal7) and Metal8)) andnot ( Metal7_slot
+;  or Metal8_slot)) notInteract Via7
+L77633=geomAnd(L77035 Metal7)
+L43230=geomAnd(L77633 Metal8)
+L46500=geomOr(Metal7_slot Metal8_slot)
+L41567=geomAndNot(L43230 L46500)
+rule_Bondpad_Missing_V7=geomAvoiding(L41567 Via7)
+
+; rule_Bondpad_Missing_V8=(((((Bondpad size -3) and Metal8) and Metal9)) andnot ( Metal8_slot
+;  or Metal9_slot)) notInteract Via8
+L77634=geomAnd(L77035 Metal8)
+L13730=geomAnd(L77634 Metal9)
+L77594=geomOr(Metal8_slot Metal9_slot)
+L73478=geomAndNot(L13730 L77594)
+rule_Bondpad_Missing_V8=geomAvoiding(L73478 Via8)
+
+; rule_POLY_SE_3=((Poly andnot (Cont sizeWithin 12.5 0.2 Poly)) buttOnly == 2 (Cont
+;  sizeWithin 12.5 0.2 Poly)) andnot (Poly downUp 0.07)
+L34518=geomSizeAnd(Cont Poly 0.2 12.5)
+L21439=geomAndNot(Poly L34518)
+L82927=geomButtOnly(L21439 L34518 keep==2)
+L99542=geomSize(Poly -0.07 downUp)
+rule_POLY_SE_3=geomAndNot(L82927 L99542)
+
+; bondpad_metal1=(Metal1 and (( ( ( ( ( fill Metal1 ) enclose Bondpad ) downUp 25.0
+;  ) and ( fill Metal1 ) ) enclose Bondpad )))
+bondpad_metal1=geomAnd(Metal1 bondpad_metal1_filled)
+
+; bondpad_metal1_slot=holes bondpad_metal1
+L19359=geomHoles(bondpad_metal1)
+bondpad_metal1_slot=geomAndNot(L19359 bondpad_metal1)
+
+; bondpad_metal1_slot_on_edge=(bondpad_metal1_slot buttOnly == 1 ( bondpad_metal1_slot
+;  drcSep <= 2.5 ))
+L51557=drc(bondpad_metal1_slot 0<sep<=2.5 opposite parallel)
+bondpad_metal1_slot_on_edge=geomButtOnly(bondpad_metal1_slot L51557 keep==1)
+
+; rule_BONDPAD_SP_5_metal1=(( bondpad_metal1_slot drcSep <= 2.5 ) andnot ( bondpad_metal1_slot
+;  drcSep == 1.5 ))
+L74117=drc(bondpad_metal1_slot sep==1.5 opposite parallel)
+rule_BONDPAD_SP_5_metal1=geomAndNot(L51557 L74117)
+
+; rule_BONDPAD_W_4_metal1=(( bondpad_metal1_slot andnot ( bondpad_metal1_slot drcWidth
+;  == 1.0 ) ) andnot bondpad_metal1_slot_on_edge)
+L23896=drc(bondpad_metal1_slot width==1.0 opposite parallel)
+L22008=geomAndNot(bondpad_metal1_slot L23896)
+rule_BONDPAD_W_4_metal1=geomAndNot(L22008 bondpad_metal1_slot_on_edge)
+
+; bondpad_metal2=(Metal2 and (( ( ( ( ( fill Metal2 ) enclose Bondpad ) downUp 25.0
+;  ) and ( fill Metal2 ) ) enclose Bondpad )))
+bondpad_metal2=geomAnd(Metal2 bondpad_metal2_filled)
+
+; bondpad_metal2_slot=holes bondpad_metal2
+L19390=geomHoles(bondpad_metal2)
+bondpad_metal2_slot=geomAndNot(L19390 bondpad_metal2)
+
+; bondpad_metal2_slot_on_edge=(bondpad_metal2_slot buttOnly == 1 ( bondpad_metal2_slot
+;  drcSep <= 2.5 ))
+L34276=drc(bondpad_metal2_slot 0<sep<=2.5 opposite parallel)
+bondpad_metal2_slot_on_edge=geomButtOnly(bondpad_metal2_slot L34276 keep==1)
+
+; rule_BONDPAD_R_1_via1=(( ( bondpad_metal1 and bondpad_metal2 ) enclose Via1 ) enclose
+;  < 16 Via1)
+L27416=geomAnd(bondpad_metal1 bondpad_metal2)
+L39318=geomEnclose(L27416 Via1)
+L87782=geomEnclose(L39318 Via1 keep>=16)
+rule_BONDPAD_R_1_via1=geomAndNot(L39318 L87782)
+
+; rule_BONDPAD_SP_5_metal2=(( bondpad_metal2_slot drcSep <= 2.5 ) andnot ( bondpad_metal2_slot
+;  drcSep == 1.5 ))
+L56836=drc(bondpad_metal2_slot sep==1.5 opposite parallel)
+rule_BONDPAD_SP_5_metal2=geomAndNot(L34276 L56836)
+
+; rule_BONDPAD_W_4_metal2=(( bondpad_metal2_slot andnot ( bondpad_metal2_slot drcWidth
+;  == 1.0 ) ) andnot bondpad_metal2_slot_on_edge)
+L41177=drc(bondpad_metal2_slot width==1.0 opposite parallel)
+L44343=geomAndNot(bondpad_metal2_slot L41177)
+rule_BONDPAD_W_4_metal2=geomAndNot(L44343 bondpad_metal2_slot_on_edge)
+
+; bondpad_metal3=(Metal3 and (( ( ( ( ( fill Metal3 ) enclose Bondpad ) downUp 25.0
+;  ) and ( fill Metal3 ) ) enclose Bondpad )))
+bondpad_metal3=geomAnd(Metal3 bondpad_metal3_filled)
+
+; bondpad_metal3_slot=holes bondpad_metal3
+L19421=geomHoles(bondpad_metal3)
+bondpad_metal3_slot=geomAndNot(L19421 bondpad_metal3)
+
+; bondpad_metal3_slot_on_edge=(bondpad_metal3_slot buttOnly == 1 ( bondpad_metal3_slot
+;  drcSep <= 2.5 ))
+L16995=drc(bondpad_metal3_slot 0<sep<=2.5 opposite parallel)
+bondpad_metal3_slot_on_edge=geomButtOnly(bondpad_metal3_slot L16995 keep==1)
+
+; rule_BONDPAD_R_1_via2=(( ( bondpad_metal2 and bondpad_metal3 ) enclose Via2 ) enclose
+;  < 16 Via2)
+L93240=geomAnd(bondpad_metal2 bondpad_metal3)
+L67829=geomEnclose(L93240 Via2)
+L11459=geomEnclose(L67829 Via2 keep>=16)
+rule_BONDPAD_R_1_via2=geomAndNot(L67829 L11459)
+
+; rule_BONDPAD_SP_5_metal3=(( bondpad_metal3_slot drcSep <= 2.5 ) andnot ( bondpad_metal3_slot
+;  drcSep == 1.5 ))
+L39555=drc(bondpad_metal3_slot sep==1.5 opposite parallel)
+rule_BONDPAD_SP_5_metal3=geomAndNot(L16995 L39555)
+
+; rule_BONDPAD_W_4_metal3=(( bondpad_metal3_slot andnot ( bondpad_metal3_slot drcWidth
+;  == 1.0 ) ) andnot bondpad_metal3_slot_on_edge)
+L58458=drc(bondpad_metal3_slot width==1.0 opposite parallel)
+L54826=geomAndNot(bondpad_metal3_slot L58458)
+rule_BONDPAD_W_4_metal3=geomAndNot(L54826 bondpad_metal3_slot_on_edge)
+
+; bondpad_metal4=(Metal4 and (( ( ( ( ( fill Metal4 ) enclose Bondpad ) downUp 25.0
+;  ) and ( fill Metal4 ) ) enclose Bondpad )))
+bondpad_metal4=geomAnd(Metal4 bondpad_metal4_filled)
+
+; bondpad_metal4_slot=holes bondpad_metal4
+L19452=geomHoles(bondpad_metal4)
+bondpad_metal4_slot=geomAndNot(L19452 bondpad_metal4)
+
+; bondpad_metal4_slot_on_edge=(bondpad_metal4_slot buttOnly == 1 ( bondpad_metal4_slot
+;  drcSep <= 2.5 ))
+L99714=drc(bondpad_metal4_slot 0<sep<=2.5 opposite parallel)
+bondpad_metal4_slot_on_edge=geomButtOnly(bondpad_metal4_slot L99714 keep==1)
+
+; rule_BONDPAD_R_1_via3=(( ( bondpad_metal3 and bondpad_metal4 ) enclose Via3 ) enclose
+;  < 16 Via3)
+L59064=geomAnd(bondpad_metal3 bondpad_metal4)
+L64598=geomEnclose(L59064 Via3)
+L70022=geomEnclose(L64598 Via3 keep>=16)
+rule_BONDPAD_R_1_via3=geomAndNot(L64598 L70022)
+
+; rule_BONDPAD_SP_5_metal4=(( bondpad_metal4_slot drcSep <= 2.5 ) andnot ( bondpad_metal4_slot
+;  drcSep == 1.5 ))
+L22274=drc(bondpad_metal4_slot sep==1.5 opposite parallel)
+rule_BONDPAD_SP_5_metal4=geomAndNot(L99714 L22274)
+
+; rule_BONDPAD_W_4_metal4=(( bondpad_metal4_slot andnot ( bondpad_metal4_slot drcWidth
+;  == 1.0 ) ) andnot bondpad_metal4_slot_on_edge)
+L75739=drc(bondpad_metal4_slot width==1.0 opposite parallel)
+L12310=geomAndNot(bondpad_metal4_slot L75739)
+rule_BONDPAD_W_4_metal4=geomAndNot(L12310 bondpad_metal4_slot_on_edge)
+
+; bondpad_metal5=(Metal5 and (( ( ( ( ( fill Metal5 ) enclose Bondpad ) downUp 25.0
+;  ) and ( fill Metal5 ) ) enclose Bondpad )))
+bondpad_metal5=geomAnd(Metal5 bondpad_metal5_filled)
+
+; bondpad_metal5_slot=holes bondpad_metal5
+L19483=geomHoles(bondpad_metal5)
+bondpad_metal5_slot=geomAndNot(L19483 bondpad_metal5)
+
+; bondpad_metal5_slot_on_edge=(bondpad_metal5_slot buttOnly == 1 ( bondpad_metal5_slot
+;  drcSep <= 2.5 ))
+L82433=drc(bondpad_metal5_slot 0<sep<=2.5 opposite parallel)
+bondpad_metal5_slot_on_edge=geomButtOnly(bondpad_metal5_slot L82433 keep==1)
+
+; rule_BONDPAD_R_1_via4=(( ( bondpad_metal4 and bondpad_metal5 ) enclose Via4 ) enclose
+;  < 16 Via4)
+L24888=geomAnd(bondpad_metal4 bondpad_metal5)
+L80299=geomEnclose(L24888 Via4)
+L26717=geomEnclose(L80299 Via4 keep>=16)
+rule_BONDPAD_R_1_via4=geomAndNot(L80299 L26717)
+
+; rule_BONDPAD_SP_5_metal5=(( bondpad_metal5_slot drcSep <= 2.5 ) andnot ( bondpad_metal5_slot
+;  drcSep == 1.5 ))
+L4993=drc(bondpad_metal5_slot sep==1.5 opposite parallel)
+rule_BONDPAD_SP_5_metal5=geomAndNot(L82433 L4993)
+
+; rule_BONDPAD_W_4_metal5=(( bondpad_metal5_slot andnot ( bondpad_metal5_slot drcWidth
+;  == 1.0 ) ) andnot bondpad_metal5_slot_on_edge)
+L93020=drc(bondpad_metal5_slot width==1.0 opposite parallel)
+L89996=geomAndNot(bondpad_metal5_slot L93020)
+rule_BONDPAD_W_4_metal5=geomAndNot(L89996 bondpad_metal5_slot_on_edge)
+
+; bondpad_metal6=(Metal6 and (( ( ( ( ( fill Metal6 ) enclose Bondpad ) downUp 25.0
+;  ) and ( fill Metal6 ) ) enclose Bondpad )))
+bondpad_metal6=geomAnd(Metal6 bondpad_metal6_filled)
+
+; bondpad_metal6_slot=holes bondpad_metal6
+L19514=geomHoles(bondpad_metal6)
+bondpad_metal6_slot=geomAndNot(L19514 bondpad_metal6)
+
+; bondpad_metal6_slot_on_edge=(bondpad_metal6_slot buttOnly == 1 ( bondpad_metal6_slot
+;  drcSep <= 2.5 ))
+L65152=drc(bondpad_metal6_slot 0<sep<=2.5 opposite parallel)
+bondpad_metal6_slot_on_edge=geomButtOnly(bondpad_metal6_slot L65152 keep==1)
+
+; rule_BONDPAD_R_1_via5=(( ( bondpad_metal5 and bondpad_metal6 ) enclose Via5 ) enclose
+;  < 16 Via5)
+L90712=geomAnd(bondpad_metal5 bondpad_metal6)
+L7391=geomEnclose(L90712 Via5)
+L70564=geomEnclose(L7391 Via5 keep>=16)
+rule_BONDPAD_R_1_via5=geomAndNot(L7391 L70564)
+
+; rule_BONDPAD_SP_5_metal6=(( bondpad_metal6_slot drcSep <= 2.5 ) andnot ( bondpad_metal6_slot
+;  drcSep == 1.5 ))
+L87712=drc(bondpad_metal6_slot sep==1.5 opposite parallel)
+rule_BONDPAD_SP_5_metal6=geomAndNot(L65152 L87712)
+
+; rule_BONDPAD_W_4_metal6=(( bondpad_metal6_slot andnot ( bondpad_metal6_slot drcWidth
+;  == 1.0 ) ) andnot bondpad_metal6_slot_on_edge)
+L10301=drc(bondpad_metal6_slot width==1.0 opposite parallel)
+L12270=geomAndNot(bondpad_metal6_slot L10301)
+rule_BONDPAD_W_4_metal6=geomAndNot(L12270 bondpad_metal6_slot_on_edge)
+
+; bondpad_metal7=(Metal7 and (( ( ( ( ( fill Metal7 ) enclose Bondpad ) downUp 25.0
+;  ) and ( fill Metal7 ) ) enclose Bondpad )))
+bondpad_metal7=geomAnd(Metal7 bondpad_metal7_filled)
+
+; bondpad_metal7_slot=holes bondpad_metal7
+L19545=geomHoles(bondpad_metal7)
+bondpad_metal7_slot=geomAndNot(L19545 bondpad_metal7)
+
+; bondpad_metal7_slot_on_edge=(bondpad_metal7_slot buttOnly == 1 ( bondpad_metal7_slot
+;  drcSep <= 2.5 ))
+L47871=drc(bondpad_metal7_slot 0<sep<=2.5 opposite parallel)
+bondpad_metal7_slot_on_edge=geomButtOnly(bondpad_metal7_slot L47871 keep==1)
+
+; rule_BONDPAD_R_1_via6=(( ( bondpad_metal6 and bondpad_metal7 ) enclose Via6 ) enclose
+;  < 16 Via6)
+L43464=geomAnd(bondpad_metal6 bondpad_metal7)
+L77040=geomEnclose(L43464 Via6)
+L69901=geomEnclose(L77040 Via6 keep>=16)
+rule_BONDPAD_R_1_via6=geomAndNot(L77040 L69901)
+
+; rule_BONDPAD_SP_5_metal7=(( bondpad_metal7_slot drcSep <= 2.5 ) andnot ( bondpad_metal7_slot
+;  drcSep == 1.5 ))
+L70431=drc(bondpad_metal7_slot sep==1.5 opposite parallel)
+rule_BONDPAD_SP_5_metal7=geomAndNot(L47871 L70431)
+
+; rule_BONDPAD_W_4_metal7=(( bondpad_metal7_slot andnot ( bondpad_metal7_slot drcWidth
+;  == 1.0 ) ) andnot bondpad_metal7_slot_on_edge)
+L27582=drc(bondpad_metal7_slot width==1.0 opposite parallel)
+L43492=geomAndNot(bondpad_metal7_slot L27582)
+rule_BONDPAD_W_4_metal7=geomAndNot(L43492 bondpad_metal7_slot_on_edge)
+
+; bondpad_metal8=(Metal8 and (( ( ( ( ( fill Metal8 ) enclose Bondpad ) downUp 25.0
+;  ) and ( fill Metal8 ) ) enclose Bondpad )))
+bondpad_metal8=geomAnd(Metal8 bondpad_metal8_filled)
+
+; bondpad_metal8_slot=holes bondpad_metal8
+L19576=geomHoles(bondpad_metal8)
+bondpad_metal8_slot=geomAndNot(L19576 bondpad_metal8)
+
+; bondpad_metal8_slot_on_edge=(bondpad_metal8_slot buttOnly == 1 ( bondpad_metal8_slot
+;  drcSep <= 2.5 ))
+L30590=drc(bondpad_metal8_slot 0<sep<=2.5 opposite parallel)
+bondpad_metal8_slot_on_edge=geomButtOnly(bondpad_metal8_slot L30590 keep==1)
+
+; rule_BONDPAD_R_2_via7=(( ( bondpad_metal7 and bondpad_metal8 ) enclose Via7 ) enclose
+;  < 4 Via7)
+L77640=geomAnd(bondpad_metal7 bondpad_metal8)
+L17326=geomEnclose(L77640 Via7)
+L7990=geomEnclose(L17326 Via7 keep>=4)
+rule_BONDPAD_R_2_via7=geomAndNot(L17326 L7990)
+
+; rule_BONDPAD_SP_5_metal8=(( bondpad_metal8_slot drcSep <= 2.5 ) andnot ( bondpad_metal8_slot
+;  drcSep == 1.5 ))
+L53150=drc(bondpad_metal8_slot sep==1.5 opposite parallel)
+rule_BONDPAD_SP_5_metal8=geomAndNot(L30590 L53150)
+
+; rule_BONDPAD_W_4_metal8=(( bondpad_metal8_slot andnot ( bondpad_metal8_slot drcWidth
+;  == 1.0 ) ) andnot bondpad_metal8_slot_on_edge)
+L44863=drc(bondpad_metal8_slot width==1.0 opposite parallel)
+L976=geomAndNot(bondpad_metal8_slot L44863)
+rule_BONDPAD_W_4_metal8=geomAndNot(L976 bondpad_metal8_slot_on_edge)
+
+; bondpad_metal9=(Metal9 and (( ( ( ( ( fill Metal9 ) enclose Bondpad ) downUp 25.0
+;  ) and ( fill Metal9 ) ) enclose Bondpad )))
+bondpad_metal9=geomAnd(Metal9 bondpad_metal9_filled)
+
+; rule_BONDPAD_R_2_via8=(( ( bondpad_metal8 and bondpad_metal9 ) enclose Via8 ) enclose
+;  < 4 Via8)
+L11816=geomAnd(bondpad_metal8 bondpad_metal9)
+L73128=geomEnclose(L11816 Via8)
+L79085=geomEnclose(L73128 Via8 keep>=4)
+rule_BONDPAD_R_2_via8=geomAndNot(L73128 L79085)
+
+; rule_OXIDE_L_1_L_2=((Oxide andnot (Cont sizeWithin 11.0 0.1 Oxide)) interact (Oxide
+;  andnot (Oxide downUp 0.09))) buttOnly (Cont sizeWithin 11.0 0.1 Oxide)
+L23312=geomSizeAnd(Cont Oxide 0.1 11.0)
+L29258=geomAndNot(Oxide L23312)
+L39287=geomSize(Oxide -0.09 downUp)
+L30786=geomAndNot(Oxide L39287)
+L45792=geomButtOrOver(L29258 L30786)
+rule_OXIDE_L_1_L_2=geomButtOnly(L45792 L23312)
+
+; rule_BONDPAD_W_5_metal1=(( ( ( bondpad_metal1_filled size -25.0 ) size 20.0 ) growEdges
+;  5.0 ) outside ( ( bondpad_metal1_filled andnot ( bondpad_metal1_slot or ( bondpad_metal1_slot
+;  drcSep <= 10.0 ) ) ) drcWidth == 5.0 ))
+L512=geomSize(bondpad_metal1_filled -1.0)
+L95323=geomSize(L512 -24.0)
+L51361=geomSize(L95323 1.0)
+L90795=geomSize(L51361 19.0)
+L19940=geomSize(L90795 5.0 edges)
+L97067=drc(bondpad_metal1_slot 0<sep<=10.0 opposite parallel)
+L52936=geomOr(L97067 bondpad_metal1_slot)
+L47599=geomAndNot(bondpad_metal1_filled L52936)
+L53804=drc(L47599 width==5.0 opposite parallel)
+rule_BONDPAD_W_5_metal1=geomOutside(L19940 L53804)
+
+; rule_BONDPAD_W_5_metal2=(( ( ( bondpad_metal2_filled size -25.0 ) size 20.0 ) growEdges
+;  5.0 ) outside ( ( bondpad_metal2_filled andnot ( bondpad_metal2_slot or ( bondpad_metal2_slot
+;  drcSep <= 10.0 ) ) ) drcWidth == 5.0 ))
+L58113=geomSize(bondpad_metal2_filled -1.0)
+L36698=geomSize(L58113 -24.0)
+L43141=geomSize(L36698 1.0)
+L3707=geomSize(L43141 19.0)
+L74735=geomSize(L3707 5.0 edges)
+L74=drc(bondpad_metal2_slot 0<sep<=10.0 opposite parallel)
+L81007=geomOr(L74 bondpad_metal2_slot)
+L35857=geomAndNot(bondpad_metal2_filled L81007)
+L45326=drc(L35857 width==5.0 opposite parallel)
+rule_BONDPAD_W_5_metal2=geomOutside(L74735 L45326)
+
+; rule_BONDPAD_W_5_metal3=(( ( ( bondpad_metal3_filled size -25.0 ) size 20.0 ) growEdges
+;  5.0 ) outside ( ( bondpad_metal3_filled andnot ( bondpad_metal3_slot or ( bondpad_metal3_slot
+;  drcSep <= 10.0 ) ) ) drcWidth == 5.0 ))
+L16738=geomSize(bondpad_metal3_filled -1.0)
+L21927=geomSize(L16738 -24.0)
+L29544=geomSize(L21927 1.0)
+L31022=geomSize(L29544 19.0)
+L77926=geomSize(L31022 5.0 edges)
+L64215=drc(bondpad_metal3_slot 0<sep<=10.0 opposite parallel)
+L98923=geomOr(L64215 bondpad_metal3_slot)
+L56717=geomAndNot(bondpad_metal3_filled L98923)
+L53462=drc(L56717 width==5.0 opposite parallel)
+rule_BONDPAD_W_5_metal3=geomOutside(L77926 L53462)
+
+; rule_BONDPAD_W_5_metal4=(( ( ( bondpad_metal4_filled size -25.0 ) size 20.0 ) growEdges
+;  5.0 ) outside ( ( bondpad_metal4_filled andnot ( bondpad_metal4_slot or ( bondpad_metal4_slot
+;  drcSep <= 10.0 ) ) ) drcWidth == 5.0 ))
+L75363=geomSize(bondpad_metal4_filled -1.0)
+L80552=geomSize(L75363 -24.0)
+L35133=geomSize(L80552 1.0)
+L95699=geomSize(L35133 19.0)
+L27426=geomSize(L95699 5.0 edges)
+L61208=drc(bondpad_metal4_slot 0<sep<=10.0 opposite parallel)
+L90065=geomOr(L61208 bondpad_metal4_slot)
+L61675=geomAndNot(bondpad_metal4_filled L90065)
+L23149=drc(L61675 width==5.0 opposite parallel)
+rule_BONDPAD_W_5_metal4=geomOutside(L27426 L23149)
+
+; rule_BONDPAD_W_5_metal5=(( ( ( bondpad_metal5_filled size -25.0 ) size 20.0 ) growEdges
+;  5.0 ) outside ( ( bondpad_metal5_filled andnot ( bondpad_metal5_slot or ( bondpad_metal5_slot
+;  drcSep <= 10.0 ) ) ) drcWidth == 5.0 ))
+L33988=geomSize(bondpad_metal5_filled -1.0)
+L39177=geomSize(L33988 -24.0)
+L60748=geomSize(L39177 1.0)
+L21314=geomSize(L60748 19.0)
+L61825=geomSize(L21314 5.0 edges)
+L58201=drc(bondpad_metal5_slot 0<sep<=10.0 opposite parallel)
+L24897=geomOr(L58201 bondpad_metal5_slot)
+L91512=geomAndNot(bondpad_metal5_filled L24897)
+L26632=drc(L91512 width==5.0 opposite parallel)
+rule_BONDPAD_W_5_metal5=geomOutside(L61825 L26632)
+
+; rule_BONDPAD_W_5_metal6=(( ( ( bondpad_metal6_filled size -25.0 ) size 20.0 ) growEdges
+;  5.0 ) outside ( ( bondpad_metal6_filled andnot ( bondpad_metal6_slot or ( bondpad_metal6_slot
+;  drcSep <= 10.0 ) ) ) drcWidth == 5.0 ))
+L92613=geomSize(bondpad_metal6_filled -1.0)
+L97802=geomSize(L92613 -24.0)
+L54875=geomSize(L97802 1.0)
+L15441=geomSize(L54875 19.0)
+L19957=geomSize(L15441 5.0 edges)
+L55194=drc(bondpad_metal6_slot 0<sep<=10.0 opposite parallel)
+L74852=geomOr(L55194 bondpad_metal6_slot)
+L77773=geomAndNot(bondpad_metal6_filled L74852)
+L17229=drc(L77773 width==5.0 opposite parallel)
+rule_BONDPAD_W_5_metal6=geomOutside(L19957 L17229)
+
+; rule_BONDPAD_W_5_metal7=(( ( ( bondpad_metal7_filled size -25.0 ) size 20.0 ) growEdges
+;  5.0 ) outside ( ( bondpad_metal7_filled andnot ( bondpad_metal7_slot or ( bondpad_metal7_slot
+;  drcSep <= 10.0 ) ) ) drcWidth == 5.0 ))
+L16058=geomSize(bondpad_metal7_filled -1.0)
+L10869=geomSize(L16058 -24.0)
+L66181=geomSize(L10869 1.0)
+L5615=geomSize(L66181 19.0)
+L24363=geomSize(L5615 5.0 edges)
+L52187=drc(bondpad_metal7_slot 0<sep<=10.0 opposite parallel)
+L83586=geomOr(L52187 bondpad_metal7_slot)
+L20526=geomAndNot(bondpad_metal7_filled L83586)
+L2261=drc(L20526 width==5.0 opposite parallel)
+rule_BONDPAD_W_5_metal7=geomOutside(L24363 L2261)
+
+; rule_BONDPAD_W_5_metal8=(( ( ( bondpad_metal8_filled size -25.0 ) size 20.0 ) growEdges
+;  5.0 ) outside ( ( bondpad_metal8_filled andnot ( bondpad_metal8_slot or ( bondpad_metal8_slot
+;  drcSep <= 10.0 ) ) ) drcWidth == 5.0 ))
+L57433=geomSize(bondpad_metal8_filled -1.0)
+L52244=geomSize(L57433 -24.0)
+L75070=geomSize(L52244 1.0)
+L85496=geomSize(L75070 19.0)
+L3964=geomSize(L85496 5.0 edges)
+L49180=drc(bondpad_metal8_slot 0<sep<=10.0 opposite parallel)
+L18418=geomOr(L49180 bondpad_metal8_slot)
+L11829=geomAndNot(bondpad_metal8_filled L18418)
+L12231=drc(L11829 width==5.0 opposite parallel)
+rule_BONDPAD_W_5_metal8=geomOutside(L3964 L12231)
+
+; rule_VIA1_X_2=(( ( Metal1 and Metal2 ) enclose via1_x_2 ) outside ( ( ( via1_x_2
+;  size 0.15 ) and ( Metal1 and Metal2 ) ) enclose > 3 via1_x_2 ) outside ( ( ( via1_x_2
+;  size 0.30 ) and ( Metal1 and Metal2 ) ) enclose > 8 via1_x_2 ))
+L38712=geomAnd(Metal1 Metal2)
+L8073=geomEnclose(L38712 via1_x_2)
+L62796=geomSize(via1_x_2 0.15)
+L3292=geomAnd(L38712 L62796)
+L84071=geomEnclose(L3292 via1_x_2 keep>3)
+L71267=geomOutside(L8073 L84071)
+L62739=geomSize(via1_x_2 0.30)
+L3109=geomAnd(L38712 L62739)
+L29299=geomEnclose(L3109 via1_x_2 keep>8)
+rule_VIA1_X_2=geomOutside(L71267 L29299)
+
+; rule_VIA2_X_2=(( ( Metal2 and Metal3 ) enclose via2_x_2 ) outside ( ( ( via2_x_2
+;  size 0.15 ) and ( Metal2 and Metal3 ) ) enclose > 3 via2_x_2 ) outside ( ( ( via2_x_2
+;  size 0.30 ) and ( Metal2 and Metal3 ) ) enclose > 8 via2_x_2 ))
+L18588=geomEnclose(L18248 via2_x_2)
+L90995=geomSize(via2_x_2 0.15)
+L49606=geomAnd(L18248 L90995)
+L66271=geomEnclose(L49606 via2_x_2 keep>3)
+L89859=geomOutside(L18588 L66271)
+L91052=geomSize(via2_x_2 0.30)
+L70621=geomAnd(L18248 L91052)
+L66389=geomEnclose(L70621 via2_x_2 keep>8)
+rule_VIA2_X_2=geomOutside(L89859 L66389)
+
+; rule_VIA3_X_2=(( ( Metal3 and Metal4 ) enclose via3_x_2 ) outside ( ( ( via3_x_2
+;  size 0.15 ) and ( Metal3 and Metal4 ) ) enclose > 3 via3_x_2 ) outside ( ( ( via3_x_2
+;  size 0.30 ) and ( Metal3 and Metal4 ) ) enclose > 8 via3_x_2 ))
+L92088=geomAnd(Metal3 Metal4)
+L45131=geomEnclose(L92088 via3_x_2)
+L77490=geomSize(via3_x_2 0.15)
+L64637=geomAnd(L77490 L92088)
+L11835=geomEnclose(L64637 via3_x_2 keep>3)
+L17874=geomOutside(L45131 L11835)
+L77547=geomSize(via3_x_2 0.30)
+L97334=geomAnd(L77547 L92088)
+L31676=geomEnclose(L97334 via3_x_2 keep>8)
+rule_VIA3_X_2=geomOutside(L17874 L31676)
+
+; rule_VIA4_X_2=(( ( Metal4 and Metal5 ) enclose via4_x_2 ) outside ( ( ( via4_x_2
+;  size 0.15 ) and ( Metal4 and Metal5 ) ) enclose > 3 via4_x_2 ) outside ( ( ( via4_x_2
+;  size 0.30 ) and ( Metal4 and Metal5 ) ) enclose > 8 via4_x_2 ))
+L2424=geomAnd(Metal4 Metal5)
+L91763=geomEnclose(L2424 via4_x_2)
+L63985=geomSize(via4_x_2 0.15)
+L2406=geomAnd(L2424 L63985)
+L1562=geomEnclose(L2406 via4_x_2 keep>3)
+L98807=geomOutside(L91763 L1562)
+L64042=geomSize(via4_x_2 0.30)
+L23421=geomAnd(L2424 L64042)
+L65761=geomEnclose(L23421 via4_x_2 keep>8)
+rule_VIA4_X_2=geomOutside(L98807 L65761)
+
+; rule_VIA5_X_2=(( ( Metal5 and Metal6 ) enclose via5_x_2 ) outside ( ( ( via5_x_2
+;  size 0.15 ) and ( Metal5 and Metal6 ) ) enclose > 3 via5_x_2 ) outside ( ( ( via5_x_2
+;  size 0.30 ) and ( Metal5 and Metal6 ) ) enclose > 8 via5_x_2 ))
+L54536=geomAnd(Metal5 Metal6)
+L74091=geomEnclose(L54536 via5_x_2)
+L50480=geomSize(via5_x_2 0.15)
+L47841=geomAnd(L50480 L54536)
+L17351=geomEnclose(L47841 via5_x_2 keep>3)
+L12707=geomOutside(L74091 L17351)
+L50537=geomSize(via5_x_2 0.30)
+L53166=geomAnd(L50537 L54536)
+L35999=geomEnclose(L53166 via5_x_2 keep>8)
+rule_VIA5_X_2=geomOutside(L12707 L35999)
+
+; rule_VIA6_X_2=(( ( Metal6 and Metal7 ) enclose via6_x_2 ) outside ( ( ( via6_x_2
+;  size 0.15 ) and ( Metal6 and Metal7 ) ) enclose > 3 via6_x_2 ) outside ( ( ( via6_x_2
+;  size 0.30 ) and ( Metal6 and Metal7 ) ) enclose > 8 via6_x_2 ))
+L55800=geomAnd(Metal6 Metal7)
+L62391=geomEnclose(L55800 via6_x_2)
+L36975=geomSize(via6_x_2 0.15)
+L17051=geomAnd(L36975 L55800)
+L59980=geomEnclose(L17051 via6_x_2 keep>3)
+L15581=geomOutside(L62391 L59980)
+L37032=geomSize(via6_x_2 0.30)
+L93212=geomAnd(L37032 L55800)
+L40196=geomEnclose(L93212 via6_x_2 keep>8)
+rule_VIA6_X_2=geomOutside(L15581 L40196)
+
+; rule_VIA1_X_1=(( ( Metal1 and Metal2 ) enclose via1_x_1 ) outside ( ( ( via1_x_1
+;  size 0.15 ) and ( Metal1 and Metal2 ) ) enclose > 1 via1_x_1 ) outside ( ( ( via1_x_1
+;  size 0.30 ) and ( Metal1 and Metal2 ) ) enclose > 3 via1_x_1 )) andnot rule_VIA1_X_2
+L8074=geomEnclose(L38712 via1_x_1)
+L91947=geomSize(via1_x_1 0.15)
+L45832=geomAnd(L38712 L91947)
+L70080=geomEnclose(L45832 via1_x_1 keep>1)
+L96413=geomOutside(L8074 L70080)
+L91890=geomSize(via1_x_1 0.30)
+L45019=geomAnd(L38712 L91890)
+L53699=geomEnclose(L45019 via1_x_1 keep>3)
+L53828=geomOutside(L96413 L53699)
+rule_VIA1_X_1=geomAndNot(L53828 rule_VIA1_X_2)
+
+; rule_VIA2_X_1=(( ( Metal2 and Metal3 ) enclose via2_x_1 ) outside ( ( ( via2_x_1
+;  size 0.15 ) and ( Metal2 and Metal3 ) ) enclose > 1 via2_x_1 ) outside ( ( ( via2_x_1
+;  size 0.30 ) and ( Metal2 and Metal3 ) ) enclose > 3 via2_x_1 )) andnot rule_VIA2_X_2
+L18587=geomEnclose(L18248 via2_x_1)
+L61844=geomSize(via2_x_1 0.15)
+L7717=geomAnd(L18248 L61844)
+L38181=geomEnclose(L7717 via2_x_1 keep>1)
+L67613=geomOutside(L18587 L38181)
+L61901=geomSize(via2_x_1 0.30)
+L8551=geomAnd(L18248 L61901)
+L51226=geomEnclose(L8551 via2_x_1 keep>3)
+L36344=geomOutside(L67613 L51226)
+rule_VIA2_X_1=geomAndNot(L36344 rule_VIA2_X_2)
+
+; rule_VIA3_X_1=(( ( Metal3 and Metal4 ) enclose via3_x_1 ) outside ( ( ( via3_x_1
+;  size 0.15 ) and ( Metal3 and Metal4 ) ) enclose > 1 via3_x_1 ) outside ( ( ( via3_x_1
+;  size 0.30 ) and ( Metal3 and Metal4 ) ) enclose > 3 via3_x_1 )) andnot rule_VIA3_X_2
+L45132=geomEnclose(L92088 via3_x_1)
+L48339=geomSize(via3_x_1 0.15)
+L32665=geomAnd(L48339 L92088)
+L4930=geomEnclose(L32665 via3_x_1 keep>1)
+L84908=geomOutside(L45132 L4930)
+L48396=geomSize(via3_x_1 0.30)
+L44066=geomAnd(L48396 L92088)
+L42854=geomEnclose(L44066 via3_x_1 keep>3)
+L59033=geomOutside(L84908 L42854)
+rule_VIA3_X_1=geomAndNot(L59033 rule_VIA3_X_2)
+
+; rule_VIA4_X_1=(( ( Metal4 and Metal5 ) enclose via4_x_1 ) outside ( ( ( via4_x_1
+;  size 0.15 ) and ( Metal4 and Metal5 ) ) enclose > 1 via4_x_1 ) outside ( ( ( via4_x_1
+;  size 0.30 ) and ( Metal4 and Metal5 ) ) enclose > 3 via4_x_1 )) andnot rule_VIA4_X_2
+L91762=geomEnclose(L2424 via4_x_1)
+L34834=geomSize(via4_x_1 0.15)
+L60517=geomAnd(L2424 L34834)
+L96440=geomEnclose(L60517 via4_x_1 keep>1)
+L31171=geomOutside(L91762 L96440)
+L34891=geomSize(via4_x_1 0.30)
+L60700=geomAnd(L2424 L34891)
+L80442=geomEnclose(L60700 via4_x_1 keep>3)
+L53786=geomOutside(L31171 L80442)
+rule_VIA4_X_1=geomAndNot(L53786 rule_VIA4_X_2)
+
+; rule_VIA5_X_1=(( ( Metal5 and Metal6 ) enclose via5_x_1 ) outside ( ( ( via5_x_1
+;  size 0.15 ) and ( Metal5 and Metal6 ) ) enclose > 1 via5_x_1 ) outside ( ( ( via5_x_1
+;  size 0.30 ) and ( Metal5 and Metal6 ) ) enclose > 3 via5_x_1 )) andnot rule_VIA5_X_2
+L74092=geomEnclose(L54536 via5_x_1)
+L21329=geomSize(via5_x_1 0.15)
+L17835=geomAnd(L21329 L54536)
+L62342=geomEnclose(L17835 via5_x_1 keep>1)
+L75634=geomOutside(L74092 L62342)
+L21386=geomSize(via5_x_1 0.30)
+L6434=geomAnd(L21386 L54536)
+L39709=geomEnclose(L6434 via5_x_1 keep>3)
+L46534=geomOutside(L75634 L39709)
+rule_VIA5_X_1=geomAndNot(L46534 rule_VIA5_X_2)
+
+; rule_VIA6_X_1=(( ( Metal6 and Metal7 ) enclose via6_x_1 ) outside ( ( ( via6_x_1
+;  size 0.15 ) and ( Metal6 and Metal7 ) ) enclose > 1 via6_x_1 ) outside ( ( ( via6_x_1
+;  size 0.30 ) and ( Metal6 and Metal7 ) ) enclose > 3 via6_x_1 )) andnot rule_VIA6_X_2
+L62390=geomEnclose(L55800 via6_x_1)
+L7824=geomSize(via6_x_1 0.15)
+L86972=geomAnd(L55800 L7824)
+L41787=geomEnclose(L86972 via6_x_1 keep>1)
+L89680=geomOutside(L62390 L41787)
+L7881=geomSize(via6_x_1 0.30)
+L86789=geomAnd(L55800 L7881)
+L25793=geomEnclose(L86789 via6_x_1 keep>3)
+L95770=geomOutside(L89680 L25793)
+rule_VIA6_X_1=geomAndNot(L95770 rule_VIA6_X_2)
+
+; rule_BONDPAD_B_1_m1=( (( ( ( ( ( fill Metal1 ) enclose Bondpad ) downUp 25.0 ) and
+;  ( fill Metal1 ) ) enclose Bondpad )) andnot ( (( ( ( ( ( fill Metal1 ) enclose Bondpad
+;  ) downUp 25.0 ) and ( fill Metal1 ) ) enclose Bondpad )) drcSep <= 40.0 ) ) vertex
+;  < 8
+L75346=drc(bondpad_metal1_filled 0<sep<=40.0 opposite parallel)
+L78279=geomAndNot(bondpad_metal1_filled L75346)
+rule_BONDPAD_B_1_m1=geomGetVertex(L78279 keep<8)
+
+; rule_BONDPAD_B_1_m2=( (( ( ( ( ( fill Metal2 ) enclose Bondpad ) downUp 25.0 ) and
+;  ( fill Metal2 ) ) enclose Bondpad )) andnot ( (( ( ( ( ( fill Metal2 ) enclose Bondpad
+;  ) downUp 25.0 ) and ( fill Metal2 ) ) enclose Bondpad )) drcSep <= 40.0 ) ) vertex
+;  < 8
+L76463=drc(bondpad_metal2_filled 0<sep<=40.0 opposite parallel)
+L6397=geomAndNot(bondpad_metal2_filled L76463)
+rule_BONDPAD_B_1_m2=geomGetVertex(L6397 keep<8)
+
+; rule_BONDPAD_B_1_m3=( (( ( ( ( ( fill Metal3 ) enclose Bondpad ) downUp 25.0 ) and
+;  ( fill Metal3 ) ) enclose Bondpad )) andnot ( (( ( ( ( ( fill Metal3 ) enclose Bondpad
+;  ) downUp 25.0 ) and ( fill Metal3 ) ) enclose Bondpad )) drcSep <= 40.0 ) ) vertex
+;  < 8
+L28272=drc(bondpad_metal3_filled 0<sep<=40.0 opposite parallel)
+L85497=geomAndNot(bondpad_metal3_filled L28272)
+rule_BONDPAD_B_1_m3=geomGetVertex(L85497 keep<8)
+
+; rule_BONDPAD_B_1_m4=( (( ( ( ( ( fill Metal4 ) enclose Bondpad ) downUp 25.0 ) and
+;  ( fill Metal4 ) ) enclose Bondpad )) andnot ( (( ( ( ( ( fill Metal4 ) enclose Bondpad
+;  ) downUp 25.0 ) and ( fill Metal4 ) ) enclose Bondpad )) drcSep <= 40.0 ) ) vertex
+;  < 8
+L87215=drc(bondpad_metal4_filled 0<sep<=40.0 opposite parallel)
+L48458=geomAndNot(bondpad_metal4_filled L87215)
+rule_BONDPAD_B_1_m4=geomGetVertex(L48458 keep<8)
+
+; rule_BONDPAD_B_1_m5=( (( ( ( ( ( fill Metal5 ) enclose Bondpad ) downUp 25.0 ) and
+;  ( fill Metal5 ) ) enclose Bondpad )) andnot ( (( ( ( ( ( fill Metal5 ) enclose Bondpad
+;  ) downUp 25.0 ) and ( fill Metal5 ) ) enclose Bondpad )) drcSep <= 40.0 ) ) vertex
+;  < 8
+L64594=drc(bondpad_metal5_filled 0<sep<=40.0 opposite parallel)
+L314=geomAndNot(bondpad_metal5_filled L64594)
+rule_BONDPAD_B_1_m5=geomGetVertex(L314 keep<8)
+
+; rule_BONDPAD_B_1_m6=( (( ( ( ( ( fill Metal6 ) enclose Bondpad ) downUp 25.0 ) and
+;  ( fill Metal6 ) ) enclose Bondpad )) andnot ( (( ( ( ( ( fill Metal6 ) enclose Bondpad
+;  ) downUp 25.0 ) and ( fill Metal6 ) ) enclose Bondpad )) drcSep <= 40.0 ) ) vertex
+;  < 8
+L50893=drc(bondpad_metal6_filled 0<sep<=40.0 opposite parallel)
+L11692=geomAndNot(bondpad_metal6_filled L50893)
+rule_BONDPAD_B_1_m6=geomGetVertex(L11692 keep<8)
+
+; rule_BONDPAD_B_1_m7=( (( ( ( ( ( fill Metal7 ) enclose Bondpad ) downUp 25.0 ) and
+;  ( fill Metal7 ) ) enclose Bondpad )) andnot ( (( ( ( ( ( fill Metal7 ) enclose Bondpad
+;  ) downUp 25.0 ) and ( fill Metal7 ) ) enclose Bondpad )) drcSep <= 40.0 ) ) vertex
+;  < 8
+L99084=drc(bondpad_metal7_filled 0<sep<=40.0 opposite parallel)
+L17986=geomAndNot(bondpad_metal7_filled L99084)
+rule_BONDPAD_B_1_m7=geomGetVertex(L17986 keep<8)
+
+; rule_BONDPAD_B_1_m8=( (( ( ( ( ( fill Metal8 ) enclose Bondpad ) downUp 25.0 ) and
+;  ( fill Metal8 ) ) enclose Bondpad )) andnot ( (( ( ( ( ( fill Metal8 ) enclose Bondpad
+;  ) downUp 25.0 ) and ( fill Metal8 ) ) enclose Bondpad )) drcSep <= 40.0 ) ) vertex
+;  < 8
+L52725=drc(bondpad_metal8_filled 0<sep<=40.0 opposite parallel)
+L93580=geomAndNot(bondpad_metal8_filled L52725)
+rule_BONDPAD_B_1_m8=geomGetVertex(L93580 keep<8)
+
+; rule_BONDPAD_B_1_m9=( (( ( ( ( ( fill Metal9 ) enclose Bondpad ) downUp 25.0 ) and
+;  ( fill Metal9 ) ) enclose Bondpad )) andnot ( (( ( ( ( ( fill Metal9 ) enclose Bondpad
+;  ) downUp 25.0 ) and ( fill Metal9 ) ) enclose Bondpad )) drcSep <= 40.0 ) ) vertex
+;  < 8
+L62762=drc(bondpad_metal9_filled 0<sep<=40.0 opposite parallel)
+L81871=geomAndNot(bondpad_metal9_filled L62762)
+rule_BONDPAD_B_1_m9=geomGetVertex(L81871 keep<8)
+
+geomConnect(
+    via(bp_tap Bondpad metal9_conn)
+    via(Metal9_v Metal9_p metal9_conn)
+    via(Via8 metal9_conn metal8_conn)
+    via(Metal8_v Metal8_p metal8_conn)
+    via(Via7 metal8_conn metal7_conn)
+    via(Metal7_v Metal7_p metal7_conn)
+    via(Via6 metal7_conn metal6_conn)
+    via(Metal6_v Metal6_p metal6_conn)
+    via(Via5 metal6_conn metal5_conn)
+    via(Metal5_v Metal5_p metal5_conn)
+    via(Via4 metal5_conn metal4_conn)
+    via(Metal4_v Metal4_p metal4_conn)
+    via(Via3 metal4_conn metal3_conn)
+    via(Metal3_v Metal3_p metal3_conn)
+    via(via2_cap metal3_conn CapMetal)
+    via(via2_out_capInd metal3_conn metal2_conn)
+    via(Metal2_v Metal2_p metal2_conn)
+    via(Via1 metal2_conn metal1_conn)
+    via(ind_term1_tap metal2_conn ind_term1)
+    via(ind_term2_tap metal2_conn ind_term2)
+    via(Metal1_v Metal1_p metal1_conn)
+    via(cont_poly metal1_conn poly_conn)
+    via(cont_pdiff metal1_conn pdiff_conn)
+    via(cont_ndiff metal1_conn ndiff_conn)
+    via(cont_emit metal1_conn npn_emit)
+    via(cont_base metal1_conn npn_base)
+    via(cont_coll metal1_conn npn_coll)
+    label(Metal9_p_text Metal9_p)
+    label(Metal9_p_pintext Metal9_p)
+    label(Metal9_p_text metal9_conn)
+    label(Metal9_p_pintext metal9_conn)
+    label(Metal8_p_text Metal8_p)
+    label(Metal8_p_pintext Metal8_p)
+    label(Metal8_p_text metal8_conn)
+    label(Metal8_p_pintext metal8_conn)
+    label(Metal7_p_text Metal7_p)
+    label(Metal7_p_pintext Metal7_p)
+    label(Metal7_p_text metal7_conn)
+    label(Metal7_p_pintext metal7_conn)
+    label(Metal6_p_text Metal6_p)
+    label(Metal6_p_pintext Metal6_p)
+    label(Metal6_p_text metal6_conn)
+    label(Metal6_p_pintext metal6_conn)
+    label(Metal5_p_text Metal5_p)
+    label(Metal5_p_pintext Metal5_p)
+    label(Metal5_p_text metal5_conn)
+    label(Metal5_p_pintext metal5_conn)
+    label(Metal4_p_text Metal4_p)
+    label(Metal4_p_pintext Metal4_p)
+    label(Metal4_p_text metal4_conn)
+    label(Metal4_p_pintext metal4_conn)
+    label(Metal3_p_text Metal3_p)
+    label(Metal3_p_pintext Metal3_p)
+    label(Metal3_p_text metal3_conn)
+    label(Metal3_p_pintext metal3_conn)
+    label(Metal2_p_text Metal2_p)
+    label(Metal2_p_pintext Metal2_p)
+    label(Metal2_p_text metal2_conn)
+    label(Metal2_p_pintext metal2_conn)
+    label(Metal1_p_text Metal1_p)
+    label(Metal1_p_pintext Metal1_p)
+    label(Metal1_p_text metal1_conn)
+    label(Metal1_p_pintext metal1_conn)
+)
+geomStamp(ptap pdiff_conn error)
+geomStamp(psubstrate ptap error)
+geomStamp(ntap ndiff_conn error)
+geomStamp(nwell_conn ntap error)
+geomStamp(nb_tap nwell_conn error)
+geomStamp(Nburied nb_tap error)
+
+
+; nmos_io_esd=(ndiff_conn and ESDdummy) buttOnly (Poly buttOnly (ndiff_conn connect
+;  Bondpad))
+L94243=geomAnd(ESDdummy ndiff_conn)
+L80382=geomNodeRelate(ndiff_conn Bondpad conn)
+geomStamp(L80382 ndiff_conn)
+L73764=geomButtOnly(Poly L80382)
+nmos_io_esd=geomButtOnly(L94243 L73764)
+
+; pmos_io_esd=(pdiff_conn and ESDdummy) buttOnly (Poly buttOnly (pdiff_conn connect
+;  Bondpad))
+L21253=geomAnd(ESDdummy pdiff_conn)
+L64324=geomNodeRelate(pdiff_conn Bondpad conn)
+geomStamp(L64324 pdiff_conn)
+L1826=geomButtOnly(Poly L64324)
+pmos_io_esd=geomButtOnly(L21253 L1826)
+
+; rule_ESD_4_nmos=(nsd_esd buttOnly == 1 Poly) andnot ((ndiff_conn connect Bondpad)
+;  or (ndiff_conn connect psubstrate))
+L78152=geomButtOnly(nsd_esd Poly keep==1)
+L10595=geomNodeRelate(ndiff_conn psubstrate conn)
+geomStamp(L10595 ndiff_conn)
+L87558=geomOr(L10595 L80382)
+rule_ESD_4_nmos=geomAndNot(L78152 L87558)
+
+; rule_ESD_4_pmos=(psd_esd buttOnly == 1 Poly) andnot ((pdiff_conn connect Bondpad)
+;  or (pdiff_conn connect nwell_conn ))
+L90202=geomButtOnly(psd_esd Poly keep==1)
+L65219=geomNodeRelate(pdiff_conn nwell_conn conn)
+geomStamp(L65219 pdiff_conn)
+L40217=geomOr(L64324 L65219)
+rule_ESD_4_pmos=geomAndNot(L90202 L40217)
+
+; rule_ESD_8_nmos=((nsd_esd buttOnly == 2 Poly) andnot ((ndiff_conn connect Bondpad)
+;  or (ndiff_conn connect psubstrate))) outside SiProt
+L78153=geomButtOnly(nsd_esd Poly keep==2)
+L40153=geomAndNot(L78153 L87558)
+rule_ESD_8_nmos=geomOutside(L40153 SiProt)
+
+; rule_ESD_8_pmos=((psd_esd buttOnly == 2 Poly) andnot ((pdiff_conn connect Bondpad)
+;  or (pdiff_conn connect psubstrate))) outside SiProt
+L90201=geomButtOnly(psd_esd Poly keep==2)
+L12421=geomNodeRelate(pdiff_conn psubstrate conn)
+geomStamp(L12421 pdiff_conn)
+L42888=geomOr(L12421 L64324)
+L65050=geomAndNot(L90201 L42888)
+rule_ESD_8_pmos=geomOutside(L65050 SiProt)
+
+L83612=drc(Nburied width<3.2)
+errorLayer(L83612 "NBL.W.1: Nburied width must be >= 3.2 um")
+
+L91445=drc(Nburied Nwell enc<0.4)
+errorLayer(L91445 "NBL.E.1: Nburied to Nwell enclosure must be >= 0.4 um")
+
+L3284=drc(Nburied sep<5.0 diffNet)
+errorLayer(L3284 "NBL.SP.1: Nburied to Nburied spacing must be >= 5.0 um")
+
+L84532=geomStraddle(Nburied Oxide)
+L23988=geomStraddle(Oxide Nburied)
+L2070=geomAnd(L23988 L84532)
+errorLayer(L2070 "NBL.SE.2: Nburied to Oxide spacing must be >= 2.2 um")
+L22228=drc(Nburied Oxide sep<2.2)
+errorLayer(L22228 "NBL.SE.2: Nburied to Oxide spacing must be >= 2.2 um")
+
+L31949=drc(Nburied Nwell sep<4.4)
+errorLayer(L31949
+    "NBL.SE.1: Nburied to non-related Nwell spacing must be >= 4.4 um")
+
+L74071=geomAnd(Nburied Pimp)
+L86534=geomAnd(L74071 Oxide)
+L99790=geomAnd(L90545 Nburied)
+L2314=geomStraddle(L86534 L99790)
+L74105=geomAndNot(L2314 L99790)
+errorLayer(L74105
+    "NBL.SE.3: Nwell ring (on Nburied) to P+ Oxide spacing must be >= 0.5 um")
+L30045=drc(L99790 L86534 enc<0.5)
+errorLayer(L30045
+    "NBL.SE.3: Nwell ring (on Nburied) to P+ Oxide spacing must be >= 0.5 um")
+
+L27029=geomAnd(Nburied Nimp)
+L98901=geomAnd(L27029 Oxide)
+L25881=geomStraddle(L98901 L99790)
+L4295=geomAndNot(L25881 L99790)
+errorLayer(L4295
+    "NBL.SE.4: Nwell ring (on Nburied) to N+ Oxide spacing must be >= 0.4 um")
+L43749=drc(L99790 L98901 enc<0.4)
+errorLayer(L43749
+    "NBL.SE.4: Nwell ring (on Nburied) to N+ Oxide spacing must be >= 0.4 um")
+
+errorLayer(rule_NBL_X_1 "NBL.X.1: Nburied must have an Nwell isolation ring")
+
+L93994=drc(nwell_conn sep<0.6 sameNet)
+errorLayer(L93994
+    "NW.SP.1: Nwell to Nwell spacing (same potential) must be >= 0.6 um")
+L59839=drc(nwell_conn notch<0.6 )
+errorLayer(L59839
+    "NW.SP.1: Nwell to Nwell spacing (same potential) must be >= 0.6 um")
+
+L98679=geomStraddle(nwell_conn nwellres)
+L9823=geomStraddle(nwellres nwell_conn)
+L94629=geomAnd(L9823 L98679)
+errorLayer(L94629
+    "NW.SP.2: Nwell to Nwell spacing (diferent potential) must be >= 1.2 um")
+L83548=drc(nwell_conn nwellres 0<sep<1.2)
+errorLayer(L83548
+    "NW.SP.2: Nwell to Nwell spacing (diferent potential) must be >= 1.2 um")
+
+L50989=drc(nwellres sepNotch<1.2)
+errorLayer(L50989
+    "NW.SP.2: Nwell to Nwell spacing (diferent potential) must be >= 1.2 um")
+
+L21630=drc(Nwell width<0.6)
+errorLayer(L21630 "NW.W.1: Nwell width must be >= 0.6 um")
+
+L73112=drc(nwell_conn sep<1.2 diffNet)
+errorLayer(L73112
+    "NW.SP.2: Nwell to Nwell spacing (diferent potential) must be >= 1.2 um")
+
+L32021=drc(Nwell nactive sep<0.3)
+errorLayer(L32021 "NW.SE.1: Nwell to Oxide spacing must be >= 0.3 um")
+
+L62778=geomStraddle(Nwell pactive)
+L30714=geomStraddle(pactive Nwell)
+L77609=geomAnd(L30714 L62778)
+errorLayer(L77609 "NW.SE.2: Nwell to P+ Oxide spacing must be >= 0.3 um")
+L36333=drc(Nwell pactive sep<0.3)
+errorLayer(L36333 "NW.SE.2: Nwell to P+ Oxide spacing must be >= 0.3 um")
+
+L76283=geomAnd(Nimp Oxide_thk)
+L82759=geomAnd(L76283 Oxide)
+L41357=geomStraddle(Nwell L82759)
+L56501=geomStraddle(L82759 Nwell)
+L11463=geomAnd(L41357 L56501)
+errorLayer(L11463 "NW.SE.3: Nwell to N+ 2.5V Oxide spacing must be >= 0.5 um")
+L29596=drc(Nwell L82759 sep<0.5)
+errorLayer(L29596 "NW.SE.3: Nwell to N+ 2.5V Oxide spacing must be >= 0.5 um")
+
+L53593=geomAnd(Oxide_thk Pimp)
+L56394=geomAnd(L53593 Oxide)
+L32513=geomStraddle(Nwell L56394)
+L23881=geomStraddle(L56394 Nwell)
+L38094=geomAnd(L23881 L32513)
+errorLayer(L38094 "NW.SE.4: Nwell to P+ 2.5V Oxide spacing must be >= 0.5 um")
+L56=drc(Nwell L56394 sep<0.5)
+errorLayer(L56 "NW.SE.4: Nwell to P+ 2.5V Oxide spacing must be >= 0.5 um")
+
+L33070=geomAndNot(Nimp nwell_in_od_res)
+L90910=geomAnd(L33070 Oxide)
+L7696=geomAndNot(Nwell nwell_in_od_res)
+L38040=drc(L7696 L90910 enc<0.12)
+errorLayer(L38040 "NW.E.1: Nwell to N+ Oxide enclosure must be >= 0.12 um")
+
+L14220=geomAndNot(L30714 Nwell)
+errorLayer(L14220 "NW.E.2: Nwell to P+ Oxide enclosure must be >= 0.12 um")
+L79719=drc(Nwell pactive enc<0.12)
+errorLayer(L79719 "NW.E.2: Nwell to P+ Oxide enclosure must be >= 0.12 um")
+
+L76140=geomAndNot(L56501 Nwell)
+errorLayer(L76140 "NW.E.3: Nwell to N+ 2.5V Oxide enclosure must be >= 0.7 um")
+L85348=drc(Nwell L82759 enc<0.7 shielded)
+errorLayer(L85348 "NW.E.3: Nwell to N+ 2.5V Oxide enclosure must be >= 0.7 um")
+
+L11847=geomAndNot(L23881 Nwell)
+errorLayer(L11847 "NW.E.4: Nwell to P+ 2.5V Oxide enclosure must be >= 0.7 um")
+L39856=drc(Nwell L56394 enc<0.7 shielded)
+errorLayer(L39856 "NW.E.4: Nwell to P+ 2.5V Oxide enclosure must be >= 0.7 um")
+
+L81045=drc(SiProt nwell_in_od_res sep<0.32)
+errorLayer(L81045
+    "NWR.SE.1: Nwell (in resistor) to SiProt spacing must be >= 0.32 um")
+
+L54878=geomStraddle(nwell_in_od_res Oxide)
+L26198=geomAndNot(L54878 Oxide)
+errorLayer(L26198
+    "NWR.E.1: Oxide to Nwell (in resistor) enclosure must be >= 1.2 um")
+L9221=drc(Oxide nwell_in_od_res enc<1.2)
+errorLayer(L9221
+    "NWR.E.1: Oxide to Nwell (in resistor) enclosure must be >= 1.2 um")
+
+L75719=geomStraddle(Cont nwell_in_od_res)
+L52087=geomAndNot(L75719 nwell_in_od_res)
+errorLayer(L52087
+    "NWR.E.2: Nwell (in resistor) to Cont enclosure must be >= 0.32 um")
+L26142=drc(nwell_in_od_res Cont enc<0.32)
+errorLayer(L26142
+    "NWR.E.2: Nwell (in resistor) to Cont enclosure must be >= 0.32 um")
+
+L94333=drc(Nimp siprot_in_nwell_res ovlp<0.45)
+errorLayer(L94333 "NWR.O.1: SiProt to Nimp overlap must be >= 0.45 um")
+
+L42992=geomAnd(Oxide_thk nwell_in_od_res)
+errorLayer(L42992 "NWR.X.1: Thick Oxide is NOT allowed over Nwell resistor")
+
+L49630=drc(Oxide width<0.1)
+errorLayer(L49630 "OXIDE.W.1: Oxide width must be >= 0.1 um")
+
+L62712=geomAnd(Nimp Poly)
+L75280=geomAndNot(L62712 Oxide_thk)
+L58069=geomGetEdge(Oxide inside L75280)
+L57483=drc(L58069 width<0.12)
+errorLayer(L57483 "OXIDE.W.2.1.1: 1.2V N-channel gate width must be >= 0.12 um")
+
+L19348=geomAnd(L76283 Poly)
+L96558=geomGetEdge(Oxide inside L19348)
+L83789=drc(L96558 width<0.15)
+errorLayer(L83789 "OXIDE.W.2.1.2: 2.5V N-channel gate width must be >= 0.15 um")
+
+L89722=geomAnd(Pimp Poly)
+L35306=geomAndNot(L89722 Oxide_thk)
+L36246=geomGetEdge(Oxide inside L35306)
+L30964=drc(L36246 width<0.12)
+errorLayer(L30964 "OXIDE.W.2.2.1: 1.2V P-channel gate width must be >= 0.12 um")
+
+L29169=geomAnd(L53593 Poly)
+L25036=geomGetEdge(Oxide inside L29169)
+L15912=drc(L25036 width<0.15)
+errorLayer(L15912 "OXIDE.W.2.2.2: 2.5V P-channel gate width must be >= 0.15 um")
+
+L88346=geomGetNon90(Oxide)
+L33585=drc(L88346 width<0.13)
+errorLayer(L33585 "OXIDE.W.3: Oxide (45 degree) width must be >= 0.13 um")
+
+L53924=drc(nactive sepNotch<0.15)
+errorLayer(L53924 "OXIDE.SP.1: N+ Oxide to N+ Oxide spacing must be >= 0.15 um")
+
+L58654=drc(pactive sepNotch<0.15)
+errorLayer(L58654 "OXIDE.SP.2: P+ Oxide to P+ Oxide spacing must be >= 0.15 um")
+
+L74825=geomGetEdge(Oxide inside Nimp)
+L27783=geomGetEdge(Oxide inside Pimp)
+L68103=drc(L74825 L27783 0<sep<0.15)
+errorLayer(L68103 "OXIDE.SP.3: P+ Oxide to P+ Oxide spacing must be >= 0.15 um")
+
+L26876=drc(Oxide Oxide_thk sep<0.28 shielded)
+errorLayer(L26876 "OXIDE.SE.1: Oxide to Oxide_thk spacing must be >= 0.28 um")
+
+L78709=drc(Oxide L88346 0<sep<0.18)
+errorLayer(L78709
+    "OXIDE.SP.4: Oxide bent 45 degree to Oxide spacing must be >= 0.18 um")
+
+L21656=drc(Oxide area<0.06)
+errorLayer(L21656 "OXIDE.A.1: Oxide area must be >= 0.06 um")
+
+L49561=geomHoles(Oxide)
+L93401=geomAndNot(L49561 Oxide)
+L55099=drc(L93401 area<0.10)
+errorLayer(L55099 "OXIDE.EA.1: Oxide enclosed area must be >= 0.10 um")
+
+errorLayer(rule_OXIDE_L_1_L_2
+    "OXIDE.L.1_OXIDE.L.2: Maximum Oxide length between two contacts (when the Oxide width is <= 0.18um) must be <= 22.0um and Maximum Oxide length between one contact and the end of the Oxide line (when the Oxide width is <= 0.18um) must be <= 11.0um")
+
+L98778=geomOr(Nimp Nzvt)
+L89277=geomOr(L98778 Pimp)
+L87750=geomOr(L89277 SiProt)
+L42637=geomAndNot(Oxide L87750)
+errorLayer(L42637 "OXIDE.X.1: Oxide must be covered by Nimp or Pimp or Nzvt")
+
+L76932=geomAnd(Cont oxide_in_res)
+L73555=geomGetEdge(SiProt inside oxide_in_res)
+L48223=geomSize(L76932 -0.005 edges)
+L82879=geomSize(L73555 -0.005 edges)
+L32421=geomAnd(L48223 L82879)
+errorLayer(L32421
+    "OXIDER.SE.1: SiProt to Oxide resistor Cont spacing must be >= 0.25 um")
+L86263=drc(L76932 L73555 sep<0.25)
+errorLayer(L86263
+    "OXIDER.SE.1: SiProt to Oxide resistor Cont spacing must be >= 0.25 um")
+
+L43770=geomStraddle(Nimp oxide_in_res)
+L69938=geomStraddle(oxide_in_res Nimp)
+L57452=geomAnd(L43770 L69938)
+errorLayer(L57452
+    "OXIDER.SE.2: Oxide resistor to Nimp spacing must be >= 0.3 um")
+L705=drc(Nimp oxide_in_res sep<0.3)
+errorLayer(L705 "OXIDER.SE.2: Oxide resistor to Nimp spacing must be >= 0.3 um")
+
+L78820=geomStraddle(Pimp oxide_in_res)
+L16980=geomStraddle(oxide_in_res Pimp)
+L26963=geomAnd(L16980 L78820)
+errorLayer(L26963
+    "OXIDER.SE.2: Oxide resistor to Pimp spacing must be >= 0.3 um")
+L61091=drc(Pimp oxide_in_res sep<0.3)
+errorLayer(L61091
+    "OXIDER.SE.2: Oxide resistor to Pimp spacing must be >= 0.3 um")
+
+L52730=drc(SiProt oxide_in_res enc<0.25)
+errorLayer(L52730
+    "OXIDER.E.1: SiProt to Oxide resistor enclosure must be >= 0.25 um")
+
+L66956=geomOr(Nimp Pimp)
+L73937=geomAndNot(oxide_in_res L66956)
+errorLayer(L73937 "OXIDER.X.1: Oxide resistors must have N+ or P+ Implant")
+
+L22176=drc(Oxide_thk width<0.7)
+errorLayer(L22176 "OXIDETHK.W.1: Oxide_thk width must be >= 0.7 um")
+
+L73633=drc(Oxide_thk sepNotch<0.35)
+errorLayer(L73633
+    "OXIDETHK.SP.1: Oxide_thk to Oxide_thk spacing must be >= 0.35 um")
+
+L72114=geomGetNon90(Oxide_thk)
+L30250=drc(Oxide_thk L72114 0<sep<0.75)
+errorLayer(L30250
+    "OXIDETHK.SP.2: Oxide_thk (bent 45 degree) to Oxide_thk spacing must be >= 0.75 um")
+
+L11843=drc(L82759 sepNotch<0.20)
+errorLayer(L11843
+    "OXIDETHK.SE.1: 2.5V N+ Oxide to 2.5V N+ Oxide spacing must be >= 0.20 um")
+
+L61527=drc(L56394 sepNotch<0.20)
+errorLayer(L61527
+    "OXIDETHK.SE.2: 2.5V P+ Oxide to 2.5V P+ Oxide spacing must be >= 0.20 um")
+
+L81683=geomGetEdge(Oxide inside L76283)
+L43152=geomGetEdge(Oxide inside L53593)
+L76702=drc(L81683 L43152 0<sep<0.25)
+errorLayer(L76702
+    "OXIDETHK.SE.3: 2.5V N+ Oxide to 2.5V P+ Oxide spacing must be >= 0.25 um")
+
+L97011=drc(Oxide_thk Oxide enc<0.30)
+errorLayer(L97011
+    "OXIDETHK.E.1: Oxide_thk to Oxide enclosure must be >= 0.30 um")
+
+L32532=geomGetEdge(Oxide_thk inside Oxide)
+L50103=geomGetEdge(Poly inside Oxide)
+L10115=geomSize(L32532 -0.005 edges)
+L93599=geomSize(L50103 -0.005 edges)
+L849=geomAnd(L10115 L93599)
+errorLayer(L849
+    "OXIDETHK.SE.5: Oxide_thk to Poly gate spacing must be >= 0.34 um")
+L22883=drc(L32532 L50103 sep<0.34)
+errorLayer(L22883
+    "OXIDETHK.SE.5: Oxide_thk to Poly gate spacing must be >= 0.34 um")
+
+L86249=drc(L32532 L50103 enc<0.36)
+errorLayer(L86249
+    "OXIDETHK.E.2: Oxide_thk to Poly gate enclosure must be >= 0.36 um")
+
+errorLayer(rule_NHVT_X_1
+    "NHVT.X.1: Nhvt to Oxide enclosure must be == 0.0 on all sides")
+
+L99256=geomAnd(Nhvt Nwell)
+errorLayer(L99256 "NHVT.X.2: Nhvt is NOT allowed on Nwell")
+
+L76722=geomAnd(Nhvt pactive)
+errorLayer(L76722 "NHVT.X.3: Nhvt is NOT allowed on P+ Oxide")
+
+L46876=geomAnd(Nhvt Nzvt)
+errorLayer(L46876 "NHVT.X.4: Nhvt is NOT allowed on Nzvt")
+
+errorLayer(rule_PHVT_X_1
+    "PHVT.X.1: Phvt to Oxide enclosure must be == 0.0 on all sides")
+
+L47321=geomAndNot(Phvt Nwell)
+errorLayer(L47321 "PHVT.X.2: Phvt is NOT allowed outside Nwell")
+
+L63890=geomAnd(Phvt nactive)
+errorLayer(L63890 "PHVT.X.3: Phvt is NOT allowed on N+ Oxide")
+
+L21962=geomAnd(Nzvt Phvt)
+errorLayer(L21962 "PHVT.X.4: Phvt is NOT allowed on Nzvt")
+
+L97143=drc(Nzvt width<0.7)
+errorLayer(L97143 "NZVT.W.1: Nzvt width must be >= 0.7 um")
+
+L47280=drc(Nzvt sepNotch<0.6)
+errorLayer(L47280 "NZVT.SP.1: Nzvt to Nzvt spacing must be >= 0.6 um")
+
+errorLayer(rule_NZVT_O_1 "NZVT.O.1: Nzvt to Oxide enclosure must be == 0.3")
+
+L63749=geomStraddle(Nzvt Oxide)
+L67229=geomStraddle(Oxide Nzvt)
+L14461=geomAnd(L63749 L67229)
+errorLayer(L14461 "NZVT.SE.1: Nzvt to Oxide spacing must be >= 0.28 um")
+L64133=drc(Nzvt Oxide sep<0.28)
+errorLayer(L64133 "NZVT.SE.1: Nzvt to Oxide spacing must be >= 0.28 um")
+
+L39950=geomAnd(Nwell Nzvt)
+errorLayer(L39950 "NZVT.SE.2: Nzvt to Nwell spacing must be >= 1.2 um")
+L66863=drc(Nwell Nzvt sep<1.2)
+errorLayer(L66863 "NZVT.SE.2: Nzvt to Nwell spacing must be >= 1.2 um")
+
+L11119=geomAnd(Nzvt Oxide)
+L77737=drc(Poly L11119 enc<0.2)
+errorLayer(L77737 "NZVT.E.1: Poly to Oxide enclosure must be >= 0.2 um")
+
+L18021=geomGetEdge(Poly inside L11119)
+L82379=drc(L18021 width<0.9)
+errorLayer(L82379 "NZVT.L.1: Native Device Poly gate length must be >= 0.9 um")
+
+L21044=geomAnd(Nzvt Poly)
+L45072=geomGetEdge(Oxide inside L21044)
+L49657=drc(L45072 width<0.65)
+errorLayer(L49657 "NZVT.W.2: Native Device Poly gate width must be >= 0.65 um")
+
+L42980=geomAnd(Nzvt Pimp)
+L48980=geomAnd(L42980 Oxide)
+errorLayer(L48980 "NZVT.X.3: P+ Oxide is NOT allowed in Nzvt")
+
+errorLayer(rule_NZVT_X_4
+    "NZVT.X.4: Only one Oxide region may be in an Nzvt region")
+
+L46922=geomGetEdge(Poly inside nactive)
+L99090=drc(L46922 width<0.1)
+errorLayer(L99090 "POLY.W.1: 1.2V N+ Poly gate length must be >= 0.1 um")
+
+L73748=geomGetEdge(Poly inside pactive)
+L82202=drc(L73748 width<0.1)
+errorLayer(L82202 "POLY.W.2: 1.2V P+ Poly gate length must be >= 0.1 um")
+
+L9079=geomAnd(Oxide_thk nactive)
+L62075=geomGetEdge(Poly inside L9079)
+L59496=drc(L62075 width<0.28)
+errorLayer(L59496 "POLY.W.3: 2.5V N+ Poly gate length must be >= 0.28 um")
+
+L20548=geomAnd(Oxide Oxide_thk)
+L54089=geomAnd(L20548 Pimp)
+L53918=geomGetEdge(Poly inside L54089)
+L44552=drc(L53918 width<0.28)
+errorLayer(L44552 "POLY.W.4: 2.5V P+ Poly gate length must be >= 0.28 um")
+
+L62554=geomGetEdge(Poly outside Oxide)
+L50829=drc(L62554 width<0.1)
+errorLayer(L50829 "POLY.W.5: Poly interconnect width must be >= 0.1 um")
+
+L91308=geomGetEdge(Poly inside Resdum)
+L7805=drc(L91308 sepNotch<0.6)
+errorLayer(L7805
+    "POLY.SP.1: Poly resistor to Poly resistor spacing must be >= 0.6 um")
+
+L50760=drc(L50103 sepNotch<0.12)
+errorLayer(L50760
+    "POLY.SP.2: Poly gate to Poly gate spacing must be >= 0.12 um")
+
+L7689=drc(L62554 sepNotch<0.12)
+errorLayer(L7689
+    "POLY.SP.3: Poly interconnect to Poly interconnect spacing must be >= 0.12 um")
+
+L54859=drc(Poly nactive enc<0.18)
+errorLayer(L54859 "POLY.E.1: Poly to N+ Oxide enclosure must be >= 0.18 um")
+
+L64535=drc(Poly pactive enc<0.18)
+errorLayer(L64535 "POLY.E.2: Poly to P+ Oxide enclosure must be >= 0.18 um")
+
+L4182=drc(Oxide Poly sep<0.1)
+errorLayer(L4182 "POLY.SE.1_POLY.SE.2: Poly to Oxide spacing must be >= 0.1 um")
+
+L77903=drc(Oxide Poly enc<0.2 shielded)
+errorLayer(L77903 "POLY.E.3: Oxide to Poly enclosure must be >= 0.2 um")
+
+L6625=geomGetNon90(Poly)
+L43190=drc(L6625 width<0.18)
+errorLayer(L43190 "POLY.W.6: Bent Poly width must be >= 0.18 um")
+
+L16109=drc(L6625 sepNotch<0.22)
+errorLayer(L16109
+    "POLY.SP.4: Bent Poly to bent Poly spacing must be >= 0.22 um")
+
+L22824=geomGetAdjacentEdge(L50103 L50103)
+errorLayer(L22824 "POLY.X.1: Poly gate cannot have bends")
+
+L25416=geomGetAdjacentEdge(L91308 L91308)
+errorLayer(L25416 "POLY.X.2: Poly resistor cannot have bends")
+
+errorLayer(rule_POLY_SE_3
+    "POLY.SE.3: Poly width, between two contacts spaced > 25.0um, must be >= 0.14um")
+
+L19076=drc(Poly area<0.1)
+errorLayer(L19076 "POLY.A.1: Poly area must be >= 0.1 um")
+
+L7663=geomAnd(Cont poly_in_res)
+L50658=geomGetEdge(SiProt inside poly_in_res)
+L24602=geomSize(L7663 -0.005 edges)
+L8454=geomSize(L50658 -0.005 edges)
+L57419=geomAnd(L24602 L8454)
+errorLayer(L57419
+    "POLYR.SE.1: SiProt to Poly resistor Cont spacing must be >= 0.25 um")
+L17209=drc(L7663 L50658 sep<0.25)
+errorLayer(L17209
+    "POLYR.SE.1: SiProt to Poly resistor Cont spacing must be >= 0.25 um")
+
+L14988=drc(SiProt poly_in_res enc<0.28)
+errorLayer(L14988
+    "POLYR.E.1: SiProt to Poly resistor enclosure must be >= 0.28 um")
+
+L41665=geomStraddle(poly_in_res Nimp)
+L25127=geomAndNot(L41665 Nimp)
+errorLayer(L25127
+    "POLYR.E.2: Nimp to Poly used in resistor enclosure must be >= 0.15 um")
+L61199=drc(Nimp poly_in_res enc<0.15)
+errorLayer(L61199
+    "POLYR.E.2: Nimp to Poly used in resistor enclosure must be >= 0.15 um")
+
+L88707=geomStraddle(poly_in_res Pimp)
+L67729=geomAndNot(L88707 Pimp)
+errorLayer(L67729
+    "POLYR.E.3: Pimp to Poly used in resistor enclosure must be >= 0.15 um")
+L813=drc(Pimp poly_in_res enc<0.15)
+errorLayer(L813
+    "POLYR.E.3: Pimp to Poly used in resistor enclosure must be >= 0.15 um")
+
+L99663=geomStraddle(Nimp poly_in_res)
+L47333=geomAnd(L41665 L99663)
+errorLayer(L47333 "POLYR.SE.2: Poly resistor to Nimp spacing must be >= 0.3 um")
+L95992=drc(Nimp poly_in_res sep<0.3)
+errorLayer(L95992 "POLYR.SE.2: Poly resistor to Nimp spacing must be >= 0.3 um")
+
+L98951=geomAnd(Nzvt poly_in_res)
+errorLayer(L98951 "POLYR.SE.2: Poly resistor to Nzvt spacing must be >= 0.3 um")
+L44380=drc(Nzvt poly_in_res sep<0.3)
+errorLayer(L44380 "POLYR.SE.2: Poly resistor to Nzvt spacing must be >= 0.3 um")
+
+L48239=geomStraddle(Pimp poly_in_res)
+L68724=geomAnd(L48239 L88707)
+errorLayer(L68724 "POLYR.SE.2: Poly resistor to Pimp spacing must be >= 0.3 um")
+L47382=drc(Pimp poly_in_res sep<0.3)
+errorLayer(L47382 "POLYR.SE.2: Poly resistor to Pimp spacing must be >= 0.3 um")
+
+L37892=geomAndNot(poly_in_res L66956)
+errorLayer(L37892 "POLYR.X.1: Poly resistors must have N+ or P+ Implant")
+
+L79524=drc(Nimp width<0.24)
+errorLayer(L79524 "NIMP.W.1: Nimp width must be >= 0.24 um")
+
+L490=drc(Nimp sepNotch<0.24)
+errorLayer(L490 "NIMP.SP.1: Nimp to Nimp spacing must be >= 0.24 um")
+
+L31844=geomAndNot(Oxide Nwell)
+L86045=drc(Nimp L31844 enc<0.14)
+errorLayer(L86045 "NIMP.E.1: Nimp to Oxide enclosure must be >= 0.14 um")
+
+L23613=drc(Nimp Oxide ovlp<0.16)
+errorLayer(L23613 "NIMP.O.1: Nimp to Oxide overlap must be >= 0.16 um")
+
+L69292=geomGetEdge(Nimp outside Oxide)
+L71772=geomAnd(Nwell Pimp)
+L12041=geomGetEdge(Oxide inside L71772)
+L2832=geomSize(L69292 -0.005 edges)
+L33748=geomSize(L12041 -0.005 edges)
+L98338=geomAnd(L2832 L33748)
+errorLayer(L98338 "NIMP.SE.1: Nimp to P+ Oxide spacing must be >= 0.16 um")
+L18233=drc(L69292 L12041 sep<0.16)
+errorLayer(L18233 "NIMP.SE.1: Nimp to P+ Oxide spacing must be >= 0.16 um")
+
+L20455=geomAnd(Nwell Oxide)
+L30432=drc(Nimp L20455 enc<0.02)
+errorLayer(L30432
+    "NIMP.E.2: Nimp to Oxide (Nwell tie) enclosure must be >= 0.02 um")
+
+L72443=geomGetEdge(Nimp inside Oxide)
+L68624=drc(L72443 L50103 enc<0.18)
+errorLayer(L68624 "NIMP.E.3: Nimp to Poly gate enclosure must be >= 0.18 um")
+
+L49719=geomGetEdge(Oxide inside Poly)
+L94658=geomSize(L49719 -0.005 edges)
+L80691=geomSize(Nimp 0.005 edges)
+L50450=geomAnd(L80691 L94658)
+errorLayer(L50450 "NIMP.E.4: Nimp to gate end enclosure must be >= 0.18 um")
+L3169=drc(Nimp L49719 enc<0.18)
+errorLayer(L3169 "NIMP.E.4: Nimp to gate end enclosure must be >= 0.18 um")
+
+L47061=geomOr(Nwell Oxide)
+L23169=geomGetEdge(Nimp outside L47061)
+L46591=geomAndNot(Pimp Nwell)
+L15498=geomGetEdge(Oxide inside L46591)
+L56549=geomSize(L23169 -0.005 edges)
+L54633=geomSize(L15498 -0.005 edges)
+L28564=geomAnd(L54633 L56549)
+errorLayer(L28564 "NIMP.SE.2: Nimp to P+ Oxide spacing must be >= 0.02 um")
+L38260=drc(L23169 L15498 sep<0.02)
+errorLayer(L38260 "NIMP.SE.2: Nimp to P+ Oxide spacing must be >= 0.02 um")
+
+L9465=drc(Nimp area<0.15)
+errorLayer(L9465 "NIMP.A.1: Nimp area must be >= 0.15 um")
+
+L53850=geomHoles(Nimp)
+L10980=geomAndNot(L53850 Nimp)
+L59330=drc(L10980 area<0.16)
+errorLayer(L59330 "NIMP.EA.1: Area in Nimp ring must be >= 0.16 um")
+
+L77635=geomSize(L72443 -0.005 edges)
+L8473=geomSize(L73748 -0.005 edges)
+L53740=geomAnd(L77635 L8473)
+errorLayer(L53740 "NIMP.SE.3: Nimp to P+ gate spacing must be >= 0.18 um")
+L50426=drc(L72443 L73748 sep<0.18)
+errorLayer(L50426 "NIMP.SE.3: Nimp to P+ gate spacing must be >= 0.18 um")
+
+L40776=geomAnd(Nimp Pimp)
+errorLayer(L40776 "NIMP.X.1: Nimp is NOT allowed over Pimp")
+
+L88830=drc(Pimp width<0.24)
+errorLayer(L88830 "PIMP.W.1: Pimp width must be >= 0.24 um")
+
+L44232=drc(Pimp sepNotch<0.24)
+errorLayer(L44232 "PIMP.SP.1: Pimp to Pimp spacing must be >= 0.24 um")
+
+L33281=drc(Pimp L20455 enc<0.14)
+errorLayer(L33281 "PIMP.E.1: Pimp to Oxide enclosure must be >= 0.14 um")
+
+L96103=drc(Oxide Pimp ovlp<0.16)
+errorLayer(L96103 "PIMP.O.1: Pimp to Oxide overlap must be >= 0.16 um")
+
+L11169=geomAndNot(Nimp Nwell)
+L42355=geomGetEdge(Oxide inside L11169)
+L13034=geomGetEdge(Pimp outside Oxide)
+L14307=geomSize(L42355 -0.005 edges)
+L83703=geomSize(L13034 -0.005 edges)
+L89774=geomAnd(L14307 L83703)
+errorLayer(L89774 "PIMP.SE.1: Pimp to N+ Oxide spacing must be >= 0.16 um")
+L92495=drc(L42355 L13034 sep<0.16)
+errorLayer(L92495 "PIMP.SE.1: Pimp to N+ Oxide spacing must be >= 0.16 um")
+
+L85242=drc(Pimp L31844 enc<0.02)
+errorLayer(L85242
+    "PIMP.E.2: Pimp to Oxide (substrate tie) enclosure must be >= 0.02 um")
+
+L72263=geomGetEdge(Pimp inside Oxide)
+L73332=drc(L72263 L50103 enc<0.18)
+errorLayer(L73332 "PIMP.E.3: Pimp to Poly gate enclosure must be >= 0.18 um")
+
+L32789=geomSize(Pimp 0.005 edges)
+L25649=geomAnd(L32789 L94658)
+errorLayer(L25649 "PIMP.E.4: Pimp to gate end enclosure must be >= 0.18 um")
+L98657=drc(Pimp L49719 enc<0.18)
+errorLayer(L98657 "PIMP.E.4: Pimp to gate end enclosure must be >= 0.18 um")
+
+L98526=geomAnd(Nimp Nwell)
+L70727=geomGetEdge(Oxide inside L98526)
+L8612=geomAndNot(Nwell Oxide)
+L34993=geomGetEdge(Pimp inside L8612)
+L25131=geomSize(L70727 -0.005 edges)
+L30715=geomSize(L34993 -0.005 edges)
+L26012=geomAnd(L25131 L30715)
+errorLayer(L26012 "PIMP.SE.2: Pimp to N+ Oxide spacing must be >= 0.02 um")
+L27623=drc(L70727 L34993 sep<0.02)
+errorLayer(L27623 "PIMP.SE.2: Pimp to N+ Oxide spacing must be >= 0.02 um")
+
+L73143=drc(Pimp area<0.15)
+errorLayer(L73143 "PIMP.A.1: Pimp area must be >= 0.15 um")
+
+L892=geomHoles(Pimp)
+L87842=geomAndNot(L892 Pimp)
+L34407=drc(L87842 area<0.16)
+errorLayer(L34407 "PIMP.EA.1: Area in Pimp ring must be >= 0.16 um")
+
+L57180=geomSize(L72263 -0.005 edges)
+L1567=geomSize(L46922 -0.005 edges)
+L95278=geomAnd(L1567 L57180)
+errorLayer(L95278 "PIMP.SE.3: Pimp to N+ gate spacing must be >= 0.18 um")
+L93238=drc(L72263 L46922 sep<0.18)
+errorLayer(L93238 "PIMP.SE.3: Pimp to N+ gate spacing must be >= 0.18 um")
+
+L10817=geomContactCheck(Cont width==0.12 length==0.12 ignore)
+errorLayer(L10817 "CONT.W.1: Cont shapes must be 0.12x0.12 rectangles")
+
+L39295=drc(Cont sepNotch<0.14)
+errorLayer(L39295 "CONT.SP.1: Cont to Cont spacing must be >= 0.14 um")
+
+L39353=geomAnd(Cont L61820)
+L79226=drc(L39353 sep<0.16)
+errorLayer(L79226
+    "CONT.SP.2: Cont to Cont (in array) spacing must be >= 0.16 um")
+
+L99721=geomAnd(Cont Oxide)
+L11458=geomSize(L99721 -0.005 edges)
+L13970=geomAnd(L11458 L93599)
+errorLayer(L13970 "CONT.SE.1: Cont to gate spacing must be >= 0.10 um")
+L91390=drc(L99721 L50103 sep<0.10)
+errorLayer(L91390 "CONT.SE.1: Cont to gate spacing must be >= 0.10 um")
+
+L12025=geomAnd(Cont L20548)
+L90375=geomGetEdge(Poly inside L20548)
+L25254=geomSize(L12025 -0.005 edges)
+L69986=geomSize(L90375 -0.005 edges)
+L67696=geomAnd(L25254 L69986)
+errorLayer(L67696 "CONT.SE.2: Cont to 2.5V gate spacing must be >= 0.12 um")
+L73889=drc(L12025 L90375 sep<0.12)
+errorLayer(L73889 "CONT.SE.2: Cont to 2.5V gate spacing must be >= 0.12 um")
+
+L11991=geomSize(cont_poly -0.005 edges)
+L66537=geomAnd(L11991 L94658)
+errorLayer(L66537 "CONT.SE.3: Poly Cont to Oxide spacing must be >= 0.12 um")
+L37236=drc(cont_poly L49719 sep<0.12)
+errorLayer(L37236 "CONT.SE.3: Poly Cont to Oxide spacing must be >= 0.12 um")
+
+L31657=geomAnd(Oxide_thk Poly)
+L36121=geomGetEdge(Oxide inside L31657)
+L21355=geomSize(L36121 -0.005 edges)
+L97549=geomAnd(L11991 L21355)
+errorLayer(L97549 "CONT.SE.4: Poly Cont to Oxide spacing must be >= 0.14 um")
+L3813=drc(cont_poly L36121 sep<0.14)
+errorLayer(L3813 "CONT.SE.4: Poly Cont to Oxide spacing must be >= 0.14 um")
+
+L47091=geomStraddle(Cont Oxide)
+L99745=geomAndNot(L47091 Oxide)
+errorLayer(L99745 "CONT.E.1: Oxide to Cont enclosure must be >= 0.06 um")
+L93977=drc(Oxide Cont enc<0.06)
+errorLayer(L93977 "CONT.E.1: Oxide to Cont enclosure must be >= 0.06 um")
+
+L48850=geomStraddle(Cont Poly)
+L47376=geomAndNot(L48850 Poly)
+errorLayer(L47376 "CONT.E.2: Poly to Cont enclosure must be >= 0.04 um")
+L15704=drc(Poly Cont enc<0.04)
+errorLayer(L15704 "CONT.E.2: Poly to Cont enclosure must be >= 0.04 um")
+
+L94328=drc(Poly cont_poly venc(enc1<0.06 enc2<0 enc3<0.06 enc4<0))
+errorLayer(L94328
+    "CONT.E.3: Poly to Cont enclosure on at least two opposite sides must be >= 0.06 um")
+
+L10168=geomStraddle(L99721 Nimp)
+L6883=geomAndNot(L10168 Nimp)
+errorLayer(L6883 "CONT.E.4: Nimp to Cont enclosure must be >= 0.06 um")
+L11964=drc(Nimp L99721 enc<0.06)
+errorLayer(L11964 "CONT.E.4: Nimp to Cont enclosure must be >= 0.06 um")
+
+L57210=geomStraddle(L99721 Pimp)
+L22144=geomAndNot(L57210 Pimp)
+errorLayer(L22144 "CONT.E.4: Pimp to Cont enclosure must be >= 0.06 um")
+L13790=drc(Pimp L99721 enc<0.06)
+errorLayer(L13790 "CONT.E.4: Pimp to Cont enclosure must be >= 0.06 um")
+
+L37551=geomAnd(Oxide Poly)
+L6567=geomAnd(Cont L37551)
+errorLayer(L6567 "CONT.X.1: Cont on gate is NOT allowed")
+
+L76076=geomGetEdge(Nimp inside L99721)
+L41622=geomGetLength(L76076 keep>=0.005)
+errorLayer(L41622 "CONT.X.2: Nimp edge is NOT allowed on Oxide Cont")
+
+L67666=geomGetEdge(Pimp inside L99721)
+L50853=geomGetLength(L67666 keep>=0.005)
+errorLayer(L50853 "CONT.X.2: Pimp edge is NOT allowed on Oxide Cont")
+
+L9541=geomAndNot(Cont L32232)
+errorLayer(L9541 "CONT.X.3: Cont must be covered by Oxide or Poly")
+
+L23206=drc(SiProt width<0.44)
+errorLayer(L23206 "SIPROT.W.1: SiProt width must be >= 0.44 um")
+
+L79129=drc(SiProt sepNotch<0.44)
+errorLayer(L79129 "SIPROT.SP.1: SiProt to SiProt spacing must be >= 0.44 um")
+
+L96543=geomStraddle(Cont SiProt)
+L69271=geomStraddle(SiProt Cont)
+L85976=geomAnd(L69271 L96543)
+errorLayer(L85976 "SIPROT.SE.1: SiProt to Cont spacing must be >= 0.24 um")
+L15811=drc(Cont SiProt sep<0.24)
+errorLayer(L15811 "SIPROT.SE.1: SiProt to Cont spacing must be >= 0.24 um")
+
+L35866=drc(Oxide SiProt sep<0.24)
+errorLayer(L35866 "SIPROT.SE.2: SiProt to Oxide spacing must be >= 0.24 um")
+
+L16710=geomGetEdge(SiProt inside Oxide)
+L71655=geomSize(L16710 -0.005 edges)
+L56599=geomAnd(L71655 L93599)
+errorLayer(L56599 "SIPROT.SE.3: SiProt to Poly gate spacing must be >= 0.44 um")
+L98194=drc(L50103 L16710 sep<0.44)
+errorLayer(L98194 "SIPROT.SE.3: SiProt to Poly gate spacing must be >= 0.44 um")
+
+L72438=drc(Oxide SiProt enc<0.24)
+errorLayer(L72438 "SIPROT.E.2: Oxide to SiProt enclosure must be >= 0.24 um")
+
+L65278=geomGetEdge(Oxide outside Resdum)
+L20844=drc(SiProt L65278 enc<0.25 shielded)
+errorLayer(L20844 "SIPROT.E.1: SiProt to Oxide enclosure must be >= 0.25 um")
+
+L40063=drc(SiProt L62554 enc<0.28)
+errorLayer(L40063 "SIPROT.E.3: SiProt to Poly enclosure must be >= 0.28 um")
+
+L17485=drc(SiProt area<1.2)
+errorLayer(L17485 "SIPROT.A.1: SiProt area must be >= 1.2 um")
+
+L54793=drc(L62554 SiProt sep<0.35)
+errorLayer(L54793
+    "SIPROT.SE.4: SiProt to Poly (on field) spacing must be >= 0.35 um")
+
+L54565=geomHoles(SiProt)
+L77573=geomAndNot(L54565 SiProt)
+L90309=drc(L77573 area<1.2)
+errorLayer(L90309 "SIPROT.EA.1: Area in SiProt ring must be >= 1.2 um")
+
+L12682=geomAndNot(Via1 metal2_conn)
+errorLayer(L12682 "METAL2.E.1: Metal2 to Via1 enclosure must be >= 0.005 um")
+L66270=drc(metal2_conn Via1 enc<0.005)
+errorLayer(L66270 "METAL2.E.1: Metal2 to Via1 enclosure must be >= 0.005 um")
+
+L64313=geomAnd(Via1 metal2_conn)
+L41986=drc(metal2_conn L64313 venc(enc1<0.06 enc2<0 enc3<0.06 enc4<0))
+errorLayer(L41986
+    "METAL2.E.2: Metal2 to Via1 enclosure on opposite sides must be >= 0.06 um")
+
+L67626=geomAndNot(Via2 metal3_conn)
+errorLayer(L67626 "METAL3.E.1: Metal3 to Via2 enclosure must be >= 0.005 um")
+L7300=drc(metal3_conn Via2 enc<0.005)
+errorLayer(L7300 "METAL3.E.1: Metal3 to Via2 enclosure must be >= 0.005 um")
+
+L9369=geomAnd(Via2 metal3_conn)
+L49813=drc(metal3_conn L9369 venc(enc1<0.06 enc2<0 enc3<0.06 enc4<0))
+errorLayer(L49813
+    "METAL3.E.2: Metal3 to Via2 enclosure on opposite sides must be >= 0.06 um")
+
+L22570=geomAndNot(Via3 metal4_conn)
+errorLayer(L22570 "METAL4.E.1: Metal4 to Via3 enclosure must be >= 0.005 um")
+L86426=drc(metal4_conn Via3 enc<0.005)
+errorLayer(L86426 "METAL4.E.1: Metal4 to Via3 enclosure must be >= 0.005 um")
+
+L54425=geomAnd(Via3 metal4_conn)
+L64223=drc(metal4_conn L54425 venc(enc1<0.06 enc2<0 enc3<0.06 enc4<0))
+errorLayer(L64223
+    "METAL4.E.2: Metal4 to Via3 enclosure on opposite sides must be >= 0.06 um")
+
+L77514=geomAndNot(Via4 metal5_conn)
+errorLayer(L77514 "METAL5.E.1: Metal5 to Via4 enclosure must be >= 0.005 um")
+L87144=drc(metal5_conn Via4 enc<0.005)
+errorLayer(L87144 "METAL5.E.1: Metal5 to Via4 enclosure must be >= 0.005 um")
+
+L67815=geomAnd(Via4 metal5_conn)
+L60539=drc(metal5_conn L67815 venc(enc1<0.06 enc2<0 enc3<0.06 enc4<0))
+errorLayer(L60539
+    "METAL5.E.2: Metal5 to Via4 enclosure on opposite sides must be >= 0.06 um")
+
+L32458=geomAndNot(Via5 metal6_conn)
+errorLayer(L32458 "METAL6.E.1: Metal6 to Via5 enclosure must be >= 0.005 um")
+L6582=drc(metal6_conn Via5 enc<0.005)
+errorLayer(L6582 "METAL6.E.1: Metal6 to Via5 enclosure must be >= 0.005 um")
+
+L22759=geomAnd(Via5 metal6_conn)
+L60090=drc(metal6_conn L22759 venc(enc1<0.06 enc2<0 enc3<0.06 enc4<0))
+errorLayer(L60090
+    "METAL6.E.2: Metal6 to Via5 enclosure on opposite sides must be >= 0.06 um")
+
+L12598=geomAndNot(Via6 metal7_conn)
+errorLayer(L12598 "METAL7.E.1: Metal7 to Via6 enclosure must be >= 0.005 um")
+L66988=drc(metal7_conn Via6 enc<0.005)
+errorLayer(L66988 "METAL7.E.1: Metal7 to Via6 enclosure must be >= 0.005 um")
+
+L77703=geomAnd(Via6 metal7_conn)
+L76314=drc(metal7_conn L77703 venc(enc1<0.06 enc2<0 enc3<0.06 enc4<0))
+errorLayer(L76314
+    "METAL7.E.2: Metal7 to Via6 enclosure on opposite sides must be >= 0.06 um")
+
+L57654=geomAndNot(Via7 metal8_conn)
+errorLayer(L57654 "METAL8.E.1: Metal8 to Via7 enclosure must be >= 0.05 um")
+L18310=drc(metal8_conn Via7 enc<0.05)
+errorLayer(L18310 "METAL8.E.1: Metal8 to Via7 enclosure must be >= 0.05 um")
+
+L32647=geomAnd(Via7 metal8_conn)
+L31503=drc(metal8_conn L32647 venc(enc1<0.1 enc2<0 enc3<0.1 enc4<0))
+errorLayer(L31503
+    "METAL8.E.2: Metal8 to Via7 enclosure on opposite sides must be >= 0.1 um")
+
+L2710=geomAndNot(Via8 metal9_conn)
+errorLayer(L2710 "METAL9.E.1: Metal9 to Via8 enclosure must be >= 0.05 um")
+L82136=drc(metal9_conn Via8 enc<0.05)
+errorLayer(L82136 "METAL9.E.1: Metal9 to Via8 enclosure must be >= 0.05 um")
+
+L87591=geomAnd(Via8 metal9_conn)
+L65188=drc(metal9_conn L87591 venc(enc1<0.1 enc2<0 enc3<0.1 enc4<0))
+errorLayer(L65188
+    "METAL9.E.2: Metal9 to Via8 enclosure on opposite sides must be >= 0.1 um")
+
+L80230=geomAndNot(Cont metal1_conn)
+errorLayer(L80230 "METAL1.E.1: Metal1 to Cont enclosure must be >= 0.00 um")
+
+L89929=geomAnd(Cont metal1_conn)
+L83995=drc(metal1_conn L89929 venc(enc1<0.06 enc2<0 enc3<0.06 enc4<0))
+errorLayer(L83995
+    "METAL1.E.2: Metal1 to Cont enclosure on opposite sides must be >= 0.06 um")
+
+L91458=drc(metal1_conn width<0.12)
+errorLayer(L91458 "METAL1.W.1: Metal1 width must be >= 0.12 um")
+
+L80833=drc(metal2_conn width<0.14)
+errorLayer(L80833 "METAL2.W.1: Metal2 width must be >= 0.14 um")
+
+L53186=drc(metal3_conn width<0.14)
+errorLayer(L53186 "METAL3.W.1: Metal3 width must be >= 0.14 um")
+
+L41757=drc(metal4_conn width<0.14)
+errorLayer(L41757 "METAL4.W.1: Metal4 width must be >= 0.14 um")
+
+L69404=drc(metal5_conn width<0.14)
+errorLayer(L69404 "METAL5.W.1: Metal5 width must be >= 0.14 um")
+
+L2949=drc(metal6_conn width<0.14)
+errorLayer(L2949 "METAL6.W.1: Metal6 width must be >= 0.14 um")
+
+L75302=drc(metal7_conn width<0.14)
+errorLayer(L75302 "METAL7.W.1: Metal7 width must be >= 0.14 um")
+
+L44772=drc(metal8_conn width<0.44)
+errorLayer(L44772 "METAL8.W.1: Metal8 width must be >= 0.44 um")
+
+L50171=drc(metal9_conn width<0.44)
+errorLayer(L50171 "METAL9.W.1: Metal9 width must be >= 0.44 um")
+
+L8765=geomOr(Bondpad cont_array_zone)
+L85990=geomOr(L8765 via1_array_zone)
+L35539=geomAndNot(metal1_conn L85990)
+L77186=geomWidth(L35539 keep>12.0)
+errorLayer(L77186 "METAL1.W.2: Metal1 width must be <= 12.0 um")
+
+L27316=geomOr(Bondpad via1_array_zone)
+L67756=geomOr(L27316 via2_array_zone)
+L97586=geomAndNot(metal2_conn L67756)
+L87450=geomWidth(L97586 keep>12.0)
+errorLayer(L87450 "METAL2.W.2: Metal2 width must be <= 12.0 um")
+
+L24309=geomOr(Bondpad via2_array_zone)
+L33178=geomOr(L24309 via3_array_zone)
+L14510=geomAndNot(metal3_conn L33178)
+L44726=geomWidth(L14510 keep>12.0)
+errorLayer(L44726 "METAL3.W.2: Metal3 width must be <= 12.0 um")
+
+L21302=geomOr(Bondpad via3_array_zone)
+L50251=geomOr(L21302 via4_array_zone)
+L57744=geomAndNot(metal4_conn L50251)
+L78598=geomWidth(L57744 keep>12.0)
+errorLayer(L78598 "METAL4.W.2: Metal4 width must be <= 12.0 um")
+
+L18295=geomOr(Bondpad via4_array_zone)
+L54843=geomOr(L18295 via5_array_zone)
+L44438=geomAndNot(metal5_conn L54843)
+L32894=geomWidth(L44438 keep>12.0)
+errorLayer(L32894 "METAL5.W.2: Metal5 width must be <= 12.0 um")
+
+L15288=geomOr(Bondpad via5_array_zone)
+L46091=geomOr(L15288 via6_array_zone)
+L48539=geomAndNot(metal6_conn L46091)
+L31140=geomWidth(L48539 keep>12.0)
+errorLayer(L31140 "METAL6.W.2: Metal6 width must be <= 12.0 um")
+
+L12281=geomOr(Bondpad via6_array_zone)
+L27627=geomAndNot(Metal7 L12281)
+L73371=geomWidth(L27627 keep>12.0)
+errorLayer(L73371 "METAL7.W.2: Metal7 width must be <= 12.0 um")
+
+L16305=geomAndNot(metal8_conn Bondpad)
+L25448=geomWidth(L16305 keep>12.0)
+errorLayer(L25448 "METAL8.W.2: Metal8 width must be <= 12.0 um")
+
+L64496=geomAndNot(metal9_conn Bondpad)
+L82568=geomWidth(L64496 keep>12.0)
+errorLayer(L82568 "METAL9.W.2: Metal9 width must be <= 12.0 um")
+
+L1835=drc(Metal1 sepNotch<0.12)
+errorLayer(L1835 "METAL1.SP.1.1: Metal1 to Metal1 spacing must be >= 0.12 um")
+
+L67720=drc(Metal2 sepNotch<0.14)
+errorLayer(L67720 "METAL2.SP.1.1: Metal2 to Metal2 spacing must be >= 0.14 um")
+
+L33543=drc(Metal3 sepNotch<0.14)
+errorLayer(L33543 "METAL3.SP.1.1: Metal3 to Metal3 spacing must be >= 0.14 um")
+
+L634=drc(Metal4 sepNotch<0.14)
+errorLayer(L634 "METAL4.SP.1.1: Metal4 to Metal4 spacing must be >= 0.14 um")
+
+L34811=drc(Metal5 sepNotch<0.14)
+errorLayer(L34811 "METAL5.SP.1.1: Metal5 to Metal5 spacing must be >= 0.14 um")
+
+L68988=drc(Metal6 sepNotch<0.14)
+errorLayer(L68988 "METAL6.SP.1.1: Metal6 to Metal6 spacing must be >= 0.14 um")
+
+L3165=drc(Metal7 sepNotch<0.14)
+errorLayer(L3165 "METAL7.SP.1.1: Metal7 to Metal7 spacing must be >= 0.14 um")
+
+L32713=drc(Metal8 sepNotch<0.40)
+errorLayer(L32713 "METAL8.SP.1.1: Metal8 to Metal8 spacing must be >= 0.40 um")
+
+L98536=drc(Metal9 sepNotch<0.40)
+errorLayer(L98536 "METAL9.SP.1.1: Metal9 to Metal9 spacing must be >= 0.40 um")
+
+L18723=geomWidth(Metal1 keep>0.18)
+L52985=geomGetEdge(Metal1 coincident L18723)
+L3396=drc(Metal1 L52985 0<sep<0.18 opposite edgeb)
+L79024=geomGetLength(L3396 keep>0.56)
+errorLayer(L79024 "METAL1.SP.1.2: Metal1 to Metal1 spacing must be >= 0.18 um")
+
+L2155=geomWidth(Metal2 keep>0.20)
+L71132=geomGetEdge(Metal2 coincident L2155)
+L38729=drc(Metal2 L71132 0<sep<0.20 opposite edgeb)
+L30628=geomGetLength(L38729 keep>0.56)
+errorLayer(L30628 "METAL2.SP.1.2: Metal2 to Metal2 spacing must be >= 0.20 um")
+
+L84874=geomWidth(Metal3 keep>0.20)
+L56835=geomGetEdge(Metal3 coincident L84874)
+L85493=drc(Metal3 L56835 0<sep<0.20 opposite edgeb)
+L36164=geomGetLength(L85493 keep>0.56)
+errorLayer(L36164 "METAL3.SP.1.2: Metal3 to Metal3 spacing must be >= 0.20 um")
+
+L67593=geomWidth(Metal4 keep>0.20)
+L56281=geomGetEdge(Metal4 coincident L67593)
+L10299=drc(Metal4 L56281 0<sep<0.20 opposite edgeb)
+L97218=geomGetLength(L10299 keep>0.56)
+errorLayer(L97218 "METAL4.SP.1.2: Metal4 to Metal4 spacing must be >= 0.20 um")
+
+L50312=geomWidth(Metal5 keep>0.20)
+L41605=geomGetEdge(Metal5 coincident L50312)
+L53198=drc(Metal5 L41605 0<sep<0.20 opposite edgeb)
+L24547=geomGetLength(L53198 keep>0.56)
+errorLayer(L24547 "METAL5.SP.1.2: Metal5 to Metal5 spacing must be >= 0.20 um")
+
+L34265=geomWidth(Metal6 keep>0.20)
+L54941=geomGetEdge(Metal6 coincident L34265)
+L42278=drc(Metal6 L54941 0<sep<0.20 opposite edgeb)
+L45696=geomGetLength(L42278 keep>0.56)
+errorLayer(L45696 "METAL6.SP.1.2: Metal6 to Metal6 spacing must be >= 0.20 um")
+
+L51546=geomWidth(Metal7 keep>0.20)
+L63351=geomGetEdge(Metal7 coincident L51546)
+L60224=drc(Metal7 L63351 0<sep<0.20 opposite edgeb)
+L33787=geomGetLength(L60224 keep>0.56)
+errorLayer(L33787 "METAL7.SP.1.2: Metal7 to Metal7 spacing must be >= 0.20 um")
+
+L45840=geomWidth(Metal1 keep>1.50)
+L4475=geomGetEdge(Metal1 coincident L45840)
+L88697=drc(Metal1 L4475 0<sep<0.50 opposite edgeb)
+L38744=geomGetLength(L88697 keep>1.50)
+errorLayer(L38744 "METAL1.SP.1.3: Metal1 to Metal1 spacing must be >= 0.50 um")
+
+L28559=geomWidth(Metal2 keep>1.50)
+L4572=geomGetEdge(Metal2 coincident L28559)
+L60838=drc(Metal2 L4572 0<sep<0.50 opposite edgeb)
+L66759=geomGetLength(L60838 keep>1.50)
+errorLayer(L66759 "METAL2.SP.1.3: Metal2 to Metal2 spacing must be >= 0.50 um")
+
+L11278=geomWidth(Metal3 keep>1.50)
+L10077=geomGetEdge(Metal3 coincident L11278)
+L45734=drc(Metal3 L10077 0<sep<0.50 opposite edgeb)
+L46203=geomGetLength(L45734 keep>1.50)
+errorLayer(L46203 "METAL3.SP.1.3: Metal3 to Metal3 spacing must be >= 0.50 um")
+
+L93997=geomWidth(Metal4 keep>1.50)
+L43624=geomGetEdge(Metal4 coincident L93997)
+L55955=drc(Metal4 L43624 0<sep<0.50 opposite edgeb)
+L46371=geomGetLength(L55955 keep>1.50)
+errorLayer(L46371 "METAL4.SP.1.3: Metal4 to Metal4 spacing must be >= 0.50 um")
+
+L76716=geomWidth(Metal5 keep>1.50)
+L22889=geomGetEdge(Metal5 coincident L76716)
+L69716=drc(Metal5 L22889 0<sep<0.50 opposite edgeb)
+L3166=geomGetLength(L69716 keep>1.50)
+errorLayer(L3166 "METAL5.SP.1.3: Metal5 to Metal5 spacing must be >= 0.50 um")
+
+L7861=geomWidth(Metal6 keep>1.50)
+L89373=geomGetEdge(Metal6 coincident L7861)
+L98656=drc(Metal6 L89373 0<sep<0.50 opposite edgeb)
+L56388=geomGetLength(L98656 keep>1.50)
+errorLayer(L56388 "METAL6.SP.1.3: Metal6 to Metal6 spacing must be >= 0.50 um")
+
+L25142=geomWidth(Metal7 keep>1.50)
+L50694=geomGetEdge(Metal7 coincident L25142)
+L27719=drc(Metal7 L50694 0<sep<0.50 opposite edgeb)
+L21918=geomGetLength(L27719 keep>1.50)
+errorLayer(L21918 "METAL7.SP.1.3: Metal7 to Metal7 spacing must be >= 0.50 um")
+
+L42423=geomWidth(Metal8 keep>1.50)
+L1690=geomGetEdge(Metal8 coincident L42423)
+L16660=drc(Metal8 L1690 0<sep<0.50 opposite edgeb)
+L26865=geomGetLength(L16660 keep>1.50)
+errorLayer(L26865 "METAL8.SP.1.2: Metal8 to Metal8 spacing must be >= 0.50 um")
+
+L59704=geomWidth(Metal9 keep>1.50)
+L58745=geomGetEdge(Metal9 coincident L59704)
+L4668=drc(Metal9 L58745 0<sep<0.50 opposite edgeb)
+L94704=geomGetLength(L4668 keep>1.50)
+errorLayer(L94704 "METAL9.SP.1.2: Metal9 to Metal9 spacing must be >= 0.50 um")
+
+L88077=geomWidth(Metal1 keep>3.00)
+L47464=geomGetEdge(Metal1 coincident L88077)
+L65430=drc(Metal1 L47464 0<sep<0.90 opposite edgeb)
+L27321=geomGetLength(L65430 keep>3.00)
+errorLayer(L27321 "METAL1.SP.1.4: Metal1 to Metal1 spacing must be >= 0.90 um")
+
+L70796=geomWidth(Metal2 keep>3.00)
+L83652=geomGetEdge(Metal2 coincident L70796)
+L69454=drc(Metal2 L83652 0<sep<0.90 opposite edgeb)
+L62519=geomGetLength(L69454 keep>3.00)
+errorLayer(L62519 "METAL2.SP.1.4: Metal2 to Metal2 spacing must be >= 0.90 um")
+
+L53515=geomWidth(Metal3 keep>3.00)
+L62917=geomGetEdge(Metal3 coincident L53515)
+L50332=drc(Metal3 L62917 0<sep<0.90 opposite edgeb)
+L6466=geomGetLength(L50332 keep>3.00)
+errorLayer(L6466 "METAL3.SP.1.4: Metal3 to Metal3 spacing must be >= 0.90 um")
+
+L36234=geomWidth(Metal4 keep>3.00)
+L62363=geomGetEdge(Metal4 coincident L36234)
+L78828=drc(Metal4 L62363 0<sep<0.90 opposite edgeb)
+L24188=geomGetLength(L78828 keep>3.00)
+errorLayer(L24188 "METAL4.SP.1.4: Metal4 to Metal4 spacing must be >= 0.90 um")
+
+L18953=geomWidth(Metal5 keep>3.00)
+L87420=geomGetEdge(Metal5 coincident L18953)
+L80342=drc(Metal5 L87420 0<sep<0.90 opposite edgeb)
+L99072=geomGetLength(L80342 keep>3.00)
+errorLayer(L99072 "METAL5.SP.1.4: Metal5 to Metal5 spacing must be >= 0.90 um")
+
+L65624=geomWidth(Metal6 keep>3.00)
+L28678=geomGetEdge(Metal6 coincident L65624)
+L36583=drc(Metal6 L28678 0<sep<0.90 opposite edgeb)
+L98484=geomGetLength(L36583 keep>3.00)
+errorLayer(L98484 "METAL6.SP.1.4: Metal6 to Metal6 spacing must be >= 0.90 um")
+
+L82905=geomWidth(Metal7 keep>3.00)
+L89614=geomGetEdge(Metal7 coincident L82905)
+L40909=drc(Metal7 L89614 0<sep<0.90 opposite edgeb)
+L23053=geomGetLength(L40909 keep>3.00)
+errorLayer(L23053 "METAL7.SP.1.4: Metal7 to Metal7 spacing must be >= 0.90 um")
+
+L186=geomWidth(Metal8 keep>3.00)
+L56898=geomGetEdge(Metal8 coincident L186)
+L50538=drc(Metal8 L56898 0<sep<0.90 opposite edgeb)
+L85530=geomGetLength(L50538 keep>3.00)
+errorLayer(L85530 "METAL8.SP.1.3: Metal8 to Metal8 spacing must be >= 0.90 um")
+
+L17467=geomWidth(Metal9 keep>3.00)
+L11585=geomGetEdge(Metal9 coincident L17467)
+L38299=drc(Metal9 L11585 0<sep<0.90 opposite edgeb)
+L7020=geomGetLength(L38299 keep>3.00)
+errorLayer(L7020 "METAL9.SP.1.3: Metal9 to Metal9 spacing must be >= 0.90 um")
+
+L16403=geomWidth(Metal1 keep>4.50)
+L91322=geomGetEdge(Metal1 coincident L16403)
+L3443=drc(Metal1 L91322 0<sep<1.50 opposite edgeb)
+L23127=geomGetLength(L3443 keep>4.50)
+errorLayer(L23127 "METAL1.SP.1.5: Metal1 to Metal1 spacing must be >= 1.50 um")
+
+L99122=geomWidth(Metal2 keep>4.50)
+L99258=geomGetEdge(Metal2 coincident L99122)
+L20652=drc(Metal2 L99258 0<sep<1.50 opposite edgeb)
+L44566=geomGetLength(L20652 keep>4.50)
+errorLayer(L44566 "METAL2.SP.1.5: Metal2 to Metal2 spacing must be >= 1.50 um")
+
+L81841=geomWidth(Metal3 keep>4.50)
+L30374=geomGetEdge(Metal3 coincident L81841)
+L52329=drc(Metal3 L30374 0<sep<1.50 opposite edgeb)
+L53154=geomGetLength(L52329 keep>4.50)
+errorLayer(L53154 "METAL3.SP.1.5: Metal3 to Metal3 spacing must be >= 1.50 um")
+
+L64560=geomWidth(Metal4 keep>4.50)
+L29820=geomGetEdge(Metal4 coincident L64560)
+L17124=drc(Metal4 L29820 0<sep<1.50 opposite edgeb)
+L17970=geomGetLength(L17124 keep>4.50)
+errorLayer(L17970 "METAL4.SP.1.5: Metal4 to Metal4 spacing must be >= 1.50 um")
+
+L47279=geomWidth(Metal5 keep>4.50)
+L29917=geomGetEdge(Metal5 coincident L47279)
+L77612=drc(Metal5 L29917 0<sep<1.50 opposite edgeb)
+L24648=geomGetLength(L77612 keep>4.50)
+errorLayer(L24648 "METAL5.SP.1.5: Metal5 to Metal5 spacing must be >= 1.50 um")
+
+L37298=geomWidth(Metal6 keep>4.50)
+L81402=geomGetEdge(Metal6 coincident L37298)
+L16976=drc(Metal6 L81402 0<sep<1.50 opposite edgeb)
+L85140=geomGetLength(L16976 keep>4.50)
+errorLayer(L85140 "METAL6.SP.1.5: Metal6 to Metal6 spacing must be >= 1.50 um")
+
+L54579=geomWidth(Metal7 keep>4.50)
+L36890=geomGetEdge(Metal7 coincident L54579)
+L66498=drc(Metal7 L36890 0<sep<1.50 opposite edgeb)
+L3476=geomGetLength(L66498 keep>4.50)
+errorLayer(L3476 "METAL7.SP.1.5: Metal7 to Metal7 spacing must be >= 1.50 um")
+
+L71860=geomWidth(Metal8 keep>4.50)
+L88537=geomGetEdge(Metal8 coincident L71860)
+L15574=drc(Metal8 L88537 0<sep<1.50 opposite edgeb)
+L67887=geomGetLength(L15574 keep>4.50)
+errorLayer(L67887 "METAL8.SP.1.4: Metal8 to Metal8 spacing must be >= 1.50 um")
+
+L89141=geomWidth(Metal9 keep>4.50)
+L71203=geomGetEdge(Metal9 coincident L89141)
+L93461=drc(Metal9 L71203 0<sep<1.50 opposite edgeb)
+L3146=geomGetLength(L93461 keep>4.50)
+errorLayer(L3146 "METAL9.SP.1.4: Metal9 to Metal9 spacing must be >= 1.50 um")
+
+L86966=geomWidth(Metal1 keep>7.50)
+L67549=geomGetEdge(Metal1 coincident L86966)
+L96014=drc(Metal1 L67549 0<sep<2.50 opposite edgeb)
+L92236=geomGetLength(L96014 keep>7.50)
+errorLayer(L92236 "METAL1.SP.1.6: Metal1 to Metal1 spacing must be >= 2.50 um")
+
+L69685=geomWidth(Metal2 keep>7.50)
+L31897=geomGetEdge(Metal2 coincident L69685)
+L84176=drc(Metal2 L31897 0<sep<2.50 opposite edgeb)
+L78862=geomGetLength(L84176 keep>7.50)
+errorLayer(L78862 "METAL2.SP.1.6: Metal2 to Metal2 spacing must be >= 2.50 um")
+
+L52404=geomWidth(Metal3 keep>7.50)
+L17221=geomGetEdge(Metal3 coincident L52404)
+L51586=drc(Metal3 L17221 0<sep<2.50 opposite edgeb)
+L55755=geomGetLength(L51586 keep>7.50)
+errorLayer(L55755 "METAL3.SP.1.6: Metal3 to Metal3 spacing must be >= 2.50 um")
+
+L35123=geomWidth(Metal4 keep>7.50)
+L16667=geomGetEdge(Metal4 coincident L35123)
+L81400=drc(Metal4 L16667 0<sep<2.50 opposite edgeb)
+L39591=geomGetLength(L81400 keep>7.50)
+errorLayer(L39591 "METAL4.SP.1.6: Metal4 to Metal4 spacing must be >= 2.50 um")
+
+L17842=geomWidth(Metal5 keep>7.50)
+L41724=geomGetEdge(Metal5 coincident L17842)
+L4655=drc(Metal5 L41724 0<sep<2.50 opposite edgeb)
+L90680=geomGetLength(L4655 keep>7.50)
+errorLayer(L90680 "METAL5.SP.1.6: Metal5 to Metal5 spacing must be >= 2.50 um")
+
+L66735=geomWidth(Metal6 keep>7.50)
+L74374=geomGetEdge(Metal6 coincident L66735)
+L17817=drc(Metal6 L74374 0<sep<2.50 opposite edgeb)
+L70678=geomGetLength(L17817 keep>7.50)
+errorLayer(L70678 "METAL6.SP.1.6: Metal6 to Metal6 spacing must be >= 2.50 um")
+
+L84016=geomWidth(Metal7 keep>7.50)
+L69529=geomGetEdge(Metal7 coincident L84016)
+L43284=drc(Metal7 L69529 0<sep<2.50 opposite edgeb)
+L36691=geomGetLength(L43284 keep>7.50)
+errorLayer(L36691 "METAL7.SP.1.6: Metal7 to Metal7 spacing must be >= 2.50 um")
+
+L1297=geomWidth(Metal8 keep>7.50)
+L17378=geomGetEdge(Metal8 coincident L1297)
+L12896=drc(Metal8 L17378 0<sep<2.50 opposite edgeb)
+L65390=geomGetLength(L12896 keep>7.50)
+errorLayer(L65390 "METAL8.SP.1.5: Metal8 to Metal8 spacing must be >= 2.50 um")
+
+L18578=geomWidth(Metal9 keep>7.50)
+L65889=geomGetEdge(Metal9 coincident L18578)
+L70699=drc(Metal9 L65889 0<sep<2.50 opposite edgeb)
+L89413=geomGetLength(L70699 keep>7.50)
+errorLayer(L89413 "METAL9.SP.1.5: Metal9 to Metal9 spacing must be >= 2.50 um")
+
+L51265=geomGetNon90(Metal1)
+L28380=geomGetLength(L51265 keep<0.18)
+errorLayer(L28380
+    "METAL1.L.1: Metal1 non-90 degree segments must be >= 0.18 um")
+
+L51296=geomGetNon90(Metal2)
+L2791=geomGetLength(L51296 keep<0.20)
+errorLayer(L2791 "METAL2.L.1: Metal2 non-90 degree segments must be >= 0.20 um")
+
+L51327=geomGetNon90(Metal3)
+L19362=geomGetLength(L51327 keep<0.20)
+errorLayer(L19362
+    "METAL3.L.1: Metal3 non-90 degree segments must be >= 0.20 um")
+
+L51358=geomGetNon90(Metal4)
+L21632=geomGetLength(L51358 keep<0.20)
+errorLayer(L21632
+    "METAL4.L.1: Metal4 non-90 degree segments must be >= 0.20 um")
+
+L51389=geomGetNon90(Metal5)
+L95330=geomGetLength(L51389 keep<0.20)
+errorLayer(L95330
+    "METAL5.L.1: Metal5 non-90 degree segments must be >= 0.20 um")
+
+L51420=geomGetNon90(Metal6)
+L10276=geomGetLength(L51420 keep<0.20)
+errorLayer(L10276
+    "METAL6.L.1: Metal6 non-90 degree segments must be >= 0.20 um")
+
+L51451=geomGetNon90(Metal7)
+L83974=geomGetLength(L51451 keep<0.20)
+errorLayer(L83974
+    "METAL7.L.1: Metal7 non-90 degree segments must be >= 0.20 um")
+
+L99784=drc(Metal1 L51265 0<sep<0.16)
+errorLayer(L99784
+    "METAL1.SP.2: Metal1 to bent Metal1 spacing must be >= 0.16 um")
+
+L22162=drc(L51265 width<0.14)
+errorLayer(L22162
+    "METAL1.W.3: Bent Metal1 (45 degree angle) width must be >= 0.14")
+
+L3261=drc(Metal2 L51296 0<sep<0.18)
+errorLayer(L3261
+    "METAL2.SP.2: Metal2 to bent Metal2 spacing must be >= 0.18 um")
+
+L982=drc(L51296 width<0.16)
+errorLayer(L982
+    "METAL2.W.3: Bent Metal2 (45 degree angle) width must be >= 0.16")
+
+L35605=drc(Metal3 L51327 0<sep<0.18)
+errorLayer(L35605
+    "METAL3.SP.2: Metal3 to bent Metal3 spacing must be >= 0.18 um")
+
+L9101=drc(L51327 width<0.16)
+errorLayer(L9101
+    "METAL3.W.3: Bent Metal3 (45 degree angle) width must be >= 0.16")
+
+L28584=drc(Metal4 L51358 0<sep<0.18)
+errorLayer(L28584
+    "METAL4.SP.2: Metal4 to bent Metal4 spacing must be >= 0.18 um")
+
+L79313=drc(L51358 width<0.16)
+errorLayer(L79313
+    "METAL4.W.3: Bent Metal4 (45 degree angle) width must be >= 0.16")
+
+L74523=drc(Metal5 L51389 0<sep<0.18)
+errorLayer(L74523
+    "METAL5.SP.2: Metal5 to bent Metal5 spacing must be >= 0.18 um")
+
+L99569=drc(L51389 width<0.16)
+errorLayer(L99569
+    "METAL5.W.3: Bent Metal5 (45 degree angle) width must be >= 0.16")
+
+L64578=drc(Metal6 L51420 0<sep<0.18)
+errorLayer(L64578
+    "METAL6.SP.2: Metal6 to bent Metal6 spacing must be >= 0.18 um")
+
+L63757=drc(L51420 width<0.16)
+errorLayer(L63757
+    "METAL6.W.3: Bent Metal6 (45 degree angle) width must be >= 0.16")
+
+L38529=drc(Metal7 L51451 0<sep<0.18)
+errorLayer(L38529
+    "METAL7.SP.2: Metal7 to bent Metal7 spacing must be >= 0.18 um")
+
+L84875=drc(L51451 width<0.16)
+errorLayer(L84875
+    "METAL7.W.3: Bent Metal7 (45 degree angle) width must be >= 0.16")
+
+L96360=drc(Metal1 area<0.07)
+errorLayer(L96360 "METAL1.A.1: Metal1 area must be >= 0.07 um")
+
+L13610=drc(Metal2 area<0.08)
+errorLayer(L13610 "METAL2.A.1: Metal2 area must be >= 0.08 um")
+
+L30891=drc(Metal3 area<0.08)
+errorLayer(L30891 "METAL3.A.1: Metal3 area must be >= 0.08 um")
+
+L48172=drc(Metal4 area<0.08)
+errorLayer(L48172 "METAL4.A.1: Metal4 area must be >= 0.08 um")
+
+L65454=drc(Metal5 area<0.08)
+errorLayer(L65454 "METAL5.A.1: Metal5 area must be >= 0.08 um")
+
+L82734=drc(Metal6 area<0.08)
+errorLayer(L82734 "METAL6.A.1: Metal6 area must be >= 0.08 um")
+
+L15=drc(Metal7 area<0.08)
+errorLayer(L15 "METAL7.A.1: Metal7 area must be >= 0.08 um")
+
+L11336=drc(Metal8 area<0.2)
+errorLayer(L11336 "METAL8.A.1: Metal8 area must be >= 0.2 um")
+
+L40023=drc(Metal9 area<0.2)
+errorLayer(L40023 "METAL9.A.1: Metal9 area must be >= 0.2 um")
+
+L36752=geomContactCheck(Via1 width==0.14 length==0.14 ignore)
+errorLayer(L36752 "VIA1.W.1: Via1 shapes must be 0.14x0.14 rectangles")
+
+L25807=drc(Via1 sepNotch<0.15)
+errorLayer(L25807 "VIA1.SP.1: Via1 to Via1 spacing must be >= 0.15 um")
+
+L15302=geomSize(Via1 0.10)
+L84599=geomSize(L15302 -0.459 downUp)
+L25088=geomAnd(L84599 Via1)
+L69629=drc(L25088 sep<0.20)
+errorLayer(L69629 "VIA1.SP.2: Via1 to Via1 spacing must be >= 0.20 um")
+
+L28751=geomContactCheck(Via2 width==0.14 length==0.14 ignore)
+errorLayer(L28751 "VIA2.W.1: Via2 shapes must be 0.14x0.14 rectangles")
+
+L8370=drc(Via2 sepNotch<0.15)
+errorLayer(L8370 "VIA2.SP.1: Via2 to Via2 spacing must be >= 0.15 um")
+
+L11621=geomSize(Via2 0.10)
+L27899=geomSize(L11621 -0.459 downUp)
+L88103=geomAnd(L27899 Via2)
+L55498=drc(L88103 sep<0.20)
+errorLayer(L55498 "VIA2.SP.2: Via2 to Via2 spacing must be >= 0.20 um")
+
+L20750=geomContactCheck(Via3 width==0.14 length==0.14 ignore)
+errorLayer(L20750 "VIA3.W.1: Via3 shapes must be 0.14x0.14 rectangles")
+
+L42547=drc(Via3 sepNotch<0.15)
+errorLayer(L42547 "VIA3.SP.1: Via3 to Via3 spacing must be >= 0.15 um")
+
+L92060=geomSize(Via3 0.10)
+L21079=geomSize(L92060 -0.459 downUp)
+L93896=geomAnd(L21079 Via3)
+L30223=drc(L93896 sep<0.20)
+errorLayer(L30223 "VIA3.SP.2: Via3 to Via3 spacing must be >= 0.20 um")
+
+L54547=geomContactCheck(Via4 width==0.14 length==0.14 ignore)
+errorLayer(L54547 "VIA4.W.1: Via4 shapes must be 0.14x0.14 rectangles")
+
+L76724=drc(Via4 sepNotch<0.15)
+errorLayer(L76724 "VIA4.SP.1: Via4 to Via4 spacing must be >= 0.15 um")
+
+L95741=geomSize(Via4 0.10)
+L94846=geomSize(L95741 -0.459 downUp)
+L34019=geomAnd(L94846 Via4)
+L77709=drc(L34019 sep<0.20)
+errorLayer(L77709 "VIA4.SP.2: Via4 to Via4 spacing must be >= 0.20 um")
+
+L62548=geomContactCheck(Via5 width==0.14 length==0.14 ignore)
+errorLayer(L62548 "VIA5.W.1: Via5 shapes must be 0.14x0.14 rectangles")
+
+L10901=drc(Via5 sepNotch<0.15)
+errorLayer(L10901 "VIA5.SP.1: Via5 to Via5 spacing must be >= 0.15 um")
+
+L99422=geomSize(Via5 0.10)
+L51547=geomSize(L99422 -0.459 downUp)
+L22113=geomAnd(L51547 Via5)
+L53591=drc(L22113 sep<0.20)
+errorLayer(L53591 "VIA5.SP.2: Via5 to Via5 spacing must be >= 0.20 um")
+
+L29451=geomContactCheck(Via6 width==0.14 length==0.14 ignore)
+errorLayer(L29451 "VIA6.W.1: Via6 shapes must be 0.14x0.14 rectangles")
+
+L45078=drc(Via6 sepNotch<0.15)
+errorLayer(L45078 "VIA6.SP.1: Via6 to Via6 spacing must be >= 0.15 um")
+
+L64193=geomSize(Via6 0.10)
+L37939=geomSize(L64193 -0.459 downUp)
+L13373=geomAnd(L37939 Via6)
+L93571=drc(L13373 sep<0.20)
+errorLayer(L93571 "VIA6.SP.2: Via6 to Via6 spacing must be >= 0.20 um")
+
+L69194=geomContactCheck(Via7 width==0.36 length==0.36 ignore)
+errorLayer(L69194 "VIA7.W.1: Via7 shapes must be 0.36x0.36 rectangles")
+
+L89994=drc(Via7 sepNotch<0.36)
+errorLayer(L89994 "VIA7.SP.1: Via7 to Via7 spacing must be >= 0.36 um")
+
+L61193=geomContactCheck(Via8 width==0.36 length==0.36 ignore)
+errorLayer(L61193 "VIA8.W.1: Via8 shapes must be 0.36x0.36 rectangles")
+
+L55817=drc(Via8 sepNotch<0.36)
+errorLayer(L55817 "VIA8.SP.1: Via8 to Via8 spacing must be >= 0.36 um")
+
+L50933=geomAndNot(Via1 metal1_conn)
+errorLayer(L50933 "VIA1.E.1: Metal1 to Via1 enclosure must be >= 0.005 um")
+L44737=drc(metal1_conn Via1 enc<0.005)
+errorLayer(L44737 "VIA1.E.1: Metal1 to Via1 enclosure must be >= 0.005 um")
+
+L60632=geomAnd(Via1 metal1_conn)
+L21185=drc(metal1_conn L60632 venc(enc1<0.06 enc2<0 enc3<0.06 enc4<0))
+errorLayer(L21185
+    "VIA1.E.2: Metal1 to Via1 enclosure on opposite sides must be >= 0.06 um")
+
+L95989=geomAndNot(Via2 metal2_conn)
+errorLayer(L95989 "VIA2.E.1: Metal2 to Via2 enclosure must be >= 0.005 um")
+L48989=drc(metal2_conn Via2 enc<0.005)
+errorLayer(L48989 "VIA2.E.1: Metal2 to Via2 enclosure must be >= 0.005 um")
+
+L5688=geomAnd(Via2 metal2_conn)
+L29830=drc(metal2_conn L5688 venc(enc1<0.06 enc2<0 enc3<0.06 enc4<0))
+errorLayer(L29830
+    "VIA2.E.2: Metal2 to Via2 enclosure on opposite sides must be >= 0.06 um")
+
+L26251=geomAndNot(Via3 metal3_conn)
+errorLayer(L26251 "VIA3.E.1: Metal3 to Via3 enclosure must be >= 0.005 um")
+L24581=drc(metal3_conn Via3 enc<0.005)
+errorLayer(L24581 "VIA3.E.1: Metal3 to Via3 enclosure must be >= 0.005 um")
+
+L50744=geomAnd(Via3 metal3_conn)
+L98948=drc(metal3_conn L50744 venc(enc1<0.06 enc2<0 enc3<0.06 enc4<0))
+errorLayer(L98948
+    "VIA3.E.2: Metal3 to Via3 enclosure on opposite sides must be >= 0.06 um")
+
+L81195=geomAndNot(Via4 metal4_conn)
+errorLayer(L81195 "VIA4.E.1: Metal4 to Via4 enclosure must be >= 0.005 um")
+L69145=drc(metal4_conn Via4 enc<0.005)
+errorLayer(L69145 "VIA4.E.1: Metal4 to Via4 enclosure must be >= 0.005 um")
+
+L95800=geomAnd(Via4 metal4_conn)
+L79493=drc(metal4_conn L95800 venc(enc1<0.06 enc2<0 enc3<0.06 enc4<0))
+errorLayer(L79493
+    "VIA4.E.2: Metal4 to Via4 enclosure on opposite sides must be >= 0.06 um")
+
+L36139=geomAndNot(Via5 metal5_conn)
+errorLayer(L36139 "VIA5.E.1: Metal5 to Via5 enclosure must be >= 0.005 um")
+L4425=drc(metal5_conn Via5 enc<0.005)
+errorLayer(L4425 "VIA5.E.1: Metal5 to Via5 enclosure must be >= 0.005 um")
+
+L40856=geomAnd(Via5 metal5_conn)
+L23289=drc(metal5_conn L40856 venc(enc1<0.06 enc2<0 enc3<0.06 enc4<0))
+errorLayer(L23289
+    "VIA5.E.2: Metal5 to Via5 enclosure on opposite sides must be >= 0.06 um")
+
+L91083=geomAndNot(Via6 metal6_conn)
+errorLayer(L91083 "VIA6.E.1: Metal6 to Via6 enclosure must be >= 0.005 um")
+L89301=drc(metal6_conn Via6 enc<0.005)
+errorLayer(L89301 "VIA6.E.1: Metal6 to Via6 enclosure must be >= 0.005 um")
+
+L85912=geomAnd(Via6 metal6_conn)
+L42744=drc(metal6_conn L85912 venc(enc1<0.06 enc2<0 enc3<0.06 enc4<0))
+errorLayer(L42744
+    "VIA6.E.2: Metal6 to Via6 enclosure on opposite sides must be >= 0.06 um")
+
+L46027=geomAndNot(Via7 metal7_conn)
+errorLayer(L46027 "VIA7.E.1: Metal7 to Via7 enclosure must be >= 0.03 um")
+L67335=drc(metal7_conn Via7 enc<0.03)
+errorLayer(L67335 "VIA7.E.1: Metal7 to Via7 enclosure must be >= 0.03 um")
+
+L36328=geomAnd(Via7 metal7_conn)
+L53758=drc(metal7_conn L36328 venc(enc1<0.08 enc2<0 enc3<0.08 enc4<0))
+errorLayer(L53758
+    "VIA7.E.2: Metal7 to Via7 enclosure on opposite sides must be >= 0.08 um")
+
+L99029=geomAndNot(Via8 metal8_conn)
+errorLayer(L99029 "VIA8.E.1: Metal8 to Via8 enclosure must be >= 0.03 um")
+L33111=drc(metal8_conn Via8 enc<0.03)
+errorLayer(L33111 "VIA8.E.1: Metal8 to Via8 enclosure must be >= 0.03 um")
+
+L91272=geomAnd(Via8 metal8_conn)
+L53118=drc(metal8_conn L91272 venc(enc1<0.08 enc2<0 enc3<0.08 enc4<0))
+errorLayer(L53118
+    "VIA8.E.2: Metal8 to Via8 enclosure on opposite sides must be >= 0.08 um")
+
+errorLayer(rule_VIA1_X_1
+    "VIA1.X.1: Metal1 must connect to Metal2 with >= 2 Via1 spaced < 0.30 um or >= 4 Via1 spaced < 0.60 um")
+
+errorLayer(rule_VIA2_X_1
+    "VIA2.X.1: Metal2 must connect to Metal3 with >= 2 Via2 spaced < 0.30 um or >= 4 Via2 spaced < 0.60 um")
+
+errorLayer(rule_VIA3_X_1
+    "VIA3.X.1: Metal3 must connect to Metal4 with >= 2 Via3 spaced < 0.30 um or >= 4 Via3 spaced < 0.60 um")
+
+errorLayer(rule_VIA4_X_1
+    "VIA4.X.1: Metal4 must connect to Metal5 with >= 2 Via4 spaced < 0.30 um or >= 4 Via4 spaced < 0.60 um")
+
+errorLayer(rule_VIA5_X_1
+    "VIA5.X.1: Metal5 must connect to Metal6 with >= 2 Via5 spaced < 0.30 um or >= 4 Via5 spaced < 0.60 um")
+
+errorLayer(rule_VIA6_X_1
+    "VIA6.X.1: Metal6 must connect to Metal7 with >= 2 Via6 spaced < 0.30 um or >= 4 Via6 spaced < 0.60 um")
+
+errorLayer(rule_VIA1_X_2
+    "VIA1.X.2: Metal1 must connect to Metal2 with >= 4 Via1 spaced < 0.30 um or >= 9 Via1 spaced < 0.60 um")
+
+errorLayer(rule_VIA2_X_2
+    "VIA2.X.2: Metal2 must connect to Metal3 with >= 4 Via2 spaced < 0.30 um or >= 9 Via2 spaced < 0.60 um")
+
+errorLayer(rule_VIA3_X_2
+    "VIA3.X.2: Metal3 must connect to Metal4 with >= 4 Via3 spaced < 0.30 um or >= 9 Via3 spaced < 0.60 um")
+
+errorLayer(rule_VIA4_X_2
+    "VIA4.X.2: Metal4 must connect to Metal5 with >= 4 Via4 spaced < 0.30 um or >= 9 Via4 spaced < 0.60 um")
+
+errorLayer(rule_VIA5_X_2
+    "VIA5.X.2: Metal5 must connect to Metal6 with >= 4 Via5 spaced < 0.30 um or >= 9 Via5 spaced < 0.60 um")
+
+errorLayer(rule_VIA6_X_2
+    "VIA6.X.2: Metal6 must connect to Metal7 with >= 4 Via6 spaced < 0.30 um or >= 9 Via6 spaced < 0.60 um")
+
+L93572=geomAnd(Nwell ntap)
+L72697=geomAnd(Nwell psd)
+L90704=geomSizeAnd(L93572 Nwell 0.6 25.0)
+L90674=geomAndNot(L72697 L90704)
+errorLayer(L90674 "LATCHUP.1: P+SD to NW tap spacing must be <= 25.0 um")
+
+L79414=geomAndNot(ptap Nwell)
+L96072=geomOr(NPNdummy Nwell)
+L26270=geomOr(L96072 PNPdummy)
+L6461=geomAndNot(nsd L26270)
+L46334=geomNot(Nwell)
+L24977=geomSizeAnd(L79414 L46334 0.42 25.0)
+L37491=geomAndNot(L6461 L24977)
+errorLayer(L37491 "LATCHUP.2: N+SD to Psub tap spacing must be <= 25.0 um")
+
+L9400=geomStraddle(nmos_io_esd pmos_io_esd)
+L30456=geomStraddle(pmos_io_esd nmos_io_esd)
+L74391=geomAnd(L30456 L9400)
+errorLayer(L74391
+    "LATCHUP.3: NMOS (I/O or ESD) to PMOS (I/O or ESD) spacing must be >= 18.0 um")
+L94851=drc(nmos_io_esd pmos_io_esd sep<18.0)
+errorLayer(L94851
+    "LATCHUP.3: NMOS (I/O or ESD) to PMOS (I/O or ESD) spacing must be >= 18.0 um")
+
+L50607=drc(nmos_io_esd pmos_io_esd sep<50.0)
+L63942=geomAndNot(L50607 ntap)
+L52832=geomButtOrOver(L63942 nmos_io_esd)
+L42370=geomButtOrOver(L52832 pmos_io_esd)
+errorLayer(L42370
+    "LATCHUP.3: NMOS (I/O or ESD) to PMOS (I/O or ESD) spacing must be >= 50.0 um when not blocked by a double guard ring")
+L16900=geomAndNot(L50607 ptap)
+L19258=geomButtOrOver(L16900 nmos_io_esd)
+L69963=geomButtOrOver(L19258 pmos_io_esd)
+errorLayer(L69963
+    "LATCHUP.3: NMOS (I/O or ESD) to PMOS (I/O or ESD) spacing must be >= 50.0 um when not blocked by a double guard ring")
+
+L2166=geomAndNot(Metal1_slot Bondpad)
+L71949=drc(L2166 width<2.0)
+errorLayer(L71949
+    "MSLOT1.W.1_MSLOT1.L.1: Metal1 Slot width/length must be >= 2.0 um")
+
+L67120=drc(L2166 sepNotch<0.12)
+errorLayer(L67120
+    "MSLOT1.SP.1: Metal1 Slot to Metal1 Slot spacing must be >= 0.12 um")
+
+L13321=geomAndNot(Metal2_slot Bondpad)
+L23404=drc(L13321 width<2.0)
+errorLayer(L23404
+    "MSLOT2.W.1_MSLOT2.L.1: Metal2 Slot width/length must be >= 2.0 um")
+
+L75151=drc(L13321 sepNotch<0.14)
+errorLayer(L75151
+    "MSLOT2.SP.1: Metal2 Slot to Metal2 Slot spacing must be >= 0.14 um")
+
+L61512=geomAndNot(Metal3_slot Bondpad)
+L5161=drc(L61512 width<2.0)
+errorLayer(L5161
+    "MSLOT3.W.1_MSLOT3.L.1: Metal3 Slot width/length must be >= 2.0 um")
+
+L76484=drc(L61512 sepNotch<0.14)
+errorLayer(L76484
+    "MSLOT3.SP.1: Metal3 Slot to Metal3 Slot spacing must be >= 0.14 um")
+
+L90297=geomAndNot(Metal4_slot Bondpad)
+L83531=drc(L90297 width<2.0)
+errorLayer(L83531
+    "MSLOT4.W.1_MSLOT4.L.1: Metal4 Slot width/length must be >= 2.0 um")
+
+L2458=drc(L90297 sepNotch<0.14)
+errorLayer(L2458
+    "MSLOT4.SP.1: Metal4 Slot to Metal4 Slot spacing must be >= 0.14 um")
+
+L25190=geomAndNot(Metal5_slot Bondpad)
+L40481=drc(L25190 width<2.0)
+errorLayer(L40481
+    "MSLOT5.W.1_MSLOT5.L.1: Metal5 Slot width/length must be >= 2.0 um")
+
+L47942=drc(L25190 sepNotch<0.14)
+errorLayer(L47942
+    "MSLOT5.SP.1: Metal5 Slot to Metal5 Slot spacing must be >= 0.14 um")
+
+L26619=geomAndNot(Metal6_slot Bondpad)
+L80566=drc(L26619 width<2.0)
+errorLayer(L80566
+    "MSLOT6.W.1_MSLOT6.L.1: Metal6 Slot width/length must be >= 2.0 um")
+
+L30267=drc(L26619 sepNotch<0.14)
+errorLayer(L30267
+    "MSLOT6.SP.1: Metal6 Slot to Metal6 Slot spacing must be >= 0.14 um")
+
+L78428=geomAndNot(Metal7_slot Bondpad)
+L16309=drc(L78428 width<2.0)
+errorLayer(L16309
+    "MSLOT7.W.1_MSLOT7.L.1: Metal7 Slot width/length must be >= 2.0 um")
+
+L6554=drc(L78428 sepNotch<0.14)
+errorLayer(L6554
+    "MSLOT7.SP.1: Metal7 Slot to Metal7 Slot spacing must be >= 0.14 um")
+
+L37059=geomAndNot(Metal8_slot Bondpad)
+L76788=drc(L37059 width<2.0)
+errorLayer(L76788
+    "MSLOT8.W.1_MSLOT8.L.1: Metal8 Slot width/length must be >= 2.0 um")
+
+L14834=drc(L37059 sepNotch<0.44)
+errorLayer(L14834
+    "MSLOT8.SP.1: Metal8 Slot to Metal8 Slot spacing must be >= 0.44 um")
+
+L14750=geomAndNot(Metal9_slot Bondpad)
+L69461=drc(L14750 width<2.0)
+errorLayer(L69461
+    "MSLOT9.W.1_MSLOT9.L.1: Metal9 Slot width/length must be >= 2.0 um")
+
+L80019=drc(L14750 sepNotch<0.44)
+errorLayer(L80019
+    "MSLOT9.SP.1: Metal9 Slot to Metal9 Slot spacing must be >= 0.44 um")
+
+L6455=geomAnd(ESDdummy Oxide)
+L15520=geomGetEdge(Poly inside L6455)
+L9671=geomGetLength(L15520 15.0<=ignore<=65.0)
+errorLayer(L9671 "ESD.1: ESD gate width must be >= 15.0 um and <= 65.0 um")
+
+L27760=geomAnd(ESDdummy rule_ESD_4_nmos)
+errorLayer(L27760 "ESD.4: N+ source should connect to Pad or Bulk")
+
+L74802=geomAnd(ESDdummy rule_ESD_4_pmos)
+errorLayer(L74802 "ESD.4: P+ source should connect to Pad or Nwell")
+
+L36673=geomAnd(ESDdummy rule_ESD_5)
+errorLayer(L36673 "ESD.5: NMOS I/O and ESD devices must be inside P+ rings")
+
+L36642=geomAnd(ESDdummy rule_ESD_6)
+errorLayer(L36642 "ESD.6: PMOS I/O and ESD devices must be inside N+ rings")
+
+L28493=geomAnd(ESDdummy rule_ESD_7_nmos)
+errorLayer(L28493 "ESD.7: P+ taps can NOT butt NMOS I/O and ESD devices")
+
+L81451=geomAnd(ESDdummy rule_ESD_7_pmos)
+errorLayer(L81451 "ESD.7: N+ taps can NOT butt PMOS I/O and ESD devices")
+
+L75188=geomAnd(ESDdummy rule_ESD_8_nmos)
+errorLayer(L75188
+    "ESD.8: N+ drains must be non-salicided (except Contact area)")
+
+L22230=geomAnd(ESDdummy rule_ESD_8_pmos)
+errorLayer(L22230
+    "ESD.8: P+ drains must be non-salicided (except Contact area)")
+
+L82127=geomGetEdge(SiProt inside L6455)
+L80475=drc(L15520 L82127 ovlp<0.05)
+errorLayer(L80475 "ESD.11: SiProt to Poly gate overlap must be >= 0.05 um")
+
+L35440=drc(L82127 L15520 enc<1.8)
+errorLayer(L35440 "ESD.12: SiProt to Poly gate enclosure must be >= 1.8 um")
+
+L43253=geomAnd(ESDdummy SiProt)
+L5517=drc(L6455 L43253 ovlp<1.8)
+errorLayer(L5517 "ESD.13: SiProt to Oxide overlap must be >= 1.8 um")
+
+L75100=geomAnd(ESDdummy Poly)
+L20590=geomGetEdge(Oxide inside L75100)
+L25924=geomGetLength(L20590 ignore==0.3)
+errorLayer(L25924 "ESD.14: ESD gate length must be == 0.3 um")
+
+L34304=geomAnd(Cont L6455)
+L68066=geomSize(L34304 -0.005 edges)
+L14423=geomSize(L15520 -0.005 edges)
+L48710=geomAnd(L14423 L68066)
+errorLayer(L48710 "ESD.15: Poly gate to Cont spacing must be >= 0.25 um")
+L71792=drc(L34304 L15520 sep<0.25)
+errorLayer(L71792 "ESD.15: Poly gate to Cont spacing must be >= 0.25 um")
+
+errorLayer(rule_Bondpad_Missing_M1 "BONDPAD.O.1: Bondpads must contain Metal 1")
+
+errorLayer(rule_Bondpad_Missing_M2 "BONDPAD.O.1: Bondpads must contain Metal 2")
+
+errorLayer(rule_Bondpad_Missing_M3 "BONDPAD.O.1: Bondpads must contain Metal 3")
+
+errorLayer(rule_Bondpad_Missing_M4 "BONDPAD.O.1: Bondpads must contain Metal 4")
+
+errorLayer(rule_Bondpad_Missing_M5 "BONDPAD.O.1: Bondpads must contain Metal 5")
+
+errorLayer(rule_Bondpad_Missing_M6 "BONDPAD.O.1: Bondpads must contain Metal 6")
+
+errorLayer(rule_Bondpad_Missing_M7 "BONDPAD.O.1: Bondpads must contain Metal 7")
+
+errorLayer(rule_Bondpad_Missing_M8 "BONDPAD.O.1: Bondpads must contain Metal 8")
+
+errorLayer(rule_Bondpad_Missing_M9 "BONDPAD.O.1: Bondpads must contain Metal 9")
+
+errorLayer(rule_Bondpad_Missing_V1
+    "BONDPAD.O.2: Bondpad Metal1/Metal2 intersection must contain Via 1")
+
+errorLayer(rule_Bondpad_Missing_V2
+    "BONDPAD.O.2: Bondpad Metal2/Metal3 intersection must contain Via 2")
+
+errorLayer(rule_Bondpad_Missing_V3
+    "BONDPAD.O.2: Bondpad Metal3/Metal4 intersection must contain Via 3")
+
+errorLayer(rule_Bondpad_Missing_V4
+    "BONDPAD.O.2: Bondpad Metal4/Metal5 intersection must contain Via 4")
+
+errorLayer(rule_Bondpad_Missing_V5
+    "BONDPAD.O.2: Bondpad Metal5/Metal6 intersection must contain Via 5")
+
+errorLayer(rule_Bondpad_Missing_V6
+    "BONDPAD.O.2: Bondpad Metal6/Metal7 intersection must contain Via 6")
+
+errorLayer(rule_Bondpad_Missing_V7
+    "BONDPAD.O.2: Bondpad Metal7/Metal8 intersection must contain Via 7")
+
+errorLayer(rule_Bondpad_Missing_V8
+    "BONDPAD.O.2: Bondpad Metal8/Metal9 intersection must contain Via 8")
+
+L30956=geomStraddle(Bondpad bondpad_metal1_filled)
+L90176=geomAndNot(L30956 bondpad_metal1_filled)
+errorLayer(L90176 "BONDPAD.E.1: Metal1 to Bondpad enclosure must be >= 2.0 um")
+L14482=drc(bondpad_metal1_filled Bondpad enc<2.0)
+errorLayer(L14482 "BONDPAD.E.1: Metal1 to Bondpad enclosure must be >= 2.0 um")
+
+L34381=drc(Metal1 bondpad_metal1_filled sep<3.0)
+errorLayer(L34381
+    "BONDPAD.SP.2: Bondpad Metal1 to Metal1 spacing must be >= 3.0 um")
+
+L81877=geomStraddle(Bondpad bondpad_metal2_filled)
+L89055=geomAndNot(L81877 bondpad_metal2_filled)
+errorLayer(L89055 "BONDPAD.E.1: Metal2 to Bondpad enclosure must be >= 2.0 um")
+L94861=drc(bondpad_metal2_filled Bondpad enc<2.0)
+errorLayer(L94861 "BONDPAD.E.1: Metal2 to Bondpad enclosure must be >= 2.0 um")
+
+L40237=drc(Metal2 bondpad_metal2_filled sep<3.0)
+errorLayer(L40237
+    "BONDPAD.SP.2: Bondpad Metal2 to Metal2 spacing must be >= 3.0 um")
+
+L72586=geomStraddle(Bondpad bondpad_metal3_filled)
+L90439=geomAndNot(L72586 bondpad_metal3_filled)
+errorLayer(L90439 "BONDPAD.E.1: Metal3 to Bondpad enclosure must be >= 2.0 um")
+L63092=drc(bondpad_metal3_filled Bondpad enc<2.0)
+errorLayer(L63092 "BONDPAD.E.1: Metal3 to Bondpad enclosure must be >= 2.0 um")
+
+L46093=drc(Metal3 bondpad_metal3_filled sep<3.0)
+errorLayer(L46093
+    "BONDPAD.SP.2: Bondpad Metal3 to Metal3 spacing must be >= 3.0 um")
+
+L27049=geomStraddle(Bondpad bondpad_metal4_filled)
+L4976=geomAndNot(L27049 bondpad_metal4_filled)
+errorLayer(L4976 "BONDPAD.E.1: Metal4 to Bondpad enclosure must be >= 2.0 um")
+L46251=drc(bondpad_metal4_filled Bondpad enc<2.0)
+errorLayer(L46251 "BONDPAD.E.1: Metal4 to Bondpad enclosure must be >= 2.0 um")
+
+L48051=drc(Metal4 bondpad_metal4_filled sep<3.0)
+errorLayer(L48051
+    "BONDPAD.SP.2: Bondpad Metal4 to Metal4 spacing must be >= 3.0 um")
+
+L85784=geomStraddle(Bondpad bondpad_metal5_filled)
+L40139=geomAndNot(L85784 bondpad_metal5_filled)
+errorLayer(L40139 "BONDPAD.E.1: Metal5 to Bondpad enclosure must be >= 2.0 um")
+L11702=drc(bondpad_metal5_filled Bondpad enc<2.0)
+errorLayer(L11702 "BONDPAD.E.1: Metal5 to Bondpad enclosure must be >= 2.0 um")
+
+L42195=drc(Metal5 bondpad_metal5_filled sep<3.0)
+errorLayer(L42195
+    "BONDPAD.SP.2: Bondpad Metal5 to Metal5 spacing must be >= 3.0 um")
+
+L68679=geomStraddle(Bondpad bondpad_metal6_filled)
+L10708=geomAndNot(L68679 bondpad_metal6_filled)
+errorLayer(L10708 "BONDPAD.E.1: Metal6 to Bondpad enclosure must be >= 2.0 um")
+L97641=drc(bondpad_metal6_filled Bondpad enc<2.0)
+errorLayer(L97641 "BONDPAD.E.1: Metal6 to Bondpad enclosure must be >= 2.0 um")
+
+L36339=drc(Metal6 bondpad_metal6_filled sep<3.0)
+errorLayer(L36339
+    "BONDPAD.SP.2: Bondpad Metal6 to Metal6 spacing must be >= 3.0 um")
+
+L44154=geomStraddle(Bondpad bondpad_metal7_filled)
+L94733=geomAndNot(L44154 bondpad_metal7_filled)
+errorLayer(L94733 "BONDPAD.E.1: Metal7 to Bondpad enclosure must be >= 2.0 um")
+L60312=drc(bondpad_metal7_filled Bondpad enc<2.0)
+errorLayer(L60312 "BONDPAD.E.1: Metal7 to Bondpad enclosure must be >= 2.0 um")
+
+L36813=drc(Metal7 bondpad_metal7_filled sep<3.0)
+errorLayer(L36813
+    "BONDPAD.SP.2: Bondpad Metal7 to Metal7 spacing must be >= 3.0 um")
+
+L10309=geomStraddle(Bondpad bondpad_metal8_filled)
+L10361=geomAndNot(L10309 bondpad_metal8_filled)
+errorLayer(L10361 "BONDPAD.E.1: Metal8 to Bondpad enclosure must be >= 2.0 um")
+L49031=drc(bondpad_metal8_filled Bondpad enc<2.0)
+errorLayer(L49031 "BONDPAD.E.1: Metal8 to Bondpad enclosure must be >= 2.0 um")
+
+L42669=drc(Metal8 bondpad_metal8_filled sep<3.0)
+errorLayer(L42669
+    "BONDPAD.SP.2: Bondpad Metal8 to Metal8 spacing must be >= 3.0 um")
+
+L2524=geomStraddle(Bondpad bondpad_metal9_filled)
+L69720=geomAndNot(L2524 bondpad_metal9_filled)
+errorLayer(L69720 "BONDPAD.E.1: Metal9 to Bondpad enclosure must be >= 2.0 um")
+L8922=drc(bondpad_metal9_filled Bondpad enc<2.0)
+errorLayer(L8922 "BONDPAD.E.1: Metal9 to Bondpad enclosure must be >= 2.0 um")
+
+L48525=drc(Metal9 bondpad_metal9_filled sep<3.0)
+errorLayer(L48525
+    "BONDPAD.SP.2: Bondpad Metal9 to Metal9 spacing must be >= 3.0 um")
+
+L27480=geomStraddle(bondpad_sq bondpad_to_die_edge)
+L88650=geomStraddle(bondpad_to_die_edge bondpad_sq)
+L52596=geomAnd(L27480 L88650)
+errorLayer(L52596 "BONDPAD.W.1: Bondpad width must be >= 52.0 um")
+L99771=drc(bondpad_sq bondpad_to_die_edge sep<5.0 edgea)
+L78182=geomGetLength(L99771 keep<52.0)
+errorLayer(L78182 "BONDPAD.W.1: Bondpad width must be >= 52.0 um")
+
+L10002=drc(Bondpad sepNotch<8.0)
+errorLayer(L10002 "BONDPAD.SP.1: Bondpad to Bondpad spacing must be >= 8.0 um")
+
+errorLayer(rule_BONDPAD_L_1 "BONDPAD.L.1: Bondpad length must be >= 68.0 um")
+
+errorLayer(rule_BONDPAD_B_1_m1
+    "BONDPAD.B.1: Bondpad Metal1 must have bevelled corners")
+
+errorLayer(rule_BONDPAD_B_1_m2
+    "BONDPAD.B.1: Bondpad Metal2 must have bevelled corners")
+
+errorLayer(rule_BONDPAD_B_1_m3
+    "BONDPAD.B.1: Bondpad Metal3 must have bevelled corners")
+
+errorLayer(rule_BONDPAD_B_1_m4
+    "BONDPAD.B.1: Bondpad Metal4 must have bevelled corners")
+
+errorLayer(rule_BONDPAD_B_1_m5
+    "BONDPAD.B.1: Bondpad Metal5 must have bevelled corners")
+
+errorLayer(rule_BONDPAD_B_1_m6
+    "BONDPAD.B.1: Bondpad Metal6 must have bevelled corners")
+
+errorLayer(rule_BONDPAD_B_1_m7
+    "BONDPAD.B.1: Bondpad Metal7 must have bevelled corners")
+
+errorLayer(rule_BONDPAD_B_1_m8
+    "BONDPAD.B.1: Bondpad Metal8 must have bevelled corners")
+
+errorLayer(rule_BONDPAD_B_1_m9
+    "BONDPAD.B.1: Bondpad Metal9 must have bevelled corners")
+
+L28737=geomGetNon90(bondpad_metal1_filled)
+L27118=geomGetLength(L28737 1.8<=ignore<=3.2)
+errorLayer(L27118
+    "BONDPAD.B.1: Bondpad Metal1 beveled segments must be >= 1.8 um and <= 3.2 um")
+
+L83200=geomGetNon90(bondpad_metal2_filled)
+L25940=geomGetLength(L83200 1.8<=ignore<=3.2)
+errorLayer(L25940
+    "BONDPAD.B.1: Bondpad Metal2 beveled segments must be >= 1.8 um and <= 3.2 um")
+
+L29633=geomGetNon90(bondpad_metal3_filled)
+L46836=geomGetLength(L29633 1.8<=ignore<=3.2)
+errorLayer(L46836
+    "BONDPAD.B.1: Bondpad Metal3 beveled segments must be >= 1.8 um and <= 3.2 um")
+
+L24830=geomGetNon90(bondpad_metal4_filled)
+L49840=geomGetLength(L24830 1.8<=ignore<=3.2)
+errorLayer(L49840
+    "BONDPAD.B.1: Bondpad Metal4 beveled segments must be >= 1.8 um and <= 3.2 um")
+
+L88003=geomGetNon90(bondpad_metal5_filled)
+L71056=geomGetLength(L88003 1.8<=ignore<=3.2)
+errorLayer(L71056
+    "BONDPAD.B.1: Bondpad Metal5 beveled segments must be >= 1.8 um and <= 3.2 um")
+
+L66460=geomGetNon90(bondpad_metal6_filled)
+L80821=geomGetLength(L66460 1.8<=ignore<=3.2)
+errorLayer(L80821
+    "BONDPAD.B.1: Bondpad Metal6 beveled segments must be >= 1.8 um and <= 3.2 um")
+
+L46373=geomGetNon90(bondpad_metal7_filled)
+L34058=geomGetLength(L46373 1.8<=ignore<=3.2)
+errorLayer(L34058
+    "BONDPAD.B.1: Bondpad Metal7 beveled segments must be >= 1.8 um and <= 3.2 um")
+
+L8090=geomGetNon90(bondpad_metal8_filled)
+L37492=geomGetLength(L8090 1.8<=ignore<=3.2)
+errorLayer(L37492
+    "BONDPAD.B.1: Bondpad Metal8 beveled segments must be >= 1.8 um and <= 3.2 um")
+
+L62553=geomGetNon90(bondpad_metal9_filled)
+L36564=geomGetLength(L62553 1.8<=ignore<=3.2)
+errorLayer(L36564
+    "BONDPAD.B.1: Bondpad Metal9 beveled segments must be >= 1.8 um and <= 3.2 um")
+
+L46240=geomAnd(Via1 bondpad_metal1)
+L53610=drc(L46240 sepNotch<0.22)
+errorLayer(L53610
+    "BONDPAD.SP.3: Bondpad Via1 to Bondpad Via1 spacing must be >= 0.22 um")
+
+L11328=geomAnd(Via2 bondpad_metal2)
+L19447=drc(L11328 sepNotch<0.22)
+errorLayer(L19447
+    "BONDPAD.SP.3: Bondpad Via2 to Bondpad Via2 spacing must be >= 0.22 um")
+
+L98400=geomAnd(Via3 bondpad_metal3)
+L83=drc(L98400 sepNotch<0.22)
+errorLayer(L83
+    "BONDPAD.SP.3: Bondpad Via3 to Bondpad Via3 spacing must be >= 0.22 um")
+
+L8128=geomAnd(Via4 bondpad_metal4)
+L35695=drc(L8128 sepNotch<0.22)
+errorLayer(L35695
+    "BONDPAD.SP.3: Bondpad Via4 to Bondpad Via4 spacing must be >= 0.22 um")
+
+L49440=geomAnd(Via5 bondpad_metal5)
+L20663=drc(L49440 sepNotch<0.22)
+errorLayer(L20663
+    "BONDPAD.SP.3: Bondpad Via5 to Bondpad Via5 spacing must be >= 0.22 um")
+
+L60288=geomAnd(Via6 bondpad_metal6)
+L72758=drc(L60288 sepNotch<0.22)
+errorLayer(L72758
+    "BONDPAD.SP.3: Bondpad Via6 to Bondpad Via6 spacing must be >= 0.22 um")
+
+L70016=geomAnd(Via7 bondpad_metal7)
+L85735=drc(L70016 sepNotch<0.54)
+errorLayer(L85735
+    "BONDPAD.SP.4: Bondpad Via7 to Bondpad Via7 spacing must be >= 0.54 um")
+
+L87552=geomAnd(Via8 bondpad_metal8)
+L39440=drc(L87552 sepNotch<0.54)
+errorLayer(L39440
+    "BONDPAD.SP.4: Bondpad Via8 to Bondpad Via8 spacing must be >= 0.54 um")
+
+L64150=geomStraddle(Via1 bondpad_metal1)
+L76734=geomAndNot(L64150 bondpad_metal1)
+errorLayer(L76734
+    "BONDPAD.E.2: Bondpad Metal1 to Via1 enclosure must be >= 0.05 um")
+L97595=drc(bondpad_metal1 Via1 enc<0.05)
+errorLayer(L97595
+    "BONDPAD.E.2: Bondpad Metal1 to Via1 enclosure must be >= 0.05 um")
+
+L93418=geomStraddle(Via2 bondpad_metal2)
+L49748=geomAndNot(L93418 bondpad_metal2)
+errorLayer(L49748
+    "BONDPAD.E.2: Bondpad Metal2 to Via2 enclosure must be >= 0.05 um")
+L87941=drc(bondpad_metal2 Via2 enc<0.05)
+errorLayer(L87941
+    "BONDPAD.E.2: Bondpad Metal2 to Via2 enclosure must be >= 0.05 um")
+
+L16310=geomStraddle(Via3 bondpad_metal3)
+L65983=geomAndNot(L16310 bondpad_metal3)
+errorLayer(L65983
+    "BONDPAD.E.2: Bondpad Metal3 to Via3 enclosure must be >= 0.05 um")
+L93819=drc(bondpad_metal3 Via3 enc<0.05)
+errorLayer(L93819
+    "BONDPAD.E.2: Bondpad Metal3 to Via3 enclosure must be >= 0.05 um")
+
+L26038=geomStraddle(Via4 bondpad_metal4)
+L36478=geomAndNot(L26038 bondpad_metal4)
+errorLayer(L36478
+    "BONDPAD.E.2: Bondpad Metal4 to Via4 enclosure must be >= 0.05 um")
+L91717=drc(bondpad_metal4 Via4 enc<0.05)
+errorLayer(L91717
+    "BONDPAD.E.2: Bondpad Metal4 to Via4 enclosure must be >= 0.05 um")
+
+L31530=geomStraddle(Via5 bondpad_metal5)
+L99452=geomAndNot(L31530 bondpad_metal5)
+errorLayer(L99452
+    "BONDPAD.E.2: Bondpad Metal5 to Via5 enclosure must be >= 0.05 um")
+L90043=drc(bondpad_metal5 Via5 enc<0.05)
+errorLayer(L90043
+    "BONDPAD.E.2: Bondpad Metal5 to Via5 enclosure must be >= 0.05 um")
+
+L21802=geomStraddle(Via6 bondpad_metal6)
+L70506=geomAndNot(L21802 bondpad_metal6)
+errorLayer(L70506
+    "BONDPAD.E.2: Bondpad Metal6 to Via6 enclosure must be >= 0.05 um")
+L95493=drc(bondpad_metal6 Via6 enc<0.05)
+errorLayer(L95493
+    "BONDPAD.E.2: Bondpad Metal6 to Via6 enclosure must be >= 0.05 um")
+
+L87926=geomStraddle(Via7 bondpad_metal7)
+L14420=geomAndNot(L87926 bondpad_metal7)
+errorLayer(L14420
+    "BONDPAD.E.3: Bondpad Metal7 to Via7 enclosure must be >= 0.09 um")
+L86391=drc(bondpad_metal7 Via7 enc<0.09)
+errorLayer(L86391
+    "BONDPAD.E.3: Bondpad Metal7 to Via7 enclosure must be >= 0.09 um")
+
+L69642=geomStraddle(Via8 bondpad_metal8)
+L2046=geomAndNot(L69642 bondpad_metal8)
+errorLayer(L2046
+    "BONDPAD.E.3: Bondpad Metal8 to Via8 enclosure must be >= 0.09 um")
+L99145=drc(bondpad_metal8 Via8 enc<0.09)
+errorLayer(L99145
+    "BONDPAD.E.3: Bondpad Metal8 to Via8 enclosure must be >= 0.09 um")
+
+L64181=geomStraddle(Via1 bondpad_metal2)
+L84065=geomAndNot(L64181 bondpad_metal2)
+errorLayer(L84065
+    "BONDPAD.E.2: Bondpad Metal2 to Via1 enclosure must be >= 0.05 um")
+L63418=drc(bondpad_metal2 Via1 enc<0.05)
+errorLayer(L63418
+    "BONDPAD.E.2: Bondpad Metal2 to Via1 enclosure must be >= 0.05 um")
+
+L93387=geomStraddle(Via2 bondpad_metal3)
+L40074=geomAndNot(L93387 bondpad_metal3)
+errorLayer(L40074
+    "BONDPAD.E.2: Bondpad Metal3 to Via2 enclosure must be >= 0.05 um")
+L22118=drc(bondpad_metal3 Via2 enc<0.05)
+errorLayer(L22118
+    "BONDPAD.E.2: Bondpad Metal3 to Via2 enclosure must be >= 0.05 um")
+
+L16341=geomStraddle(Via3 bondpad_metal4)
+L41348=geomAndNot(L16341 bondpad_metal4)
+errorLayer(L41348
+    "BONDPAD.E.2: Bondpad Metal4 to Via3 enclosure must be >= 0.05 um")
+L59642=drc(bondpad_metal4 Via3 enc<0.05)
+errorLayer(L59642
+    "BONDPAD.E.2: Bondpad Metal4 to Via3 enclosure must be >= 0.05 um")
+
+L26069=geomStraddle(Via4 bondpad_metal5)
+L23487=geomAndNot(L26069 bondpad_metal5)
+errorLayer(L23487
+    "BONDPAD.E.2: Bondpad Metal5 to Via4 enclosure must be >= 0.05 um")
+L25894=drc(bondpad_metal5 Via4 enc<0.05)
+errorLayer(L25894
+    "BONDPAD.E.2: Bondpad Metal5 to Via4 enclosure must be >= 0.05 um")
+
+L31499=geomStraddle(Via5 bondpad_metal6)
+L58309=geomAndNot(L31499 bondpad_metal6)
+errorLayer(L58309
+    "BONDPAD.E.2: Bondpad Metal6 to Via5 enclosure must be >= 0.05 um")
+L55866=drc(bondpad_metal6 Via5 enc<0.05)
+errorLayer(L55866
+    "BONDPAD.E.2: Bondpad Metal6 to Via5 enclosure must be >= 0.05 um")
+
+L21771=geomStraddle(Via6 bondpad_metal7)
+L6464=geomAndNot(L21771 bondpad_metal7)
+errorLayer(L6464
+    "BONDPAD.E.2: Bondpad Metal7 to Via6 enclosure must be >= 0.05 um")
+L29670=drc(bondpad_metal7 Via6 enc<0.05)
+errorLayer(L29670
+    "BONDPAD.E.2: Bondpad Metal7 to Via6 enclosure must be >= 0.05 um")
+
+L87957=geomStraddle(Via7 bondpad_metal8)
+L45545=geomAndNot(L87957 bondpad_metal8)
+errorLayer(L45545
+    "BONDPAD.E.3: Bondpad Metal8 to Via7 enclosure must be >= 0.09 um")
+L47786=drc(bondpad_metal8 Via7 enc<0.09)
+errorLayer(L47786
+    "BONDPAD.E.3: Bondpad Metal8 to Via7 enclosure must be >= 0.09 um")
+
+L69611=geomStraddle(Via8 bondpad_metal9)
+L57857=geomAndNot(L69611 bondpad_metal9)
+errorLayer(L57857
+    "BONDPAD.E.3: Bondpad Metal9 to Via8 enclosure must be >= 0.09 um")
+L33974=drc(bondpad_metal9 Via8 enc<0.09)
+errorLayer(L33974
+    "BONDPAD.E.3: Bondpad Metal9 to Via8 enclosure must be >= 0.09 um")
+
+errorLayer(rule_BONDPAD_R_1_via1
+    "BONDPAD.R.1: Minimum Bondpad Via1 inside Metal1 to Metal2 crossing must be >= 16.0")
+
+errorLayer(rule_BONDPAD_R_1_via2
+    "BONDPAD.R.1: Minimum Bondpad Via2 inside Metal2 to Metal3 crossing must be >= 16.0")
+
+errorLayer(rule_BONDPAD_R_1_via3
+    "BONDPAD.R.1: Minimum Bondpad Via3 inside Metal3 to Metal4 crossing must be >= 16.0")
+
+errorLayer(rule_BONDPAD_R_1_via4
+    "BONDPAD.R.1: Minimum Bondpad Via4 inside Metal4 to Metal5 crossing must be >= 16.0")
+
+errorLayer(rule_BONDPAD_R_1_via5
+    "BONDPAD.R.1: Minimum Bondpad Via5 inside Metal5 to Metal6 crossing must be >= 16.0")
+
+errorLayer(rule_BONDPAD_R_1_via6
+    "BONDPAD.R.1: Minimum Bondpad Via6 inside Metal6 to Metal7 crossing must be >= 16.0")
+
+errorLayer(rule_BONDPAD_R_2_via7
+    "BONDPAD.R.2: Minimum Bondpad Via7 inside Metal7 to Metal8 crossing must be >= 4.0")
+
+errorLayer(rule_BONDPAD_R_2_via8
+    "BONDPAD.R.2: Minimum Bondpad Via8 inside Metal8 to Metal9 crossing must be >= 4.0")
+
+errorLayer(rule_BONDPAD_SP_5_metal1
+    "BONDPAD.SP.5: Bondpad Metal1 slot to Bondpad Metal1 slot spacing must be == 1.50")
+
+errorLayer(rule_BONDPAD_SP_5_metal2
+    "BONDPAD.SP.5: Bondpad Metal2 slot to Bondpad Metal2 slot spacing must be == 1.50")
+
+errorLayer(rule_BONDPAD_SP_5_metal3
+    "BONDPAD.SP.5: Bondpad Metal3 slot to Bondpad Metal3 slot spacing must be == 1.50")
+
+errorLayer(rule_BONDPAD_SP_5_metal4
+    "BONDPAD.SP.5: Bondpad Metal4 slot to Bondpad Metal4 slot spacing must be == 1.50")
+
+errorLayer(rule_BONDPAD_SP_5_metal5
+    "BONDPAD.SP.5: Bondpad Metal5 slot to Bondpad Metal5 slot spacing must be == 1.50")
+
+errorLayer(rule_BONDPAD_SP_5_metal6
+    "BONDPAD.SP.5: Bondpad Metal6 slot to Bondpad Metal6 slot spacing must be == 1.50")
+
+errorLayer(rule_BONDPAD_SP_5_metal7
+    "BONDPAD.SP.5: Bondpad Metal7 slot to Bondpad Metal7 slot spacing must be == 1.50")
+
+errorLayer(rule_BONDPAD_SP_5_metal8
+    "BONDPAD.SP.5: Bondpad Metal8 slot to Bondpad Metal8 slot spacing must be == 1.50")
+
+errorLayer(rule_BONDPAD_W_4_metal1
+    "BONDPAD.W.4: Bondpad Metal1 slot width must be == 1.00")
+
+errorLayer(rule_BONDPAD_W_4_metal2
+    "BONDPAD.W.4: Bondpad Metal2 slot width must be == 1.00")
+
+errorLayer(rule_BONDPAD_W_4_metal3
+    "BONDPAD.W.4: Bondpad Metal3 slot width must be == 1.00")
+
+errorLayer(rule_BONDPAD_W_4_metal4
+    "BONDPAD.W.4: Bondpad Metal4 slot width must be == 1.00")
+
+errorLayer(rule_BONDPAD_W_4_metal5
+    "BONDPAD.W.4: Bondpad Metal5 slot width must be == 1.00")
+
+errorLayer(rule_BONDPAD_W_4_metal6
+    "BONDPAD.W.4: Bondpad Metal6 slot width must be == 1.00")
+
+errorLayer(rule_BONDPAD_W_4_metal7
+    "BONDPAD.W.4: Bondpad Metal7 slot width must be == 1.00")
+
+errorLayer(rule_BONDPAD_W_4_metal8
+    "BONDPAD.W.4: Bondpad Metal8 slot width must be == 1.00")
+
+errorLayer(rule_BONDPAD_W_5_metal1
+    "BONDPAD.W.5: Bondpad Metal1 outside Metal1 ring width must be == 5.00")
+
+errorLayer(rule_BONDPAD_W_5_metal2
+    "BONDPAD.W.5: Bondpad Metal2 outside Metal2 ring width must be == 5.00")
+
+errorLayer(rule_BONDPAD_W_5_metal3
+    "BONDPAD.W.5: Bondpad Metal3 outside Metal3 ring width must be == 5.00")
+
+errorLayer(rule_BONDPAD_W_5_metal4
+    "BONDPAD.W.5: Bondpad Metal4 outside Metal4 ring width must be == 5.00")
+
+errorLayer(rule_BONDPAD_W_5_metal5
+    "BONDPAD.W.5: Bondpad Metal5 outside Metal5 ring width must be == 5.00")
+
+errorLayer(rule_BONDPAD_W_5_metal6
+    "BONDPAD.W.5: Bondpad Metal6 outside Metal6 ring width must be == 5.00")
+
+errorLayer(rule_BONDPAD_W_5_metal7
+    "BONDPAD.W.5: Bondpad Metal7 outside Metal7 ring width must be == 5.00")
+
+errorLayer(rule_BONDPAD_W_5_metal8
+    "BONDPAD.W.5: Bondpad Metal8 outside Metal8 ring width must be == 5.00")
+
+L16411=drc(bondpad_metal1_slot_on_edge width<1.00)
+errorLayer(L16411
+    "BONDPAD.SP.6: Bondpad Metal1 to Bondpad Metal1 spacing across first slot must be >= 1.00 um and <= 3.50 um")
+L76010=geomWidth(bondpad_metal1_slot_on_edge keep>3.50)
+errorLayer(L76010
+    "BONDPAD.SP.6: Bondpad Metal1 to Bondpad Metal1 spacing across first slot must be >= 1.00 um and <= 3.50 um")
+
+L96604=drc(bondpad_metal2_slot_on_edge width<1.00)
+errorLayer(L96604
+    "BONDPAD.SP.6: Bondpad Metal2 to Bondpad Metal2 spacing across first slot must be >= 1.00 um and <= 3.50 um")
+L81943=geomWidth(bondpad_metal2_slot_on_edge keep>3.50)
+errorLayer(L81943
+    "BONDPAD.SP.6: Bondpad Metal2 to Bondpad Metal2 spacing across first slot must be >= 1.00 um and <= 3.50 um")
+
+L76797=drc(bondpad_metal3_slot_on_edge width<1.00)
+errorLayer(L76797
+    "BONDPAD.SP.6: Bondpad Metal3 to Bondpad Metal3 spacing across first slot must be >= 1.00 um and <= 3.50 um")
+L27400=geomWidth(bondpad_metal3_slot_on_edge keep>3.50)
+errorLayer(L27400
+    "BONDPAD.SP.6: Bondpad Metal3 to Bondpad Metal3 spacing across first slot must be >= 1.00 um and <= 3.50 um")
+
+L56990=drc(bondpad_metal4_slot_on_edge width<1.00)
+errorLayer(L56990
+    "BONDPAD.SP.6: Bondpad Metal4 to Bondpad Metal4 spacing across first slot must be >= 1.00 um and <= 3.50 um")
+L30553=geomWidth(bondpad_metal4_slot_on_edge keep>3.50)
+errorLayer(L30553
+    "BONDPAD.SP.6: Bondpad Metal4 to Bondpad Metal4 spacing across first slot must be >= 1.00 um and <= 3.50 um")
+
+L37183=drc(bondpad_metal5_slot_on_edge width<1.00)
+errorLayer(L37183
+    "BONDPAD.SP.6: Bondpad Metal5 to Bondpad Metal5 spacing across first slot must be >= 1.00 um and <= 3.50 um")
+L78790=geomWidth(bondpad_metal5_slot_on_edge keep>3.50)
+errorLayer(L78790
+    "BONDPAD.SP.6: Bondpad Metal5 to Bondpad Metal5 spacing across first slot must be >= 1.00 um and <= 3.50 um")
+
+L17376=drc(bondpad_metal6_slot_on_edge width<1.00)
+errorLayer(L17376
+    "BONDPAD.SP.6: Bondpad Metal6 to Bondpad Metal6 spacing across first slot must be >= 1.00 um and <= 3.50 um")
+L79163=geomWidth(bondpad_metal6_slot_on_edge keep>3.50)
+errorLayer(L79163
+    "BONDPAD.SP.6: Bondpad Metal6 to Bondpad Metal6 spacing across first slot must be >= 1.00 um and <= 3.50 um")
+
+L97569=drc(bondpad_metal7_slot_on_edge width<1.00)
+errorLayer(L97569
+    "BONDPAD.SP.6: Bondpad Metal7 to Bondpad Metal7 spacing across first slot must be >= 1.00 um and <= 3.50 um")
+L30180=geomWidth(bondpad_metal7_slot_on_edge keep>3.50)
+errorLayer(L30180
+    "BONDPAD.SP.6: Bondpad Metal7 to Bondpad Metal7 spacing across first slot must be >= 1.00 um and <= 3.50 um")
+
+L77762=drc(bondpad_metal8_slot_on_edge width<1.00)
+errorLayer(L77762
+    "BONDPAD.SP.6: Bondpad Metal8 to Bondpad Metal8 spacing across first slot must be >= 1.00 um and <= 3.50 um")
+L27773=geomWidth(bondpad_metal8_slot_on_edge keep>3.50)
+errorLayer(L27773
+    "BONDPAD.SP.6: Bondpad Metal8 to Bondpad Metal8 spacing across first slot must be >= 1.00 um and <= 3.50 um")
+
+L30602=drc(bondpad_via1_array sepNotch<1.1)
+errorLayer(L30602
+    "BONDPAD.SP.7: Bondpad Via1 array to Bondpad Via1 array spacing must be >= 1.1 um")
+
+L79689=drc(bondpad_via2_array sepNotch<1.1)
+errorLayer(L79689
+    "BONDPAD.SP.7: Bondpad Via2 array to Bondpad Via2 array spacing must be >= 1.1 um")
+
+L28776=drc(bondpad_via3_array sepNotch<1.1)
+errorLayer(L28776
+    "BONDPAD.SP.7: Bondpad Via3 array to Bondpad Via3 array spacing must be >= 1.1 um")
+
+L77863=drc(bondpad_via4_array sepNotch<1.1)
+errorLayer(L77863
+    "BONDPAD.SP.7: Bondpad Via4 array to Bondpad Via4 array spacing must be >= 1.1 um")
+
+L26950=drc(bondpad_via5_array sepNotch<1.1)
+errorLayer(L26950
+    "BONDPAD.SP.7: Bondpad Via5 array to Bondpad Via5 array spacing must be >= 1.1 um")
+
+L76037=drc(bondpad_via6_array sepNotch<1.1)
+errorLayer(L76037
+    "BONDPAD.SP.7: Bondpad Via6 array to Bondpad Via6 array spacing must be >= 1.1 um")
+
+L74876=drc(bondpad_via7_array sepNotch<1.1)
+errorLayer(L74876
+    "BONDPAD.SP.7: Bondpad Via7 array to Bondpad Via7 array spacing must be >= 1.1 um")
+
+L25789=drc(bondpad_via8_array sepNotch<1.1)
+errorLayer(L25789
+    "BONDPAD.SP.7: Bondpad Via8 array to Bondpad Via8 array spacing must be >= 1.1 um")
+
+if( !avSwitch("SUGGESTED_CHECK") then switchProc0() )
+
+if( avSwitch("CHECK_DFM") then switchProc1() )
+
+if( avSwitch("SUGGESTED_CHECK") then switchProc2() )
+
+)
+
