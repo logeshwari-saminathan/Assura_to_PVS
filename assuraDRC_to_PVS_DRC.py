@@ -11,10 +11,11 @@ import os,sys
 lines = []
 expr = []
 count = 0
-DEBUG = 0
+DEBUG = 3
 expr_sort = []
 list_more = []
 
+sys.stdout=open("output_test","w")
 #Checks the number of times an element is repeated in the data
 def num_times_var(var):
     global lines
@@ -28,7 +29,7 @@ def num_times_var(var):
 #If the element is repeated 3 or more than 3 times, 
 #then return the next element as where the drc needs to 
 # be added. 
-#All the expressions before this i will be printed at a higher level
+#All the expressions before this it will be printed at a higher level
 #before printing the drc.
 
 def index_return(elements):
@@ -42,7 +43,7 @@ def index_return(elements):
     return index
                      
     
-#    for element in lines:
+#    for elemenerr_layer_insert_post in lines:
 #        if element >= 3:
 #            i = i+1
 #            insert_at = i
@@ -53,7 +54,7 @@ tokens = (
     'NUMBER',
     'PLUS','MINUS','TIMES','DIVIDE','EQUALS',
     'LPAREN','RPAREN', 'MODULUS','POWER',  'GREATERTHAN', 'LESSTHAN','FLOAT','DRC','SEPNOTCH','ID','METAL','GEOMGETNON90',
-    'ERRORINFO','RULMESSAGE' ,'UNDERSCORE' ,'LAYER','CHECK','NBURIED' ,'NWELL','ENC','GEOMGETLENGTH','GEOMWIDTH','KEEP','GEOMGETEDGE','COINCIDENT',
+    'ERRORINFO','RULMESSAGE' ,'UNDERSCORE' ,'LAYER','CHECK','NBURIED' ,'NWELL','ENC','GEOMGETLENGTH','GEOMWIDTH','KEEP','GEOMGETEDGE','COINCIDENT','TYPE','VIA',
     )
 
 # Regular expression rules for simple tokens
@@ -79,6 +80,12 @@ reserved = {
 }
 
 # A regular expression rule with some action code
+
+def t_TYPE(t):
+    r'type'
+    t.value = '-datatype'
+    return t 
+
 
 def t_COINCIDENT(t):
     r'coincident'
@@ -106,6 +113,9 @@ def t_METAL(t):
     return t
 t_METAL.__doc__=r'Metal\d' #can be an expression
 
+def t_VIA (t):
+    return t
+t_VIA.__doc__=r'Via\d' #can be an expression  
     
 def t_NWELL(t):
     r'nwell'
@@ -120,13 +130,30 @@ def t_NBURIED(t):
 
 def t_LAYER(t):
     r'layer'
-    t.value =['layer_def','layername']
+    t.value =['layer_def','layer_map']
     return t
     
 
 def t_GEOMGETNON90(t):
     r'geomGetNon90'
-    t.value = ['angle ', ' -ltgt 0 90']
+    t.value = ['angle ', ' -lunt']
+    global expr
+#    expr1 = layer[expr[i]]
+    if count == 0:
+        for i in range(len(expr)):
+            expr1 = layer[expr[i]]
+            if DEBUG >=1:
+                print('expr1 = ',expr1)
+            if i ==0:
+    #            print(expr1)
+                print('rule ',expr1.split(':')[0],'" {')
+                print('\t caption',expr1,';')
+            else:
+                print('\t',expr1,';')         
+        print('}')
+        expr = []
+    else:
+        print('##')
     return t
 
 
@@ -138,7 +165,7 @@ def t_LESSTHAN(t):
 def t_GREATERTHAN(t):
     r'\>'
     t.value = '-gt'
-    return t   
+    return t
     
 def t_DRC(t):
     r'drc'
@@ -190,13 +217,9 @@ def t_error(t):
 lexer = lex.lex()
 
 # Test it out  (Input)
-data = '''L18723=geomWidth(Metal1 keep>0.18)
-L52985=geomGetEdge(Metal1 coincident L18723)
-L3396=drc(Metal1 L52985 0<sep<0.18 opposite edgeb)
-L79024=geomGetLength(L3396 keep>0.56)
-errorLayer(L79024 "METAL1.SP.1.2: Metal1 to Metal1 spacing must be >= 0.18 um")'''
-#Metal1_d=layer( 7 type(0) )
-#L91383=drc(Nburied Nwell enc<0.2)'''
+data = '''L66270=drc(metal2_conn Via1 enc<0.005)
+errorLayer(L66270 "METAL2.E.1: Metal2 to Via1 enclosure must be >= 0.005 um")'''
+
 
 #data = '''L18723=geomWidth(Metal1 keep>0.18)
 #L52985=geomGetEdge(Metal1 coincident L18723)
@@ -205,7 +228,11 @@ errorLayer(L79024 "METAL1.SP.1.2: Metal1 to Metal1 spacing must be >= 0.18 um")'
 #L79024=geomGetLength(L3396 keep>0.56)
 #errorLayer(L79024 "METAL1.SP.1.2: Metal1 to Metal1 spacing must be >= 0.18 um")'''
 
-
+#data = '''L45840=geomWidth(Metal1 keep>1.50)
+#L4475=geomGetEdge(Metal1 coincident L45840)
+#L88697=drc(Metal1 L4475 0<sep<0.50 opposite edgeb)
+#L38744=geomGetLength(L88697 keep>1.50)
+#errorLayer(L38744 "METAL1.SP.1.3: Metal1 to Metal1 spacing must be >= 0.50 um")'''
 
 # Tokenize
 #which_token = lexer.token()
@@ -238,43 +265,43 @@ layer = {}
 
 #Printing the rule
 # By default count is always 0
-#def print_expr():
-#    global expr
-##    expr1 = layer[expr[i]]
-#    for i in range(len(expr)):
-#        expr1 = layer[expr[i]]
-#        if DEBUG >=1:
-#            print('expr1 = ',expr1)
-#        if i ==0:
-##            print(expr1)
-#            print('rule ',expr1.split(':')[0],'" {')
-#            print('\tcaption',expr1,';')
-#        else:
-#            print('\t',expr1,';')         
-#    print('}')
-#
-#    expr = []
+def print_expr():
+    global expr
+#    expr1 = layer[expr[i]]
+    for i in range(len(expr)):
+        expr1 = layer[expr[i]]
+        if DEBUG >=1:
+            print('expr1 = ',expr1)
+        if i ==0:
+#            print(expr1)
+            print('rule ',expr1.split(':')[0],'" {')
+            print('\t caption',expr1,';')
+        else:
+            print('\t',expr1,';')         
+    print('}')
+
+    expr = []
 
 
 #Prints the rule in PVL
-def print_expr(count):
-    global expr
-#    expr1 = layer[expr[i]]
-    if count == 0:
-        for i in range(len(expr)):
-            expr1 = layer[expr[i]]
-            if DEBUG >=1:
-                print('expr1 = ',expr1)
-            if i ==0:
-    #            print(expr1)
-                print('rule ',expr1.split(':')[0],'" {')
-                print('\t caption',expr1,';')
-            else:
-                print('\t',expr1,';')         
-        print('}')
-        expr = []
-    else:
-        print('##')
+#def print_expr(count):
+#    global expr
+##    expr1 = layer[expr[i]]
+#    if count == 0:
+#        for i in range(len(expr)):
+#            expr1 = layer[expr[i]]
+#            if DEBUG >=1:
+#                print('expr1 = ',expr1)
+#            if i ==0:
+#    #            print(expr1)
+#                print('rule ',expr1.split(':')[0],'" {')
+#                print('\t caption',expr1,';')
+#            else:
+#                print('\t',expr1,';')         
+#        print('}')
+#        expr = []
+#    else:
+#        print('##')
         
     
 #def print_expr(count):
@@ -322,8 +349,19 @@ def print_expr(count):
 #    expr = [] 
 
 
+#Layer Map##
+#From : Metal1_d=layer( 7 type(0) )
+#To : layer_def Nwell_drawing 1001;
+#     layer_map 2 -datatype 0 1001;
+
+#def p_layer_map(t):
+#    'expression : ID EQUALS LAYER LPAREN NUMBER TYPE LPAREN NUMBER RPAREN RPAREN'
+#    layer[t[1]] = " ".join([[3][0],t[1],'arbitary_number','\n',t[3][1],t[5],t[6],)
 
 
+
+#global expr
+#    expr1 = layer[expr[i]] 
 #From : L998=drc(Metal1 sepNotch<0.06)       
 # To : exte Metal1 Metal1 -lt 0.06 -output region -abut lt 90; 
 def p_statement_metalspacing(t):
@@ -348,14 +386,14 @@ def p_statement_geomwidth(t):
 #To : edge_length L52229 -gt 0.32;
 def p_statement_geomGetLength(t):
     'expression : ID EQUALS GEOMGETLENGTH LPAREN ID KEEP GREATERTHAN NUMBER RPAREN'
-    layer[t[1]] = " ".join([t[3],'L52229',t[7],str(t[8])])
+    layer[t[1]] = " ".join([t[3],t[1],t[7],str(t[8])])
     expr.append(t[1])
     
 #From : L3396=drc(Metal1 L52985 0<sep<0.18 opposite edgeb)
 #To: exte Metal1 L67295 -lt 0.1 -output positive2  -output region -project -abut ltgt 0 90 L52229;
 def p_statement_drcsep(t):
     'expression : ID EQUALS DRC LPAREN METAL ID NUMBER LESSTHAN SEPNOTCH LESSTHAN NUMBER ID ID RPAREN'
-    layer[t[1]] = " ".join([t[3][0],t[5],'L67295',t[8],str(t[11]),'-output region -project -abut ltgt 0 90','L52229'])
+    layer[t[1]] = " ".join([t[3][0],t[5],t[1],t[8],str(t[11]),'-output region -project -abut ltgt 0 90',t[6]])
     expr.append(t[1])
     
    
@@ -363,85 +401,9 @@ def p_statement_drcsep(t):
 #To : edge_boolean -coincident_only Metal1 L80731 L67295;
 def p_statement_geomgetedge(t):
     'expression : ID EQUALS GEOMGETEDGE LPAREN METAL COINCIDENT ID RPAREN'
-    layer[t[1]] = " ".join([t[3],t[6],t[5],'L80731','L67295'])
+    layer[t[1]] = " ".join([t[3],t[6],t[5],t[1],t[7]])
     expr.append(t[1])
-
-   
-#errorLayer(L998 "METAL1.SP.1.1: Metal1 to spacing must be >= 0.06 um")
-#TODO: debug p_statement_getRUL
-def p_statement_getRUL(t):
-    'expression : ERRORINFO LPAREN ID RULMESSAGE RPAREN'
-    global expr_sort
-    elements = 0
-    if DEBUG>2:
-        print('expr  =',expr)
-        print('t[4]  =',t[4])
-    layer[t[1]] = t[4]
-    if DEBUG>2:
-        print('layer[t[1]]  =',layer[t[1]])
-        print('layer =',layer)
-#    expr.append(t[1])
-    expr.insert(index_return(elements))
     
-#    Sorting and getting all the repeated IDs first to process them first
-#    expr_sort = list(expr)
-#    expr_sort.sort(key=Counter(expr_sort).get, reverse=True)
-    
-#    I have a list
-#    If the elements in the list is repeated more than 2 times put it in a seperate list
-#    and delete them in the old list
-    
-    if DEBUG>2:    
-        print ('expr_sort =',expr_sort)
-
-    if DEBUG>2:
-        print('t[1]  =',t[1])
-        print('expr  =',expr)
-#    expr.reverse()
-    if DEBUG>2:
-        print('expr  =',expr)
-#    Setting count_ID to 0
-#    count_ID = 0
-##    I am checking the number of IDs that are repeated in this for loop
-#    for i in range(len(expr)):
-##    If the count is more than 2 count_ID is set to 1
-#        if num_times_var(expr[i]) >2:
-#            count_ID = 1
-#            print_expr(count_ID,i)
-##    If the count is less than 2 count_ID is set to 0
-#        else:
-#            count_ID = 0
-#            print_expr(count_ID,i)
-        
-###################################################33
-#    Setting count_ID to 0
-    count_ID = 0
-#    print_expr()
-#    I am checking the number of IDs that are repeated in this for loop
-    for i in range(len(expr)):
-#    If the count is more than 2 count_ID is set to 1
-        if num_times_var(expr[i]) > 2:
-            count_ID = 1
-#            for j in range(num_times_var(expr[i])):
-#            I am appending all the IDs that are more than 2 in list_more list
-            list_more.append(expr[i])
-#    If the count is less than 2 count_ID is set to 0
-        else:
-            count_ID = 0
-    for ID in list_more:
-#        If the same element in the list_more list exists in expr_sort remove them
-        if ID in expr_sort:
-            expr_sort.remove(ID)
-    if DEBUG>2:
-        print('list_more = ',list_more)
-        print('expr_sort = ',expr_sort)
-        print('count_ID = ',count_ID)
-#    After setting the count_ID call the print_expr function
-    if count_ID == 0:
-        print_expr(count_ID)
-    else:
-        print_expr(count_ID)
-
 #From :L51265=geomGetNon90(Metal1)
 #To:angle inLayer -ltgt 0 90 outLayer;    
 def p_statement_geonon90(t):
@@ -462,21 +424,184 @@ def p_statement_enclose(t):
     'expression : ID EQUALS DRC LPAREN NBURIED NWELL ENC LESSTHAN NUMBER RPAREN '
     layer[t[1]] = " ".join([t[7],t[5][0], t[6][0], t[8], t[9],'-output region -abut lt 90;'])
     expr.append(t[1])
+    
+#From : L66270=drc(metal2_conn Via1 enc<0.005)
+#To : enc Via1 metal2_conn -lt 0.005 -output region -singular -abut lt 90 -outside_also;
+def p_via_enclosure(t):
+    'expression : ID EQUALS DRC LPAREN ID VIA ENC LESSTHAN NUMBER RPAREN'
+    layer[t[1]] = " ".join([t[7],t[6],t[8],str(t[9]),'-output region -singular -abut lt 90 -outside_also;'])
+    expr.append(t[1])
+
+   
+#errorLayer(L998 "METAL1.SP.1.1: Metal1 to spacing must be >= 0.06 um")
+#TODO: debug p_statement_getRUL
+def p_statement_getRUL(t):
+    'expression : ERRORINFO LPAREN ID RULMESSAGE RPAREN'
+    global expr_sort
+    elements = 0
+    if DEBUG>2:
+        print('expr  =',expr)
+        print('t[4]  =',t[4])
+    layer[t[1]] = t[4]
+    if DEBUG>2:
+        print('layer[t[1]]  =',layer[t[1]])
+        print('layer =',layer)
+#    expr.append(t[1])
+    err_layer_insert_pos = index_return(expr)
+    expr.insert(err_layer_insert_pos,t[1])
+    
+#    Sorting and getting all the repeated IDs first to process them first
+#    expr_sort = list(expr)
+#    expr_sort.sort(key=Counter(expr_sort).get, reverse=True)
+    
+#    I have a list
+#    If the elements in the list is repeated more than 2 times put it in a seperate list
+#    and delete them in the old list
+    
+#    if DEBUG>2:    
+#        print ('expr_sort =',expr_sort)
+
+    if DEBUG>2:
+        print('t[1]  =',t[1])
+        print('expr  =',expr)
+#    expr.reverse()
+#    Setting count_ID to 0
+#    count_ID = 0
+    print_expr()
+
+##    I am checking the number of IDs that are repeated in this for loop
+#    for i in range(len(expr)):
+##    If the count is more than 2 count_ID is set to 1
+#        if num_times_var(expr[i]) >2:
+#            count_ID = 1
+#            print_expr(count_ID,i)
+##    If the count is less than 2 count_ID is set to 0
+#        else:
+#            count_ID = 0
+#            print_expr(count_ID,i)
+        
+###################################################33
+##    Setting count_ID to 0
+#    count_ID = 0
+##    print_expr()
+##    I am checking the number of IDs that are repeated in this for loop
+#    for i in range(len(expr)):
+##    If the count is more than 2 count_ID is set to 1
+#        if num_times_var(expr[i]) > 2:
+#            count_ID = 1
+##            for j in range(num_times_var(expr[i])):
+##            I am appending all the IDs that are more than 2 in list_more list
+#            list_more.append(expr[i])
+##    If the count is less than 2 count_ID is set to 0
+#        else:
+#            count_ID = 0
+#    for ID in list_more:
+##        If the same element in the list_more list exists in expr_sort remove them
+#        if ID in expr_sort:
+#            expr_sort.remove(ID)
+#    if DEBUG>2:
+#        print('list_more = ',list_more)
+#        print('expr_sort = ',expr_sort)
+#        print('count_ID = ',count_ID)
+##    After setting the count_ID call the print_expr function
+#    if count_ID == 0:
+#        print_expr(count_ID)
+#    else:
+#        print_expr(count_ID)
+
+
+
 
     
 import ply.yacc as yacc
 parser = yacc.yacc()
 
 
-#lines = data.split('\n')
-infl = open("Input_rule_file")
-lines = list(infl)
+
+        
+
+#Function which returns number of '(' in a line
+    # for each character of the line 
+        #check if its '(' and increment the count
+    # return the final count
+def left_paren_count(line):
+    left_paren_count = 0
+    for element in line:
+        if '(' == element:
+            left_paren_count = left_paren_count+1
+    return left_paren_count
+
+#Function which returns number of ')' in a line
+    # for each character of the line 
+        #check if its ')' and increment the count
+    # return the final count
+def right_paren_count(line):
+    right_paren_count = 0
+    for element in line:
+        if ')' == element:
+            right_paren_count = right_paren_count+1
+    return right_paren_count
+
+#Ignore the line which doesn't have left paren and right paren
+#Function to compare if there are equal number of ( and ) in a line
+#def compare_paren():
+#    if left_paren_count() == right_paren_count() in line:
+        
+        
+        
+#
+
+inlines = data.split('\n')
+#infl = open("Input_rule_file")
+#inlines = list(infl)
+lines=[]
+
+incomplete=False
+left_count=0
+right_count=0
+temp_line = ''
+
+for inline in inlines:
+    # if Am I incomplete
+        # count number of ( and ) and add it to my previous number
+        # I check if ( == ) now
+            # incomplete False
+            # add this line to temp_line
+            # add temp_line to lines
+    # not incomplete
+        # if '(' is not there its a regular line 
+            # add it to lines
+        # else count number of ( and check if its != count )
+            # then add this to a temp_line and state that its incomplete
+    if incomplete:
+#        inline.strip(' ')
+        inline_split = inline.split()
+        inline_join = ' '.join(inline_split)
+        newline = temp_line+' '+inline_join
+#        newline.split()
+#        ' '.join(newline.split())
+        lines.append(newline)
+        incomplete = False
+    #    else:
+        
+    else:
+        left_count = left_paren_count(inline) 
+        right_count = right_paren_count(inline)
+        if '(' not in inline:
+            lines.append(inline)
+        elif left_count!=right_count:
+            temp_line = inline
+            incomplete = True
+        else:
+            lines.append(inline)
+        
 for line in lines:
-    if not(line == '\n' or line ==''):
+    if not (line == '\n' or line ==''):
         result = parser.parse(line)
         pass
 
-#f = open('output_rule_file','w');
+#sys.stdout.close()
+#f = open('output_rule_file.txt','w')
 #sys.stdout = f
 #print('#L18723=',num_times_var('L18723'))
 #print('#L52985=',num_times_var('L52985'))
