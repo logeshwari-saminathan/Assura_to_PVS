@@ -11,11 +11,16 @@ import os,sys
 lines = []
 expr = []
 count = 0
-DEBUG = 3
+DEBUG = 0
 expr_sort = []
 list_more = []
+Write2File = True
+read_from_data = False
+read_from_file = True
 
-sys.stdout=open("output_test","w")
+
+if Write2File:
+    sys.stdout=open("output_test","w")
 #Checks the number of times an element is repeated in the data
 def num_times_var(var):
     global lines
@@ -54,7 +59,7 @@ tokens = (
     'NUMBER',
     'PLUS','MINUS','TIMES','DIVIDE','EQUALS',
     'LPAREN','RPAREN', 'MODULUS','POWER',  'GREATERTHAN', 'LESSTHAN','FLOAT','DRC','SEPNOTCH','ID','METAL','GEOMGETNON90',
-    'ERRORINFO','RULMESSAGE' ,'UNDERSCORE' ,'LAYER','CHECK','NBURIED' ,'NWELL','ENC','GEOMGETLENGTH','GEOMWIDTH','KEEP','GEOMGETEDGE','COINCIDENT','TYPE','VIA',
+    'ERRORINFO','RULMESSAGE' ,'UNDERSCORE' ,'LAYER','CHECK','NBURIED' ,'NWELL','ENC','GEOMGETLENGTH','GEOMWIDTH','KEEP','GEOMGETEDGE','COINCIDENT','TYPE','VIA','GEOMANDNOT','CONT','METALCONN',
     )
 
 # Regular expression rules for simple tokens
@@ -81,6 +86,21 @@ reserved = {
 
 # A regular expression rule with some action code
 
+def t_METALCONN(t):    
+    return t
+t_METALCONN.__doc__=r'Metal\d_conn' #can be an expression
+
+def t_CONT(t):
+    r'Cont'
+    t.value = 'Cont'
+    return t 
+
+
+def t_GEOMANDNOT(t):
+    r'geomandnot'
+    t.value = ['not']
+    return t
+    
 def t_TYPE(t):
     r'type'
     t.value = '-datatype'
@@ -169,7 +189,7 @@ def t_GREATERTHAN(t):
     
 def t_DRC(t):
     r'drc'
-    t.value = ['exte']
+    t.value = ['exte','inte']
     return t
     
 def t_SEPNOTCH(t):
@@ -217,8 +237,8 @@ def t_error(t):
 lexer = lex.lex()
 
 # Test it out  (Input)
-data = '''L66270=drc(metal2_conn Via1 enc<0.005)
-errorLayer(L66270 "METAL2.E.1: Metal2 to Via1 enclosure must be >= 0.005 um")'''
+data = '''L91458=drc(metal1_conn width<0.12)
+errorLayer(L91458 "METAL1.W.1: Metal1 width must be >= 0.12 um")'''
 
 
 #data = '''L18723=geomWidth(Metal1 keep>0.18)
@@ -429,10 +449,25 @@ def p_statement_enclose(t):
 #To : enc Via1 metal2_conn -lt 0.005 -output region -singular -abut lt 90 -outside_also;
 def p_via_enclosure(t):
     'expression : ID EQUALS DRC LPAREN ID VIA ENC LESSTHAN NUMBER RPAREN'
-    layer[t[1]] = " ".join([t[7],t[6],t[8],str(t[9]),'-output region -singular -abut lt 90 -outside_also;'])
+    layer[t[1]] = " ".join([t[7],t[6],t[5],t[8],str(t[9]),'-output region -singular -abut lt 90 -outside_also;'])
     expr.append(t[1])
-
-   
+    
+#From : L80230=geomAndNot(Cont metal1_conn)
+   #To: not Cont metal1_conn L24896;
+#        copy L24896;
+def p_cont_enclosure(t):
+    'expression : ID EQUALS GEOMANDNOT LPAREN CONT ID RPAREN'
+    layer[t[1]] = " ".join([t[3][0],t[5],t[6],t[1],'\n','copy',t[1]])
+    expr.append(t[1])
+    
+#From:L91458=drc(metal1_conn width<0.12)
+#To:    inte metal1_conn metal1_conn -lt 0.06 -output region -singular -abut lt 90;
+def p_metal_width(t):
+    'expression : ID EQUALS DRC LPAREN METALCONN ID LESSTHAN NUMBER '
+    layer[t[1]] = " ".join([t[3][1],t[5],t[5],t[7],str(t[8]),'-output region -singular -abut lt 90;'])
+    expr.append(t[1])
+    
+    
 #errorLayer(L998 "METAL1.SP.1.1: Metal1 to spacing must be >= 0.06 um")
 #TODO: debug p_statement_getRUL
 def p_statement_getRUL(t):
@@ -551,9 +586,11 @@ def right_paren_count(line):
         
 #
 
-inlines = data.split('\n')
-#infl = open("Input_rule_file")
-#inlines = list(infl)
+if read_from_data:
+    inlines = data.split('\n')
+if read_from_file:
+    infl = open("Input_rule_file")
+    inlines = list(infl)
 lines=[]
 
 incomplete=False
@@ -600,8 +637,9 @@ for line in lines:
         result = parser.parse(line)
         pass
 
-#sys.stdout.close()
-#f = open('output_rule_file.txt','w')
+if Write2File:
+    sys.stdout.close()
+#f = open('output_rule_file','w')
 #sys.stdout = f
 #print('#L18723=',num_times_var('L18723'))
 #print('#L52985=',num_times_var('L52985'))
