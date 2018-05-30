@@ -334,3 +334,11 @@ errorLayer(L44772 "METAL8.W.1: Metal8 width must be >= 0.44 um")
 L50171=drc(metal9_conn width<0.44)
 errorLayer(L50171 "METAL9.W.1: Metal9 width must be >= 0.44 um")
 
+L91458=drc(metal1_conn width<0.12)
+errorLayer(L91458 "METAL1.W.1: Metal1 width must be >= 0.12 um")
+
+L83789=drc(L96558 width<0.15)
+errorLayer(L83789 "OXIDE.W.2.1.2: 2.5V N-channel gate width must be >= 0.15 um")
+
+L15912=drc(L25036 width<0.15)
+errorLayer(L15912 "OXIDE.W.2.2.2: 2.5V P-channel gate width must be >= 0.15 um")

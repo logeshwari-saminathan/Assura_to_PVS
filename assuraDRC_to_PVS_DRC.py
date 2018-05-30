@@ -17,6 +17,9 @@ list_more = []
 Write2File = True
 read_from_data = False
 read_from_file = True
+#read either data or input file
+
+    
 
 
 if Write2File:
@@ -37,18 +40,20 @@ def num_times_var(var):
 #All the expressions before this it will be printed at a higher level
 #before printing the drc.
 
-def index_return(elements):
+def index_return(inlines):
     global lines
     index=0
     i=0
+    if DEBUG>0:
+        print(inlines)
 #    for i in range(len(elements)):
     #If the element has repeated 3 or more than 3 times, then insert that line in the expression
-    if num_times_var(elements[i])>= 3:
+    if num_times_var(inlines[i])>= 3:
         index = i+1
     return index
                      
     
-#    for elemenerr_layer_insert_post in lines:
+#    for element_layer_insert_post in lines:
 #        if element >= 3:
 #            i = i+1
 #            insert_at = i
@@ -86,9 +91,9 @@ reserved = {
 
 # A regular expression rule with some action code
 
-def t_METALCONN(t):    
+def t_METALCONN(t): 
     return t
-t_METALCONN.__doc__=r'Metal\d_conn' #can be an expression
+t_METALCONN.__doc__=r'metal\d_conn' #can be an expression
 
 def t_CONT(t):
     r'Cont'
@@ -97,9 +102,11 @@ def t_CONT(t):
 
 
 def t_GEOMANDNOT(t):
-    r'geomandnot'
-    t.value = ['not']
+    r'geomAndNot'
+    t.value = 'not'
     return t
+t_GEOMANDNOT.__doc__=r'geomAndNot' #can be an expression
+
     
 def t_TYPE(t):
     r'type'
@@ -157,23 +164,6 @@ def t_LAYER(t):
 def t_GEOMGETNON90(t):
     r'geomGetNon90'
     t.value = ['angle ', ' -lunt']
-    global expr
-#    expr1 = layer[expr[i]]
-    if count == 0:
-        for i in range(len(expr)):
-            expr1 = layer[expr[i]]
-            if DEBUG >=1:
-                print('expr1 = ',expr1)
-            if i ==0:
-    #            print(expr1)
-                print('rule ',expr1.split(':')[0],'" {')
-                print('\t caption',expr1,';')
-            else:
-                print('\t',expr1,';')         
-        print('}')
-        expr = []
-    else:
-        print('##')
     return t
 
 
@@ -237,8 +227,8 @@ def t_error(t):
 lexer = lex.lex()
 
 # Test it out  (Input)
-data = '''L91458=drc(metal1_conn width<0.12)
-errorLayer(L91458 "METAL1.W.1: Metal1 width must be >= 0.12 um")'''
+data = '''L83789=drc(L96558 width<0.15)
+errorLayer(L83789 "OXIDE.W.2.1.2: 2.5V N-channel gate width must be >= 0.15 um")'''
 
 
 #data = '''L18723=geomWidth(Metal1 keep>0.18)
@@ -292,7 +282,7 @@ def print_expr():
         expr1 = layer[expr[i]]
         if DEBUG >=1:
             print('expr1 = ',expr1)
-        if i ==0:
+        if i == 0:
 #            print(expr1)
             print('rule ',expr1.split(':')[0],'" {')
             print('\t caption',expr1,';')
@@ -448,16 +438,17 @@ def p_statement_enclose(t):
 #From : L66270=drc(metal2_conn Via1 enc<0.005)
 #To : enc Via1 metal2_conn -lt 0.005 -output region -singular -abut lt 90 -outside_also;
 def p_via_enclosure(t):
-    'expression : ID EQUALS DRC LPAREN ID VIA ENC LESSTHAN NUMBER RPAREN'
+    'expression : ID EQUALS DRC LPAREN METALCONN VIA ENC LESSTHAN NUMBER RPAREN'
     layer[t[1]] = " ".join([t[7],t[6],t[5],t[8],str(t[9]),'-output region -singular -abut lt 90 -outside_also;'])
     expr.append(t[1])
     
 #From : L80230=geomAndNot(Cont metal1_conn)
+#    L80230=geomAndNot(Cont metal1_conn)
    #To: not Cont metal1_conn L24896;
 #        copy L24896;
 def p_cont_enclosure(t):
-    'expression : ID EQUALS GEOMANDNOT LPAREN CONT ID RPAREN'
-    layer[t[1]] = " ".join([t[3][0],t[5],t[6],t[1],'\n','copy',t[1]])
+    'expression : ID EQUALS GEOMANDNOT LPAREN CONT METALCONN RPAREN'
+    layer[t[1]] = " ".join([t[3],t[5],t[6],t[1],'\n\t','copy',t[1]])
     expr.append(t[1])
     
 #From:L91458=drc(metal1_conn width<0.12)
@@ -465,6 +456,13 @@ def p_cont_enclosure(t):
 def p_metal_width(t):
     'expression : ID EQUALS DRC LPAREN METALCONN ID LESSTHAN NUMBER '
     layer[t[1]] = " ".join([t[3][1],t[5],t[5],t[7],str(t[8]),'-output region -singular -abut lt 90;'])
+    expr.append(t[1])
+    
+#From:L83789=drc(L96558 width<0.15)
+#To:inte L43550 L43550 -lt 0.32 -output region -abut lt 90;
+def p_n_channel_gate_width(t):
+    'expression : ID EQUALS DRC LPAREN ID ID LESSTHAN NUMBER RPAREN '
+    layer[t[1]] = " ".join([t[1],t[5],t[7],str(t[8]),'-output region -abut lt 90;'])
     expr.append(t[1])
     
     
@@ -482,7 +480,7 @@ def p_statement_getRUL(t):
         print('layer[t[1]]  =',layer[t[1]])
         print('layer =',layer)
 #    expr.append(t[1])
-    err_layer_insert_pos = index_return(expr)
+    err_layer_insert_pos = index_return(inlines)
     expr.insert(err_layer_insert_pos,t[1])
     
 #    Sorting and getting all the repeated IDs first to process them first
@@ -586,10 +584,10 @@ def right_paren_count(line):
         
 #
 
-if read_from_data:
+if read_from_data :
     inlines = data.split('\n')
-if read_from_file:
-    infl = open("Input_rule_file")
+if read_from_file :
+    infl = open("Input")
     inlines = list(infl)
 lines=[]
 
