@@ -10,6 +10,8 @@ import os,sys
 
 lines = []
 expr = []
+#expr = ['L51265', 'errorLayer', 'L51265', 'L28380']
+
 count = 0
 DEBUG = 0
 expr_sort = []
@@ -40,16 +42,18 @@ def num_times_var(var):
 #All the expressions before this it will be printed at a higher level
 #before printing the drc.
 
-def index_return(inlines):
-    global lines
+def index_return():
+    global inlines,expr
     index=0
     i=0
     if DEBUG>0:
         print(inlines)
-#    for i in range(len(elements)):
+    for i in range(len(expr)):
     #If the element has repeated 3 or more than 3 times, then insert that line in the expression
-    if num_times_var(inlines[i])>= 3:
-        index = i+1
+#        inline=inlines[i].split('=')
+#        print(inline,inline[0])
+        if num_times_var(expr[i])>= 3:
+            index = i+1
     return index
                      
     
@@ -64,7 +68,7 @@ tokens = (
     'NUMBER',
     'PLUS','MINUS','TIMES','DIVIDE','EQUALS',
     'LPAREN','RPAREN', 'MODULUS','POWER',  'GREATERTHAN', 'LESSTHAN','FLOAT','DRC','SEPNOTCH','ID','METAL','GEOMGETNON90',
-    'ERRORINFO','RULMESSAGE' ,'UNDERSCORE' ,'LAYER','CHECK','NBURIED' ,'NWELL','ENC','GEOMGETLENGTH','GEOMWIDTH','KEEP','GEOMGETEDGE','COINCIDENT','TYPE','VIA','GEOMANDNOT','CONT','METALCONN',
+    'ERRORINFO','RULMESSAGE' ,'UNDERSCORE' ,'LAYER','CHECK','NBURIED' ,'NWELL','ENC','GEOMGETLENGTH','GEOMWIDTH','KEEP','GEOMGETEDGE','COINCIDENT','TYPE','VIA','GEOMANDNOT','CONT','METALCONN','GEOMAND',
     )
 
 # Regular expression rules for simple tokens
@@ -115,8 +119,11 @@ def t_TYPE(t):
 
 
 def t_COINCIDENT(t):
-    r'coincident'
-    t.value = '-coincident_only'
+    r'coincident|inside'
+    if t.value=='coincident':
+       t.value = '-coincident_only'
+    else:
+        t.value='-inside'
     return t
 
 def t_GEOMGETEDGE(t):
@@ -126,7 +133,7 @@ def t_GEOMGETEDGE(t):
     
 def t_KEEP(t):
     r'keep'
-    t.value = ['-by','-underover']
+    t.value = ['-by','-underover',""]
     return t
 t_KEEP.__doc__=r'keep' #can be an expression
 
@@ -163,7 +170,7 @@ def t_LAYER(t):
 
 def t_GEOMGETNON90(t):
     r'geomGetNon90'
-    t.value = ['angle ', ' -lunt']
+    t.value = ['angle ', ' -ltgt']
     return t
 
 
@@ -227,8 +234,11 @@ def t_error(t):
 lexer = lex.lex()
 
 # Test it out  (Input)
-data = '''L83789=drc(L96558 width<0.15)
-errorLayer(L83789 "OXIDE.W.2.1.2: 2.5V N-channel gate width must be >= 0.15 um")'''
+data = '''L51265=geomGetNon90(Metal1)
+L51265=geomGetNon90(Metal1)
+L28380=geomGetLength(L51265 keep<0.18)
+errorLayer(L28380
+    "METAL1.L.1: Metal1 non-90 degree segments must be >= 0.18 um")'''
 
 
 #data = '''L18723=geomWidth(Metal1 keep>0.18)
@@ -268,7 +278,7 @@ precedence = (
 
 # dictionary of names
 layer = {}
-
+#layer = {'L28380': 'edge_length L51265 -lt 0.18 ;', 'L51265': 'angle  Metal1  -ltgt 0 90 L51265', 'errorLayer': '"METAL1.L.1: Metal1 non-90 degree segments must be >= 0.18 um"'}
           
 
 # Parsing rules
@@ -277,15 +287,21 @@ layer = {}
 # By default count is always 0
 def print_expr():
     global expr
-#    expr1 = layer[expr[i]]
+    if DEBUG >=0:
+        print('expr =',expr)
+#        get the index of errorLayer
+    index_error = expr.index('errorLayer')
     for i in range(len(expr)):
         expr1 = layer[expr[i]]
         if DEBUG >=1:
             print('expr1 = ',expr1)
-        if i == 0:
-#            print(expr1)
+        if expr[i] == 'errorLayer':
             print('rule ',expr1.split(':')[0],'" {')
             print('\t caption',expr1,';')
+#If this expression is before errorLayer then 
+#don't put '\t' else put '\t'.            
+        elif i<index_error:
+            print(expr1,';')                     
         else:
             print('\t',expr1,';')         
     print('}')
@@ -418,7 +434,7 @@ def p_statement_geomgetedge(t):
 #To:angle inLayer -ltgt 0 90 outLayer;    
 def p_statement_geonon90(t):
     'expression : ID EQUALS GEOMGETNON90 LPAREN METAL RPAREN'
-    layer[t[1]] = " ".join([t[3][0],t[5], t[3][1],t[1]])
+    layer[t[1]] = " ".join([t[3][0],t[5], t[3][1],'0','90',t[1]])
     expr.append(t[1])
     
 # From :Metal1_d=layer( 7 type(0) )
@@ -465,7 +481,21 @@ def p_n_channel_gate_width(t):
     layer[t[1]] = " ".join([t[1],t[5],t[7],str(t[8]),'-output region -abut lt 90;'])
     expr.append(t[1])
     
+#From : L28380=geomGetLength(L51265 keep<0.18)
+#To : edge_length L79182 -lt 0.1;
+def p_goem_get_length(t):
+    'expression : ID EQUALS GEOMGETLENGTH LPAREN ID KEEP LESSTHAN NUMBER RPAREN'
+    layer[t[1]] = " ".join([t[3],t[5],t[7],str(t[8]),';'])
+    expr.append(t[1])
+
     
+#From:L51265=geomGetNon90(Metal1)
+#To:angle Metal1 -ltgt 0 90 L79182;
+#def p_geom_get_non_99(t):
+#    'expression : ID EQUALS GEOMGETNON90 LPAREN METAL RPAREN'    
+#    layer[t[1]] = " ".join([t[3][1],t[5],t[3][1],'0','90',t[1]])    
+#    expr.append(t[1])
+
 #errorLayer(L998 "METAL1.SP.1.1: Metal1 to spacing must be >= 0.06 um")
 #TODO: debug p_statement_getRUL
 def p_statement_getRUL(t):
@@ -480,7 +510,7 @@ def p_statement_getRUL(t):
         print('layer[t[1]]  =',layer[t[1]])
         print('layer =',layer)
 #    expr.append(t[1])
-    err_layer_insert_pos = index_return(inlines)
+    err_layer_insert_pos = index_return()
     expr.insert(err_layer_insert_pos,t[1])
     
 #    Sorting and getting all the repeated IDs first to process them first
@@ -662,7 +692,7 @@ if Write2File:
 
 
 #while True: 
-#    tok=parser.parse(names)
+#    tok=parser.parse(data)
 #    if not tok: 
 #        break      # No more input
 #    print(tok)

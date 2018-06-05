@@ -283,29 +283,46 @@ L70699=drc(Metal9 L65889 0<sep<2.50 opposite edgeb)
 L89413=geomGetLength(L70699 keep>7.50)
 errorLayer(L89413 "METAL9.SP.1.5: Metal9 to Metal9 spacing must be >= 2.50 um")
 
+L12682=geomAndNot(Via1 metal2_conn)
+errorLayer(L12682 "METAL2.E.1: Metal2 to Via1 enclosure must be >= 0.005 um")
 L66270=drc(metal2_conn Via1 enc<0.005)
 errorLayer(L66270 "METAL2.E.1: Metal2 to Via1 enclosure must be >= 0.005 um")
 
+L67626=geomAndNot(Via2 metal3_conn)
+errorLayer(L67626 "METAL3.E.1: Metal3 to Via2 enclosure must be >= 0.005 um")
 L7300=drc(metal3_conn Via2 enc<0.005)
 errorLayer(L7300 "METAL3.E.1: Metal3 to Via2 enclosure must be >= 0.005 um")
 
+L22570=geomAndNot(Via3 metal4_conn)
+errorLayer(L22570 "METAL4.E.1: Metal4 to Via3 enclosure must be >= 0.005 um")
 L86426=drc(metal4_conn Via3 enc<0.005)
 errorLayer(L86426 "METAL4.E.1: Metal4 to Via3 enclosure must be >= 0.005 um")
 
+L77514=geomAndNot(Via4 metal5_conn)
+errorLayer(L77514 "METAL5.E.1: Metal5 to Via4 enclosure must be >= 0.005 um")
 L87144=drc(metal5_conn Via4 enc<0.005)
 errorLayer(L87144 "METAL5.E.1: Metal5 to Via4 enclosure must be >= 0.005 um")
 
+L32458=geomAndNot(Via5 metal6_conn)
+errorLayer(L32458 "METAL6.E.1: Metal6 to Via5 enclosure must be >= 0.005 um")
 L6582=drc(metal6_conn Via5 enc<0.005)
 errorLayer(L6582 "METAL6.E.1: Metal6 to Via5 enclosure must be >= 0.005 um")
 
+L12598=geomAndNot(Via6 metal7_conn)
+errorLayer(L12598 "METAL7.E.1: Metal7 to Via6 enclosure must be >= 0.005 um")
 L66988=drc(metal7_conn Via6 enc<0.005)
 errorLayer(L66988 "METAL7.E.1: Metal7 to Via6 enclosure must be >= 0.005 um")
 
+L57654=geomAndNot(Via7 metal8_conn)
+errorLayer(L57654 "METAL8.E.1: Metal8 to Via7 enclosure must be >= 0.05 um")
 L18310=drc(metal8_conn Via7 enc<0.05)
 errorLayer(L18310 "METAL8.E.1: Metal8 to Via7 enclosure must be >= 0.05 um")
 
+L2710=geomAndNot(Via8 metal9_conn)
+errorLayer(L2710 "METAL9.E.1: Metal9 to Via8 enclosure must be >= 0.05 um")
 L82136=drc(metal9_conn Via8 enc<0.05)
 errorLayer(L82136 "METAL9.E.1: Metal9 to Via8 enclosure must be >= 0.05 um")
+
 
 L91458=drc(metal1_conn width<0.12)
 errorLayer(L91458 "METAL1.W.1: Metal1 width must be >= 0.12 um")
@@ -334,11 +351,47 @@ errorLayer(L44772 "METAL8.W.1: Metal8 width must be >= 0.44 um")
 L50171=drc(metal9_conn width<0.44)
 errorLayer(L50171 "METAL9.W.1: Metal9 width must be >= 0.44 um")
 
-L91458=drc(metal1_conn width<0.12)
-errorLayer(L91458 "METAL1.W.1: Metal1 width must be >= 0.12 um")
-
+L19348=geomAnd(L76283 Poly)
+L96558=geomGetEdge(Oxide inside L19348)
 L83789=drc(L96558 width<0.15)
 errorLayer(L83789 "OXIDE.W.2.1.2: 2.5V N-channel gate width must be >= 0.15 um")
 
 L15912=drc(L25036 width<0.15)
 errorLayer(L15912 "OXIDE.W.2.2.2: 2.5V P-channel gate width must be >= 0.15 um")
+
+L51265=geomGetNon90(Metal1)
+L28380=geomGetLength(L51265 keep<0.18)
+errorLayer(L28380
+    "METAL1.L.1: Metal1 non-90 degree segments must be >= 0.18 um")
+    
+L51296=geomGetNon90(Metal2)
+L2791=geomGetLength(L51296 keep<0.20)
+errorLayer(L2791 "METAL2.L.1: Metal2 non-90 degree segments must be >= 0.20 um")
+
+L51327=geomGetNon90(Metal3)
+L19362=geomGetLength(L51327 keep<0.20)
+errorLayer(L19362
+    "METAL3.L.1: Metal3 non-90 degree segments must be >= 0.20 um")
+
+L51358=geomGetNon90(Metal4)
+L21632=geomGetLength(L51358 keep<0.20)
+errorLayer(L21632
+    "METAL4.L.1: Metal4 non-90 degree segments must be >= 0.20 um")
+    
+L51389=geomGetNon90(Metal5)
+L95330=geomGetLength(L51389 keep<0.20)
+errorLayer(L95330
+    "METAL5.L.1: Metal5 non-90 degree segments must be >= 0.20 um")
+    
+L51420=geomGetNon90(Metal6)
+L10276=geomGetLength(L51420 keep<0.20)
+errorLayer(L10276
+    "METAL6.L.1: Metal6 non-90 degree segments must be >= 0.20 um")
+    
+L51451=geomGetNon90(Metal7)
+L83974=geomGetLength(L51451 keep<0.20)
+errorLayer(L83974
+    "METAL7.L.1: Metal7 non-90 degree segments must be >= 0.20 um")
+    
+L80230=geomAndNot(Cont metal1_conn)
+errorLayer(L80230 "METAL1.E.1: Metal1 to Cont enclosure must be >= 0.00 um")
