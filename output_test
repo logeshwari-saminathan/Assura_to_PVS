@@ -1,0 +1,540 @@
+rule  "METAL1.SP.1.1 " {
+	 caption "METAL1.SP.1.1: Metal1 to Metal1 spacing must be >= 0.12 um" ;
+	  Metal1 Metal1 -lt 0.12 -output region -singular -abut lt 90  ;
+}
+rule  "METAL2.SP.1.1 " {
+	 caption "METAL2.SP.1.1: Metal2 to Metal2 spacing must be >= 0.14 um" ;
+	  Metal2 Metal2 -lt 0.14 -output region -singular -abut lt 90  ;
+}
+rule  "METAL3.SP.1.1 " {
+	 caption "METAL3.SP.1.1: Metal3 to Metal3 spacing must be >= 0.14 um" ;
+	  Metal3 Metal3 -lt 0.14 -output region -singular -abut lt 90  ;
+}
+rule  "METAL4.SP.1.1 " {
+	 caption "METAL4.SP.1.1: Metal4 to Metal4 spacing must be >= 0.14 um" ;
+	  Metal4 Metal4 -lt 0.14 -output region -singular -abut lt 90  ;
+}
+rule  "METAL5.SP.1.1 " {
+	 caption "METAL5.SP.1.1: Metal5 to Metal5 spacing must be >= 0.14 um" ;
+	  Metal5 Metal5 -lt 0.14 -output region -singular -abut lt 90  ;
+}
+rule  "METAL6.SP.1.1 " {
+	 caption "METAL6.SP.1.1: Metal6 to Metal6 spacing must be >= 0.14 um" ;
+	  Metal6 Metal6 -lt 0.14 -output region -singular -abut lt 90  ;
+}
+rule  "METAL7.SP.1.1 " {
+	 caption "METAL7.SP.1.1: Metal7 to Metal7 spacing must be >= 0.14 um" ;
+	  Metal7 Metal7 -lt 0.14 -output region -singular -abut lt 90  ;
+}
+rule  "METAL8.SP.1.1 " {
+	 caption "METAL8.SP.1.1: Metal8 to Metal8 spacing must be >= 0.40 um" ;
+	  Metal8 Metal8 -lt 0.4 -output region -singular -abut lt 90  ;
+}
+rule  "METAL9.SP.1.1 " {
+	 caption "METAL9.SP.1.1: Metal9 to Metal9 spacing must be >= 0.40 um" ;
+	  Metal9 Metal9 -lt 0.4 -output region -singular -abut lt 90  ;
+}
+rule  "METAL1.SP.1.2 " {
+	 caption "METAL1.SP.1.2: Metal1 to Metal1 spacing must be >= 0.18 um" ;
+	 size Metal1 -by 0.18 -underover L78025 ; 
+	 and L78025 Metal1 L80731 ;
+	 edge_boolean -coincident_only Metal1 L52985 L18723 ;
+	 exte Metal1 L3396 -lt 0.18 -output region -project -abut ltgt 0 90 L52985 ;
+	 edge_length L79024 -gt 0.56 ;
+}
+rule  "METAL2.SP.1.2 " {
+	 caption "METAL2.SP.1.2: Metal2 to Metal2 spacing must be >= 0.20 um" ;
+	 size Metal2 -by 0.2 -underover L78025 ; 
+	 and L78025 Metal2 L80731 ;
+	 edge_boolean -coincident_only Metal2 L71132 L2155 ;
+	 exte Metal2 L38729 -lt 0.2 -output region -project -abut ltgt 0 90 L71132 ;
+	 edge_length L30628 -gt 0.56 ;
+}
+rule  "METAL3.SP.1.2 " {
+	 caption "METAL3.SP.1.2: Metal3 to Metal3 spacing must be >= 0.20 um" ;
+	 size Metal3 -by 0.2 -underover L78025 ; 
+	 and L78025 Metal3 L80731 ;
+	 edge_boolean -coincident_only Metal3 L56835 L84874 ;
+	 exte Metal3 L85493 -lt 0.2 -output region -project -abut ltgt 0 90 L56835 ;
+	 edge_length L36164 -gt 0.56 ;
+}
+rule  "METAL4.SP.1.2 " {
+	 caption "METAL4.SP.1.2: Metal4 to Metal4 spacing must be >= 0.20 um" ;
+	 size Metal4 -by 0.2 -underover L78025 ; 
+	 and L78025 Metal4 L80731 ;
+	 edge_boolean -coincident_only Metal4 L56281 L67593 ;
+	 exte Metal4 L10299 -lt 0.2 -output region -project -abut ltgt 0 90 L56281 ;
+	 edge_length L97218 -gt 0.56 ;
+}
+rule  "METAL5.SP.1.2 " {
+	 caption "METAL5.SP.1.2: Metal5 to Metal5 spacing must be >= 0.20 um" ;
+	 size Metal5 -by 0.2 -underover L78025 ; 
+	 and L78025 Metal5 L80731 ;
+	 edge_boolean -coincident_only Metal5 L41605 L50312 ;
+	 exte Metal5 L53198 -lt 0.2 -output region -project -abut ltgt 0 90 L41605 ;
+	 edge_length L24547 -gt 0.56 ;
+}
+rule  "METAL6.SP.1.2 " {
+	 caption "METAL6.SP.1.2: Metal6 to Metal6 spacing must be >= 0.20 um" ;
+	 size Metal6 -by 0.2 -underover L78025 ; 
+	 and L78025 Metal6 L80731 ;
+	 edge_boolean -coincident_only Metal6 L54941 L34265 ;
+	 exte Metal6 L42278 -lt 0.2 -output region -project -abut ltgt 0 90 L54941 ;
+	 edge_length L45696 -gt 0.56 ;
+}
+rule  "METAL7.SP.1.2 " {
+	 caption "METAL7.SP.1.2: Metal7 to Metal7 spacing must be >= 0.20 um" ;
+	 size Metal7 -by 0.2 -underover L78025 ; 
+	 and L78025 Metal7 L80731 ;
+	 edge_boolean -coincident_only Metal7 L63351 L51546 ;
+	 exte Metal7 L60224 -lt 0.2 -output region -project -abut ltgt 0 90 L63351 ;
+	 edge_length L33787 -gt 0.56 ;
+}
+rule  "METAL1.SP.1.3 " {
+	 caption "METAL1.SP.1.3: Metal1 to Metal1 spacing must be >= 0.50 um" ;
+	 size Metal1 -by 1.5 -underover L78025 ; 
+	 and L78025 Metal1 L80731 ;
+	 edge_boolean -coincident_only Metal1 L4475 L45840 ;
+	 exte Metal1 L88697 -lt 0.5 -output region -project -abut ltgt 0 90 L4475 ;
+	 edge_length L38744 -gt 1.5 ;
+}
+rule  "METAL2.SP.1.3 " {
+	 caption "METAL2.SP.1.3: Metal2 to Metal2 spacing must be >= 0.50 um" ;
+	 size Metal2 -by 1.5 -underover L78025 ; 
+	 and L78025 Metal2 L80731 ;
+	 edge_boolean -coincident_only Metal2 L4572 L28559 ;
+	 exte Metal2 L60838 -lt 0.5 -output region -project -abut ltgt 0 90 L4572 ;
+	 edge_length L66759 -gt 1.5 ;
+}
+rule  "METAL3.SP.1.3 " {
+	 caption "METAL3.SP.1.3: Metal3 to Metal3 spacing must be >= 0.50 um" ;
+	 size Metal3 -by 1.5 -underover L78025 ; 
+	 and L78025 Metal3 L80731 ;
+	 edge_boolean -coincident_only Metal3 L10077 L11278 ;
+	 exte Metal3 L45734 -lt 0.5 -output region -project -abut ltgt 0 90 L10077 ;
+	 edge_length L46203 -gt 1.5 ;
+}
+rule  "METAL4.SP.1.3 " {
+	 caption "METAL4.SP.1.3: Metal4 to Metal4 spacing must be >= 0.50 um" ;
+	 size Metal4 -by 1.5 -underover L78025 ; 
+	 and L78025 Metal4 L80731 ;
+	 edge_boolean -coincident_only Metal4 L43624 L93997 ;
+	 exte Metal4 L55955 -lt 0.5 -output region -project -abut ltgt 0 90 L43624 ;
+	 edge_length L46371 -gt 1.5 ;
+}
+rule  "METAL5.SP.1.3 " {
+	 caption "METAL5.SP.1.3: Metal5 to Metal5 spacing must be >= 0.50 um" ;
+	 size Metal5 -by 1.5 -underover L78025 ; 
+	 and L78025 Metal5 L80731 ;
+	 edge_boolean -coincident_only Metal5 L22889 L76716 ;
+	 exte Metal5 L69716 -lt 0.5 -output region -project -abut ltgt 0 90 L22889 ;
+	 edge_length L3166 -gt 1.5 ;
+}
+rule  "METAL6.SP.1.3 " {
+	 caption "METAL6.SP.1.3: Metal6 to Metal6 spacing must be >= 0.50 um" ;
+	 size Metal6 -by 1.5 -underover L78025 ; 
+	 and L78025 Metal6 L80731 ;
+	 edge_boolean -coincident_only Metal6 L89373 L7861 ;
+	 exte Metal6 L98656 -lt 0.5 -output region -project -abut ltgt 0 90 L89373 ;
+	 edge_length L56388 -gt 1.5 ;
+}
+rule  "METAL7.SP.1.3 " {
+	 caption "METAL7.SP.1.3: Metal7 to Metal7 spacing must be >= 0.50 um" ;
+	 size Metal7 -by 1.5 -underover L78025 ; 
+	 and L78025 Metal7 L80731 ;
+	 edge_boolean -coincident_only Metal7 L50694 L25142 ;
+	 exte Metal7 L27719 -lt 0.5 -output region -project -abut ltgt 0 90 L50694 ;
+	 edge_length L21918 -gt 1.5 ;
+}
+rule  "METAL8.SP.1.2 " {
+	 caption "METAL8.SP.1.2: Metal8 to Metal8 spacing must be >= 0.50 um" ;
+	 size Metal8 -by 1.5 -underover L78025 ; 
+	 and L78025 Metal8 L80731 ;
+	 edge_boolean -coincident_only Metal8 L1690 L42423 ;
+	 exte Metal8 L16660 -lt 0.5 -output region -project -abut ltgt 0 90 L1690 ;
+	 edge_length L26865 -gt 1.5 ;
+}
+rule  "METAL9.SP.1.2 " {
+	 caption "METAL9.SP.1.2: Metal9 to Metal9 spacing must be >= 0.50 um" ;
+	 size Metal9 -by 1.5 -underover L78025 ; 
+	 and L78025 Metal9 L80731 ;
+	 edge_boolean -coincident_only Metal9 L58745 L59704 ;
+	 exte Metal9 L4668 -lt 0.5 -output region -project -abut ltgt 0 90 L58745 ;
+	 edge_length L94704 -gt 1.5 ;
+}
+rule  "METAL1.SP.1.4 " {
+	 caption "METAL1.SP.1.4: Metal1 to Metal1 spacing must be >= 0.90 um" ;
+	 size Metal1 -by 3.0 -underover L78025 ; 
+	 and L78025 Metal1 L80731 ;
+	 edge_boolean -coincident_only Metal1 L47464 L88077 ;
+	 exte Metal1 L65430 -lt 0.9 -output region -project -abut ltgt 0 90 L47464 ;
+	 edge_length L27321 -gt 3.0 ;
+}
+rule  "METAL2.SP.1.4 " {
+	 caption "METAL2.SP.1.4: Metal2 to Metal2 spacing must be >= 0.90 um" ;
+	 size Metal2 -by 3.0 -underover L78025 ; 
+	 and L78025 Metal2 L80731 ;
+	 edge_boolean -coincident_only Metal2 L83652 L70796 ;
+	 exte Metal2 L69454 -lt 0.9 -output region -project -abut ltgt 0 90 L83652 ;
+	 edge_length L62519 -gt 3.0 ;
+}
+rule  "METAL3.SP.1.4 " {
+	 caption "METAL3.SP.1.4: Metal3 to Metal3 spacing must be >= 0.90 um" ;
+	 size Metal3 -by 3.0 -underover L78025 ; 
+	 and L78025 Metal3 L80731 ;
+	 edge_boolean -coincident_only Metal3 L62917 L53515 ;
+	 exte Metal3 L50332 -lt 0.9 -output region -project -abut ltgt 0 90 L62917 ;
+	 edge_length L6466 -gt 3.0 ;
+}
+rule  "METAL4.SP.1.4 " {
+	 caption "METAL4.SP.1.4: Metal4 to Metal4 spacing must be >= 0.90 um" ;
+	 size Metal4 -by 3.0 -underover L78025 ; 
+	 and L78025 Metal4 L80731 ;
+	 edge_boolean -coincident_only Metal4 L62363 L36234 ;
+	 exte Metal4 L78828 -lt 0.9 -output region -project -abut ltgt 0 90 L62363 ;
+	 edge_length L24188 -gt 3.0 ;
+}
+rule  "METAL5.SP.1.4 " {
+	 caption "METAL5.SP.1.4: Metal5 to Metal5 spacing must be >= 0.90 um" ;
+	 size Metal5 -by 3.0 -underover L78025 ; 
+	 and L78025 Metal5 L80731 ;
+	 edge_boolean -coincident_only Metal5 L87420 L18953 ;
+	 exte Metal5 L80342 -lt 0.9 -output region -project -abut ltgt 0 90 L87420 ;
+	 edge_length L99072 -gt 3.0 ;
+}
+rule  "METAL6.SP.1.4 " {
+	 caption "METAL6.SP.1.4: Metal6 to Metal6 spacing must be >= 0.90 um" ;
+	 size Metal6 -by 3.0 -underover L78025 ; 
+	 and L78025 Metal6 L80731 ;
+	 edge_boolean -coincident_only Metal6 L28678 L65624 ;
+	 exte Metal6 L36583 -lt 0.9 -output region -project -abut ltgt 0 90 L28678 ;
+	 edge_length L98484 -gt 3.0 ;
+}
+rule  "METAL7.SP.1.4 " {
+	 caption "METAL7.SP.1.4: Metal7 to Metal7 spacing must be >= 0.90 um" ;
+	 size Metal7 -by 3.0 -underover L78025 ; 
+	 and L78025 Metal7 L80731 ;
+	 edge_boolean -coincident_only Metal7 L89614 L82905 ;
+	 exte Metal7 L40909 -lt 0.9 -output region -project -abut ltgt 0 90 L89614 ;
+	 edge_length L23053 -gt 3.0 ;
+}
+rule  "METAL8.SP.1.3 " {
+	 caption "METAL8.SP.1.3: Metal8 to Metal8 spacing must be >= 0.90 um" ;
+	 size Metal8 -by 3.0 -underover L78025 ; 
+	 and L78025 Metal8 L80731 ;
+	 edge_boolean -coincident_only Metal8 L56898 L186 ;
+	 exte Metal8 L50538 -lt 0.9 -output region -project -abut ltgt 0 90 L56898 ;
+	 edge_length L85530 -gt 3.0 ;
+}
+rule  "METAL9.SP.1.3 " {
+	 caption "METAL9.SP.1.3: Metal9 to Metal9 spacing must be >= 0.90 um" ;
+	 size Metal9 -by 3.0 -underover L78025 ; 
+	 and L78025 Metal9 L80731 ;
+	 edge_boolean -coincident_only Metal9 L11585 L17467 ;
+	 exte Metal9 L38299 -lt 0.9 -output region -project -abut ltgt 0 90 L11585 ;
+	 edge_length L7020 -gt 3.0 ;
+}
+rule  "METAL1.SP.1.5 " {
+	 caption "METAL1.SP.1.5: Metal1 to Metal1 spacing must be >= 1.50 um" ;
+	 size Metal1 -by 4.5 -underover L78025 ; 
+	 and L78025 Metal1 L80731 ;
+	 edge_boolean -coincident_only Metal1 L91322 L16403 ;
+	 exte Metal1 L3443 -lt 1.5 -output region -project -abut ltgt 0 90 L91322 ;
+	 edge_length L23127 -gt 4.5 ;
+}
+rule  "METAL2.SP.1.5 " {
+	 caption "METAL2.SP.1.5: Metal2 to Metal2 spacing must be >= 1.50 um" ;
+	 size Metal2 -by 4.5 -underover L78025 ; 
+	 and L78025 Metal2 L80731 ;
+	 edge_boolean -coincident_only Metal2 L99258 L99122 ;
+	 exte Metal2 L20652 -lt 1.5 -output region -project -abut ltgt 0 90 L99258 ;
+	 edge_length L44566 -gt 4.5 ;
+}
+rule  "METAL3.SP.1.5 " {
+	 caption "METAL3.SP.1.5: Metal3 to Metal3 spacing must be >= 1.50 um" ;
+	 size Metal3 -by 4.5 -underover L78025 ; 
+	 and L78025 Metal3 L80731 ;
+	 edge_boolean -coincident_only Metal3 L30374 L81841 ;
+	 exte Metal3 L52329 -lt 1.5 -output region -project -abut ltgt 0 90 L30374 ;
+	 edge_length L53154 -gt 4.5 ;
+}
+rule  "METAL4.SP.1.5 " {
+	 caption "METAL4.SP.1.5: Metal4 to Metal4 spacing must be >= 1.50 um" ;
+	 size Metal4 -by 4.5 -underover L78025 ; 
+	 and L78025 Metal4 L80731 ;
+	 edge_boolean -coincident_only Metal4 L29820 L64560 ;
+	 exte Metal4 L17124 -lt 1.5 -output region -project -abut ltgt 0 90 L29820 ;
+	 edge_length L17970 -gt 4.5 ;
+}
+rule  "METAL5.SP.1.5 " {
+	 caption "METAL5.SP.1.5: Metal5 to Metal5 spacing must be >= 1.50 um" ;
+	 size Metal5 -by 4.5 -underover L78025 ; 
+	 and L78025 Metal5 L80731 ;
+	 edge_boolean -coincident_only Metal5 L29917 L47279 ;
+	 exte Metal5 L77612 -lt 1.5 -output region -project -abut ltgt 0 90 L29917 ;
+	 edge_length L24648 -gt 4.5 ;
+}
+rule  "METAL6.SP.1.5 " {
+	 caption "METAL6.SP.1.5: Metal6 to Metal6 spacing must be >= 1.50 um" ;
+	 size Metal6 -by 4.5 -underover L78025 ; 
+	 and L78025 Metal6 L80731 ;
+	 edge_boolean -coincident_only Metal6 L81402 L37298 ;
+	 exte Metal6 L16976 -lt 1.5 -output region -project -abut ltgt 0 90 L81402 ;
+	 edge_length L85140 -gt 4.5 ;
+}
+rule  "METAL7.SP.1.5 " {
+	 caption "METAL7.SP.1.5: Metal7 to Metal7 spacing must be >= 1.50 um" ;
+	 size Metal7 -by 4.5 -underover L78025 ; 
+	 and L78025 Metal7 L80731 ;
+	 edge_boolean -coincident_only Metal7 L36890 L54579 ;
+	 exte Metal7 L66498 -lt 1.5 -output region -project -abut ltgt 0 90 L36890 ;
+	 edge_length L3476 -gt 4.5 ;
+}
+rule  "METAL8.SP.1.4 " {
+	 caption "METAL8.SP.1.4: Metal8 to Metal8 spacing must be >= 1.50 um" ;
+	 size Metal8 -by 4.5 -underover L78025 ; 
+	 and L78025 Metal8 L80731 ;
+	 edge_boolean -coincident_only Metal8 L88537 L71860 ;
+	 exte Metal8 L15574 -lt 1.5 -output region -project -abut ltgt 0 90 L88537 ;
+	 edge_length L67887 -gt 4.5 ;
+}
+rule  "METAL9.SP.1.4 " {
+	 caption "METAL9.SP.1.4: Metal9 to Metal9 spacing must be >= 1.50 um" ;
+	 size Metal9 -by 4.5 -underover L78025 ; 
+	 and L78025 Metal9 L80731 ;
+	 edge_boolean -coincident_only Metal9 L71203 L89141 ;
+	 exte Metal9 L93461 -lt 1.5 -output region -project -abut ltgt 0 90 L71203 ;
+	 edge_length L3146 -gt 4.5 ;
+}
+rule  "METAL1.SP.1.6 " {
+	 caption "METAL1.SP.1.6: Metal1 to Metal1 spacing must be >= 2.50 um" ;
+	 size Metal1 -by 7.5 -underover L78025 ; 
+	 and L78025 Metal1 L80731 ;
+	 edge_boolean -coincident_only Metal1 L67549 L86966 ;
+	 exte Metal1 L96014 -lt 2.5 -output region -project -abut ltgt 0 90 L67549 ;
+	 edge_length L92236 -gt 7.5 ;
+}
+rule  "METAL2.SP.1.6 " {
+	 caption "METAL2.SP.1.6: Metal2 to Metal2 spacing must be >= 2.50 um" ;
+	 size Metal2 -by 7.5 -underover L78025 ; 
+	 and L78025 Metal2 L80731 ;
+	 edge_boolean -coincident_only Metal2 L31897 L69685 ;
+	 exte Metal2 L84176 -lt 2.5 -output region -project -abut ltgt 0 90 L31897 ;
+	 edge_length L78862 -gt 7.5 ;
+}
+rule  "METAL3.SP.1.6 " {
+	 caption "METAL3.SP.1.6: Metal3 to Metal3 spacing must be >= 2.50 um" ;
+	 size Metal3 -by 7.5 -underover L78025 ; 
+	 and L78025 Metal3 L80731 ;
+	 edge_boolean -coincident_only Metal3 L17221 L52404 ;
+	 exte Metal3 L51586 -lt 2.5 -output region -project -abut ltgt 0 90 L17221 ;
+	 edge_length L55755 -gt 7.5 ;
+}
+rule  "METAL4.SP.1.6 " {
+	 caption "METAL4.SP.1.6: Metal4 to Metal4 spacing must be >= 2.50 um" ;
+	 size Metal4 -by 7.5 -underover L78025 ; 
+	 and L78025 Metal4 L80731 ;
+	 edge_boolean -coincident_only Metal4 L16667 L35123 ;
+	 exte Metal4 L81400 -lt 2.5 -output region -project -abut ltgt 0 90 L16667 ;
+	 edge_length L39591 -gt 7.5 ;
+}
+rule  "METAL5.SP.1.6 " {
+	 caption "METAL5.SP.1.6: Metal5 to Metal5 spacing must be >= 2.50 um" ;
+	 size Metal5 -by 7.5 -underover L78025 ; 
+	 and L78025 Metal5 L80731 ;
+	 edge_boolean -coincident_only Metal5 L41724 L17842 ;
+	 exte Metal5 L4655 -lt 2.5 -output region -project -abut ltgt 0 90 L41724 ;
+	 edge_length L90680 -gt 7.5 ;
+}
+rule  "METAL6.SP.1.6 " {
+	 caption "METAL6.SP.1.6: Metal6 to Metal6 spacing must be >= 2.50 um" ;
+	 size Metal6 -by 7.5 -underover L78025 ; 
+	 and L78025 Metal6 L80731 ;
+	 edge_boolean -coincident_only Metal6 L74374 L66735 ;
+	 exte Metal6 L17817 -lt 2.5 -output region -project -abut ltgt 0 90 L74374 ;
+	 edge_length L70678 -gt 7.5 ;
+}
+rule  "METAL7.SP.1.6 " {
+	 caption "METAL7.SP.1.6: Metal7 to Metal7 spacing must be >= 2.50 um" ;
+	 size Metal7 -by 7.5 -underover L78025 ; 
+	 and L78025 Metal7 L80731 ;
+	 edge_boolean -coincident_only Metal7 L69529 L84016 ;
+	 exte Metal7 L43284 -lt 2.5 -output region -project -abut ltgt 0 90 L69529 ;
+	 edge_length L36691 -gt 7.5 ;
+}
+rule  "METAL8.SP.1.5 " {
+	 caption "METAL8.SP.1.5: Metal8 to Metal8 spacing must be >= 2.50 um" ;
+	 size Metal8 -by 7.5 -underover L78025 ; 
+	 and L78025 Metal8 L80731 ;
+	 edge_boolean -coincident_only Metal8 L17378 L1297 ;
+	 exte Metal8 L12896 -lt 2.5 -output region -project -abut ltgt 0 90 L17378 ;
+	 edge_length L65390 -gt 7.5 ;
+}
+rule  "METAL9.SP.1.5 " {
+	 caption "METAL9.SP.1.5: Metal9 to Metal9 spacing must be >= 2.50 um" ;
+	 size Metal9 -by 7.5 -underover L78025 ; 
+	 and L78025 Metal9 L80731 ;
+	 edge_boolean -coincident_only Metal9 L65889 L18578 ;
+	 exte Metal9 L70699 -lt 2.5 -output region -project -abut ltgt 0 90 L65889 ;
+	 edge_length L89413 -gt 7.5 ;
+}
+rule  "METAL2.E.1 " {
+	 caption "METAL2.E.1: Metal2 to Via1 enclosure must be >= 0.005 um" ;
+	 not Via1 metal2_conn L12682 
+	 copy L12682 ;
+}
+rule  "METAL2.E.1 " {
+	 caption "METAL2.E.1: Metal2 to Via1 enclosure must be >= 0.005 um" ;
+	 enc Via1 metal2_conn -lt 0.005 -output region -singular -abut lt 90 -outside_also ;
+}
+rule  "METAL3.E.1 " {
+	 caption "METAL3.E.1: Metal3 to Via2 enclosure must be >= 0.005 um" ;
+	 not Via2 metal3_conn L67626 
+	 copy L67626 ;
+}
+rule  "METAL3.E.1 " {
+	 caption "METAL3.E.1: Metal3 to Via2 enclosure must be >= 0.005 um" ;
+	 enc Via2 metal3_conn -lt 0.005 -output region -singular -abut lt 90 -outside_also ;
+}
+rule  "METAL4.E.1 " {
+	 caption "METAL4.E.1: Metal4 to Via3 enclosure must be >= 0.005 um" ;
+	 not Via3 metal4_conn L22570 
+	 copy L22570 ;
+}
+rule  "METAL4.E.1 " {
+	 caption "METAL4.E.1: Metal4 to Via3 enclosure must be >= 0.005 um" ;
+	 enc Via3 metal4_conn -lt 0.005 -output region -singular -abut lt 90 -outside_also ;
+}
+rule  "METAL5.E.1 " {
+	 caption "METAL5.E.1: Metal5 to Via4 enclosure must be >= 0.005 um" ;
+	 not Via4 metal5_conn L77514 
+	 copy L77514 ;
+}
+rule  "METAL5.E.1 " {
+	 caption "METAL5.E.1: Metal5 to Via4 enclosure must be >= 0.005 um" ;
+	 enc Via4 metal5_conn -lt 0.005 -output region -singular -abut lt 90 -outside_also ;
+}
+rule  "METAL6.E.1 " {
+	 caption "METAL6.E.1: Metal6 to Via5 enclosure must be >= 0.005 um" ;
+	 not Via5 metal6_conn L32458 
+	 copy L32458 ;
+}
+rule  "METAL6.E.1 " {
+	 caption "METAL6.E.1: Metal6 to Via5 enclosure must be >= 0.005 um" ;
+	 enc Via5 metal6_conn -lt 0.005 -output region -singular -abut lt 90 -outside_also ;
+}
+rule  "METAL7.E.1 " {
+	 caption "METAL7.E.1: Metal7 to Via6 enclosure must be >= 0.005 um" ;
+	 not Via6 metal7_conn L12598 
+	 copy L12598 ;
+}
+rule  "METAL7.E.1 " {
+	 caption "METAL7.E.1: Metal7 to Via6 enclosure must be >= 0.005 um" ;
+	 enc Via6 metal7_conn -lt 0.005 -output region -singular -abut lt 90 -outside_also ;
+}
+rule  "METAL8.E.1 " {
+	 caption "METAL8.E.1: Metal8 to Via7 enclosure must be >= 0.05 um" ;
+	 not Via7 metal8_conn L57654 
+	 copy L57654 ;
+}
+rule  "METAL8.E.1 " {
+	 caption "METAL8.E.1: Metal8 to Via7 enclosure must be >= 0.05 um" ;
+	 enc Via7 metal8_conn -lt 0.05 -output region -singular -abut lt 90 -outside_also ;
+}
+rule  "METAL9.E.1 " {
+	 caption "METAL9.E.1: Metal9 to Via8 enclosure must be >= 0.05 um" ;
+	 not Via8 metal9_conn L2710 
+	 copy L2710 ;
+}
+rule  "METAL9.E.1 " {
+	 caption "METAL9.E.1: Metal9 to Via8 enclosure must be >= 0.05 um" ;
+	 enc Via8 metal9_conn -lt 0.05 -output region -singular -abut lt 90 -outside_also ;
+}
+rule  "METAL1.W.1 " {
+	 caption "METAL1.W.1: Metal1 width must be >= 0.12 um" ;
+	 inte metal1_conn metal1_conn -lt 0.12 -output region -singular -abut lt 90 ;
+}
+rule  "METAL2.W.1 " {
+	 caption "METAL2.W.1: Metal2 width must be >= 0.14 um" ;
+	 inte metal2_conn metal2_conn -lt 0.14 -output region -singular -abut lt 90 ;
+}
+rule  "METAL3.W.1 " {
+	 caption "METAL3.W.1: Metal3 width must be >= 0.14 um" ;
+	 inte metal3_conn metal3_conn -lt 0.14 -output region -singular -abut lt 90 ;
+}
+rule  "METAL4.W.1 " {
+	 caption "METAL4.W.1: Metal4 width must be >= 0.14 um" ;
+	 inte metal4_conn metal4_conn -lt 0.14 -output region -singular -abut lt 90 ;
+}
+rule  "METAL5.W.1 " {
+	 caption "METAL5.W.1: Metal5 width must be >= 0.14 um" ;
+	 inte metal5_conn metal5_conn -lt 0.14 -output region -singular -abut lt 90 ;
+}
+rule  "METAL6.W.1 " {
+	 caption "METAL6.W.1: Metal6 width must be >= 0.14 um" ;
+	 inte metal6_conn metal6_conn -lt 0.14 -output region -singular -abut lt 90 ;
+}
+rule  "METAL7.W.1 " {
+	 caption "METAL7.W.1: Metal7 width must be >= 0.14 um" ;
+	 inte metal7_conn metal7_conn -lt 0.14 -output region -singular -abut lt 90 ;
+}
+rule  "METAL8.W.1 " {
+	 caption "METAL8.W.1: Metal8 width must be >= 0.44 um" ;
+	 inte metal8_conn metal8_conn -lt 0.44 -output region -singular -abut lt 90 ;
+}
+rule  "METAL9.W.1 " {
+	 caption "METAL9.W.1: Metal9 width must be >= 0.44 um" ;
+	 inte metal9_conn metal9_conn -lt 0.44 -output region -singular -abut lt 90 ;
+}
+rule  "OXIDE.W.2.1.2 " {
+	 caption "OXIDE.W.2.1.2: 2.5V N-channel gate width must be >= 0.15 um" ;
+	 and L76283 Poly L19348 ;
+	 edge_boolean -inside Oxide L96558 L19348 ;
+	 L83789 L96558 -lt 0.15 -output region -abut lt 90 ;
+}
+rule  "OXIDE.W.2.2.2 " {
+	 caption "OXIDE.W.2.2.2: 2.5V P-channel gate width must be >= 0.15 um" ;
+	 and L53593 Poly L29169 ;
+	 edge_boolean -inside Oxide L25036 L29169 ;
+	 L15912 L25036 -lt 0.15 -output region -abut lt 90 ;
+}
+rule  "METAL1.E.1 " {
+	 caption "METAL1.E.1: Metal1 to Cont enclosure must be >= 0.00 um" ;
+	 not Cont metal1_conn L80230 
+	 copy L80230 ;
+}
+rule  "METAL1.L.1 " {
+	 caption "METAL1.L.1: Metal1 non-90 degree segments must be >= 0.18 um" ;
+	 angle Metal1 -ltgt 0 90 L51265 ;
+	 edge_length L51265 -lt 0.18 ;
+}
+rule  "METAL2.L.1 " {
+	 caption "METAL2.L.1: Metal2 non-90 degree segments must be >= 0.20 um" ;
+	 angle Metal2 -ltgt 0 90 L51296 ;
+	 edge_length L51296 -lt 0.2 ;
+}
+rule  "METAL3.L.1 " {
+	 caption "METAL3.L.1: Metal3 non-90 degree segments must be >= 0.20 um" ;
+	 angle Metal3 -ltgt 0 90 L51327 ;
+	 edge_length L51327 -lt 0.2 ;
+}
+rule  "METAL4.L.1 " {
+	 caption "METAL4.L.1: Metal4 non-90 degree segments must be >= 0.20 um" ;
+	 angle Metal4 -ltgt 0 90 L51358 ;
+	 edge_length L51358 -lt 0.2 ;
+}
+rule  "METAL5.L.1 " {
+	 caption "METAL5.L.1: Metal5 non-90 degree segments must be >= 0.20 um" ;
+	 angle Metal5 -ltgt 0 90 L51389 ;
+	 edge_length L51389 -lt 0.2 ;
+}
+rule  "METAL6.L.1 " {
+	 caption "METAL6.L.1: Metal6 non-90 degree segments must be >= 0.20 um" ;
+	 angle Metal6 -ltgt 0 90 L51420 ;
+	 edge_length L51420 -lt 0.2 ;
+}
+rule  "METAL7.L.1 " {
+	 caption "METAL7.L.1: Metal7 non-90 degree segments must be >= 0.20 um" ;
+	 angle Metal7 -ltgt 0 90 L51451 ;
+	 edge_length L51451 -lt 0.2 ;
+}

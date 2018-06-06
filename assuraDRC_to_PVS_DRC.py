@@ -14,19 +14,18 @@ expr = []
 
 count = 0
 DEBUG = 0
-expr_sort = []
-list_more = []
-Write2File = True
-read_from_data = False
-read_from_file = True
-#read either data or input file
-
-    
+#expr_sort = []
+#list_more = []
+Write2File = False
+read_from_file = False
 
 
+   
+
+#Writing the output to a output_test file
 if Write2File:
     sys.stdout=open("output_test","w")
-#Checks the number of times an element is repeated in the data
+#Checks the number of times an element is repeated in the input
 def num_times_var(var):
     global lines
     global count 
@@ -36,39 +35,33 @@ def num_times_var(var):
             count = count +1
     return count
 
-#If the element is repeated 3 or more than 3 times, 
+#If the element is repeated 3 or more than 3 times in expr, 
 #then return the next element as where the drc needs to 
 # be added. 
-#All the expressions before this it will be printed at a higher level
+#All the expressions that has more than 3 repeated,
+# it will be printed before rule
 #before printing the drc.
-
 def index_return():
     global inlines,expr
     index=0
     i=0
     if DEBUG>0:
-        print(inlines)
+        print('inlines = ',inlines)
     for i in range(len(expr)):
-    #If the element has repeated 3 or more than 3 times, then insert that line in the expression
 #        inline=inlines[i].split('=')
 #        print(inline,inline[0])
+#If the element has repeated 3 or more than 3 times,
         if num_times_var(expr[i])>= 3:
             index = i+1
     return index
                      
-    
-#    for element_layer_insert_post in lines:
-#        if element >= 3:
-#            i = i+1
-#            insert_at = i
-#    return insert_at
-    
+      
 # List of token names.   This is always required
 tokens = (
     'NUMBER',
     'PLUS','MINUS','TIMES','DIVIDE','EQUALS',
     'LPAREN','RPAREN', 'MODULUS','POWER',  'GREATERTHAN', 'LESSTHAN','FLOAT','DRC','SEPNOTCH','ID','METAL','GEOMGETNON90',
-    'ERRORINFO','RULMESSAGE' ,'UNDERSCORE' ,'LAYER','CHECK','NBURIED' ,'NWELL','ENC','GEOMGETLENGTH','GEOMWIDTH','KEEP','GEOMGETEDGE','COINCIDENT','TYPE','VIA','GEOMANDNOT','CONT','METALCONN','GEOMAND',
+    'ERRORINFO','RULMESSAGE' ,'UNDERSCORE' ,'LAYER','CHECK','NBURIED' ,'NWELL','ENC','GEOMGETLENGTH','GEOMWIDTH','KEEP','GEOMGETEDGE','COINCIDENT','TYPE','VIA','CONT','METALCONN','GEOMAND',
     )
 
 # Regular expression rules for simple tokens
@@ -80,8 +73,6 @@ t_DIVIDE  = r'/'
 t_EQUALS  = r'='
 t_LPAREN  = r'\('
 t_RPAREN  = r'\)'
-#t_METAL   = r'Metal'
-
 #t_NAME    = r'[a-zA-Z_][a-zA-Z0-9_]*'
 t_RULMESSAGE = r'".*"'
 #t_GREATERTHAN = r'\>'
@@ -105,11 +96,13 @@ def t_CONT(t):
     return t 
 
 
-def t_GEOMANDNOT(t):
-    r'geomAndNot'
-    t.value = 'not'
+def t_GEOMAND(t):
+    r'geomAndNot|geomAnd'
+    if t.value == 'geomAndNot':   
+        t.value = 'not'
+    if t.value == 'geomAnd':
+        t.value = 'and'
     return t
-t_GEOMANDNOT.__doc__=r'geomAndNot' #can be an expression
 
     
 def t_TYPE(t):
@@ -135,13 +128,11 @@ def t_KEEP(t):
     r'keep'
     t.value = ['-by','-underover',""]
     return t
-t_KEEP.__doc__=r'keep' #can be an expression
 
 def t_GEOMWIDTH(t):
     r'geomWidth'
     t.value = ['size','and']
     return t
-t_GEOMWIDTH.__doc__=r'geomWidth' #can be an expression
 
 def t_METAL(t):    
     return t
@@ -170,7 +161,7 @@ def t_LAYER(t):
 
 def t_GEOMGETNON90(t):
     r'geomGetNon90'
-    t.value = ['angle ', ' -ltgt']
+    t.value = ['angle','-ltgt']
     return t
 
 
@@ -234,25 +225,13 @@ def t_error(t):
 lexer = lex.lex()
 
 # Test it out  (Input)
-data = '''L51265=geomGetNon90(Metal1)
-L51265=geomGetNon90(Metal1)
-L28380=geomGetLength(L51265 keep<0.18)
-errorLayer(L28380
-    "METAL1.L.1: Metal1 non-90 degree segments must be >= 0.18 um")'''
+data = '''L89722=geomAnd(Pimp Poly)
+L35306=geomAndNot(L89722 Oxide_thk)
+L36246=geomGetEdge(Oxide inside L35306)
+L30964=drc(L36246 width<0.12)
+errorLayer(L30964 "OXIDE.W.2.2.1: 1.2V P-channel gate width must be >= 0.12 um")
+'''
 
-
-#data = '''L18723=geomWidth(Metal1 keep>0.18)
-#L52985=geomGetEdge(Metal1 coincident L18723)
-#L52985=geomGetEdge(Metal1 coincident L18723)
-#L3396=drc(Metal1 L52985 0<sep<0.18 opposite edgeb)
-#L79024=geomGetLength(L3396 keep>0.56)
-#errorLayer(L79024 "METAL1.SP.1.2: Metal1 to Metal1 spacing must be >= 0.18 um")'''
-
-#data = '''L45840=geomWidth(Metal1 keep>1.50)
-#L4475=geomGetEdge(Metal1 coincident L45840)
-#L88697=drc(Metal1 L4475 0<sep<0.50 opposite edgeb)
-#L38744=geomGetLength(L88697 keep>1.50)
-#errorLayer(L38744 "METAL1.SP.1.3: Metal1 to Metal1 spacing must be >= 0.50 um")'''
 
 # Tokenize
 #which_token = lexer.token()
@@ -263,7 +242,7 @@ while True:
     tok = lexer.token()
     if not tok: 
         break      # No more input
-    if DEBUG>2:
+    if DEBUG>0:
         print(tok)
 
 
@@ -287,8 +266,9 @@ layer = {}
 # By default count is always 0
 def print_expr():
     global expr
-    if DEBUG >=0:
+    if DEBUG >=1:
         print('expr =',expr)
+        print('layer =',layer)   
 #        get the index of errorLayer
     index_error = expr.index('errorLayer')
     for i in range(len(expr)):
@@ -298,7 +278,6 @@ def print_expr():
         if expr[i] == 'errorLayer':
             print('rule ',expr1.split(':')[0],'" {')
             print('\t caption',expr1,';')
-#If this expression is before errorLayer then 
 #don't put '\t' else put '\t'.            
         elif i<index_error:
             print(expr1,';')                     
@@ -426,75 +405,84 @@ def p_statement_drcsep(t):
 #From : L52985=geomGetEdge(Metal1 coincident L18723)
 #To : edge_boolean -coincident_only Metal1 L80731 L67295;
 def p_statement_geomgetedge(t):
-    'expression : ID EQUALS GEOMGETEDGE LPAREN METAL COINCIDENT ID RPAREN'
+    '''expression : ID EQUALS GEOMGETEDGE LPAREN METAL COINCIDENT ID RPAREN
+        | ID EQUALS GEOMGETEDGE LPAREN ID COINCIDENT ID RPAREN
+        '''
+    
     layer[t[1]] = " ".join([t[3],t[6],t[5],t[1],t[7]])
     expr.append(t[1])
     
-#From :L51265=geomGetNon90(Metal1)
-#To:angle inLayer -ltgt 0 90 outLayer;    
-def p_statement_geonon90(t):
-    'expression : ID EQUALS GEOMGETNON90 LPAREN METAL RPAREN'
-    layer[t[1]] = " ".join([t[3][0],t[5], t[3][1],'0','90',t[1]])
+#From:L19348=geomAnd(L76283 Poly)    
+#To:and L512 Poly L94841;
+### and also the following:
+#From : L80230=geomAndNot(Cont metal1_conn)
+   #To: not Cont metal1_conn L24896;
+#        copy L24896;
+def p_statement_geomAnd(t):
+    '''expression : ID EQUALS GEOMAND LPAREN CONT METALCONN RPAREN
+            | ID EQUALS GEOMAND LPAREN VIA METALCONN RPAREN
+            | ID EQUALS GEOMAND    LPAREN ID   ID       RPAREN
+            '''
+    if t[3]=='and':
+        layer[t[1]] = " ".join([t[3],t[5],t[6],t[1]])
+    elif t[3]=='not':
+        layer[t[1]] = " ".join([t[3],t[5],t[6],t[1],'\n\t','copy',t[1]])      
     expr.append(t[1])
+    
+    
+
+
+#From:L51265=geomGetNon90(Metal1)
+#To:angle Metal1 -ltgt 0 90 L79182;
+def p_geomgetnon90(t):
+    'expression : ID EQUALS GEOMGETNON90 LPAREN METAL RPAREN'    
+    layer[t[1]] = " ".join([t[3][0],t[5],t[3][1],'0','90',t[1]])    
+    expr.append(t[1])    
     
 # From :Metal1_d=layer( 7 type(0) )
 # To:layer_def layername arbitary_number;
 def p_statement_layermap(t):
     'expression : ID EQUALS LAYER LPAREN NUMBER ID LPAREN NUMBER RPAREN RPAREN '
-    layer[t[1]] = " ".join([t[3][1],t[3][1],'arbitary_number;' ])
+    layer[t[1]] = " ".join([t[3][1],t[3][1],'arbitary_number' ])
     expr.append(t[1])
     
 #From : L91383=drc(Nburied Nwell enc<0.2)
 #To   : enc inLayer2 inLayer1 -lt value -output region -abut lt 90;
 def p_statement_enclose(t):
     'expression : ID EQUALS DRC LPAREN NBURIED NWELL ENC LESSTHAN NUMBER RPAREN '
-    layer[t[1]] = " ".join([t[7],t[5][0], t[6][0], t[8], t[9],'-output region -abut lt 90;'])
+    layer[t[1]] = " ".join([t[7],t[5][0], t[6][0], t[8], t[9],'-output region -abut lt 90'])
     expr.append(t[1])
     
 #From : L66270=drc(metal2_conn Via1 enc<0.005)
 #To : enc Via1 metal2_conn -lt 0.005 -output region -singular -abut lt 90 -outside_also;
 def p_via_enclosure(t):
     'expression : ID EQUALS DRC LPAREN METALCONN VIA ENC LESSTHAN NUMBER RPAREN'
-    layer[t[1]] = " ".join([t[7],t[6],t[5],t[8],str(t[9]),'-output region -singular -abut lt 90 -outside_also;'])
-    expr.append(t[1])
-    
-#From : L80230=geomAndNot(Cont metal1_conn)
-#    L80230=geomAndNot(Cont metal1_conn)
-   #To: not Cont metal1_conn L24896;
-#        copy L24896;
-def p_cont_enclosure(t):
-    'expression : ID EQUALS GEOMANDNOT LPAREN CONT METALCONN RPAREN'
-    layer[t[1]] = " ".join([t[3],t[5],t[6],t[1],'\n\t','copy',t[1]])
+    layer[t[1]] = " ".join([t[7],t[6],t[5],t[8],str(t[9]),'-output region -singular -abut lt 90 -outside_also'])
     expr.append(t[1])
     
 #From:L91458=drc(metal1_conn width<0.12)
 #To:    inte metal1_conn metal1_conn -lt 0.06 -output region -singular -abut lt 90;
 def p_metal_width(t):
-    'expression : ID EQUALS DRC LPAREN METALCONN ID LESSTHAN NUMBER '
-    layer[t[1]] = " ".join([t[3][1],t[5],t[5],t[7],str(t[8]),'-output region -singular -abut lt 90;'])
+    'expression : ID EQUALS DRC LPAREN METALCONN ID LESSTHAN NUMBER RPAREN'
+    layer[t[1]] = " ".join([t[3][1],t[5],t[5],t[7],str(t[8]),'-output region -singular -abut lt 90'])
     expr.append(t[1])
     
 #From:L83789=drc(L96558 width<0.15)
 #To:inte L43550 L43550 -lt 0.32 -output region -abut lt 90;
 def p_n_channel_gate_width(t):
     'expression : ID EQUALS DRC LPAREN ID ID LESSTHAN NUMBER RPAREN '
-    layer[t[1]] = " ".join([t[1],t[5],t[7],str(t[8]),'-output region -abut lt 90;'])
+    layer[t[1]] = " ".join([t[1],t[5],t[7],str(t[8]),'-output region -abut lt 90'])
     expr.append(t[1])
     
 #From : L28380=geomGetLength(L51265 keep<0.18)
 #To : edge_length L79182 -lt 0.1;
 def p_goem_get_length(t):
     'expression : ID EQUALS GEOMGETLENGTH LPAREN ID KEEP LESSTHAN NUMBER RPAREN'
-    layer[t[1]] = " ".join([t[3],t[5],t[7],str(t[8]),';'])
+    layer[t[1]] = " ".join([t[3],t[5],t[7],str(t[8])])
     expr.append(t[1])
 
     
-#From:L51265=geomGetNon90(Metal1)
-#To:angle Metal1 -ltgt 0 90 L79182;
-#def p_geom_get_non_99(t):
-#    'expression : ID EQUALS GEOMGETNON90 LPAREN METAL RPAREN'    
-#    layer[t[1]] = " ".join([t[3][1],t[5],t[3][1],'0','90',t[1]])    
-#    expr.append(t[1])
+
 
 #errorLayer(L998 "METAL1.SP.1.1: Metal1 to spacing must be >= 0.06 um")
 #TODO: debug p_statement_getRUL
@@ -509,7 +497,7 @@ def p_statement_getRUL(t):
     if DEBUG>2:
         print('layer[t[1]]  =',layer[t[1]])
         print('layer =',layer)
-#    expr.append(t[1])
+#inserts the position of where the drc should start in an expr
     err_layer_insert_pos = index_return()
     expr.insert(err_layer_insert_pos,t[1])
     
@@ -605,16 +593,9 @@ def right_paren_count(line):
             right_paren_count = right_paren_count+1
     return right_paren_count
 
-#Ignore the line which doesn't have left paren and right paren
-#Function to compare if there are equal number of ( and ) in a line
-#def compare_paren():
-#    if left_paren_count() == right_paren_count() in line:
-        
-        
-        
-#
 
-if read_from_data :
+
+if not read_from_file :
     inlines = data.split('\n')
 if read_from_file :
     infl = open("Input")
@@ -666,7 +647,8 @@ for line in lines:
         pass
 
 if Write2File:
-    sys.stdout.close()
+    sys.stdout = sys.__stdout__
+
 #f = open('output_rule_file','w')
 #sys.stdout = f
 #print('#L18723=',num_times_var('L18723'))
